@@ -22,7 +22,11 @@ export default function NavBar() {
                <Navbar.Collapse className="justify-content-end" id="main-navbar">
                     <Nav className="justify-content-end" activeKey="/stock">
                         <Nav.Link as={Link} href="/stock/employee" active={pathname === "/stock/employee" }>Employee</Nav.Link>
-                        <Nav.Link as={Link} href="/stock/organisation" active={pathname === "/stock/organisation" }>Organisation</Nav.Link>
+                        
+                        <NavDropdown title="Organisation" id="topics-dropdown">
+                            <NavDropdown.Item as={Link} href="/stock/organisation/create" active={pathname === "/stock/organisation/create"}>Create</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} href="/stock/organisation" active={pathname === "/stock/organisation"}>View</NavDropdown.Item>
+                        </NavDropdown>
                         < NavbarWalletButton/>
                     </Nav>
                 </Navbar.Collapse>
