@@ -245,4 +245,4 @@
       "stateMutability": "view",
       "type": "function"
     }
-  ],
+  ]
