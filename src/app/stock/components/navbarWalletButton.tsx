@@ -2,13 +2,14 @@
 import { useEffect, useState } from "react";
 import { Button, Container } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
-import { MetaMaskSDK } from '@metamask/sdk';
-import ModelViewer from '@metamask/logo';
+
 import MetamaskLogo from "./MetamaskLogo";
 
 
 interface Window {
-    ethereum: any;
+    ethereum: {
+      request: (options: { method: string }) => Promise<string[]>;
+    };
   }
 export default function NavbarWalletButton (){
     const [show, setShow] = useState(false);
@@ -16,7 +17,6 @@ export default function NavbarWalletButton (){
     const [showMetamask, setShowMetamask] = useState("Connect MetaMask")
     const [walletActive, setWalletActive] = useState(false)
     
-
     useEffect(() => {
         requestAccount()
     }, []);

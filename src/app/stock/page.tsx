@@ -1,9 +1,15 @@
 "use client"
-import Body from './components/body'
+import Body from './body';
+
+
+
 export default function Stock(){
 
     return(
-    <Body />
+        <>
+        <div>stock</div>
+        <Body />
+    </>
     );
     
 }

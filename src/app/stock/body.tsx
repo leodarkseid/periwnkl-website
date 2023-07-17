@@ -1,5 +1,5 @@
-
-export default async function Body() {
+"use client"
+export default function Body() {
 
     return (
         <>

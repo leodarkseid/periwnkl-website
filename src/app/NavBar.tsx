@@ -8,7 +8,7 @@ import NavbarWalletButton from "./stock/components/navbarWalletButton"
 export default function NavBar() {
     const pathname = usePathname();
 
-    const isStockPage = pathname === "/stock";
+    const isStockPage = pathname.startsWith("/stock");
 
     // Render null if it's the landing page to omit the navbar
     if (isStockPage) {
@@ -21,8 +21,8 @@ export default function NavBar() {
                <Navbar.Toggle aria-controls="main-navbar" />
                <Navbar.Collapse className="justify-content-end" id="main-navbar">
                     <Nav className="justify-content-end" activeKey="/stock">
-                        <Nav.Link as={Link} href="/home" active={pathname === "/hello" }>My Stocks</Nav.Link>
-                        <Nav.Link as={Link} href="/static" active={pathname === "/static" }>Create</Nav.Link>
+                        <Nav.Link as={Link} href="/stock/employee" active={pathname === "/stock/employee" }>Employee</Nav.Link>
+                        <Nav.Link as={Link} href="/stock/organisation" active={pathname === "/stock/organisation" }>Organisation</Nav.Link>
                         < NavbarWalletButton/>
                     </Nav>
                 </Navbar.Collapse>
