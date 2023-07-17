@@ -1,7 +1,8 @@
+"use client"
 import { useState, useEffect, createContext, PropsWithChildren, useContext, useCallback } from 'react'
 
 import detectEthereumProvider from '@metamask/detect-provider'
-import { formatBalance } from '~/utils'
+import { formatBalance } from '../utils'
 
 interface WalletState {
   accounts: any[]

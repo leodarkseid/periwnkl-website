@@ -1,7 +1,5 @@
 "use client"
 import { Metadata } from 'next'
-import NavBar from './Navbar';
-
 
 export const metadata: Metadata = {
     title: 'Stock Manager',
@@ -16,9 +14,6 @@ export default function Layout({children}: Props){
     return(
         <html>
             <body>
-                
-            
-                {/* <NavBar />       */}
                 <main>
                     {children}
                 </main>
