@@ -1,3 +1,5 @@
+import type { MetaMaskInpageProvider } from "@metamask/providers";
+
 export const formatBalance = (rawBalance: string) => {
     const balance = (parseInt(rawBalance) / 1000000000000000000).toFixed(2)
     return balance
@@ -11,3 +13,11 @@ export const formatBalance = (rawBalance: string) => {
   export const formatAddress = (addr: string) => {
     return `${addr.substring(0, 8)}...`
   }
+
+  
+
+export const useMetaMask = () => {
+  const ethereum = global?.window?.ethereum;
+  if (!ethereum || !ethereum.isMetaMask) return;
+  return ethereum as unknown as MetaMaskInpageProvider;
+};

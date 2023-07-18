@@ -1,17 +1,24 @@
 "use client"
 import {Button, Form, Spinner, Alert } from "react-bootstrap";
-import { useState, SyntheticEvent, } from "react";
-import { STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FACTORY_CONTRACT } from "./../../constants";
-import {ethers, Contract} from "ethers";
+import { useState, useRef, SyntheticEvent, useEffect, } from "react";
+import { STOCK_OPTIONS_CONTRACT_ABI, STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FACTORY_CONTRACT } from "./../../constants";
+import {ethers, Contract, Signer, providers } from "ethers";
+import { ExternalProvider } from "@ethersproject/providers";
+import { useMetaMask } from "@/utils";
+
 
 import { MetaMaskInpageProvider } from "@metamask/providers";
 
 declare global {
   interface Window{
-    ethereum?:MetaMaskInpageProvider
+    ethereum: any
   }
 }
+let provider: any;
 
+if (typeof window !== 'undefined') {
+provider = new ethers.providers.Web3Provider((window as any).ethereum);
+}
 export default function Create(){
     const [name, setName] = useState("");
     const [stockOptions, setStockOptions] = useState("");
@@ -20,11 +27,57 @@ export default function Create(){
     const [showAlert, setShowAlert] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [alertVariant, setAlertVariant] = useState("success")
-    
-    if((window as any).ethereum){
-    const provider = new ethers.providers.Web3Provider((window as any).ethereum);
-    
-    const signer = provider.getSigner();
+    const [ifTxSuccess, setIfTxSuccess] = useState(false)
+    const [soAddress, setSoAddress] = useState("");
+    const [orgList, setOrgList] = useState(Array<string[]>);
+    const [addressNameList, setAddressNameList] = useState([]);
+
+
+    let signer: Signer;
+    let soContract: Contract;
+    let soContractFactory: Contract;
+
+    if (typeof window !== 'undefined') {
+    signer = provider.getSigner();
+    soContractFactory = new Contract(
+      STOCK_OPTIONS_FACTORY_CONTRACT,
+      STOCK_OPTIONS_FACTORY_ABI,
+      signer,
+    )
+    soContract = new Contract(
+      soAddress,
+      STOCK_OPTIONS_CONTRACT_ABI,
+      signer
+    )
+  }
+  
+    useEffect(()=>{
+      function handleWindow(){
+        if(window.ethereum){
+          } else{
+          errorAlert("No Ethereum Compatible wallet was detected, Please click install MetaMask")
+          setFormSubmitted(true);}
+      }
+      handleWindow();
+    },[])
+
+      getList();
+      async function getList(){
+      const getOrgListTx:Array<string[]> = await soContractFactory.getCreatorDeployedContracts();
+      setOrgList(getOrgListTx)
+      console.log("This should be the Org List",getOrgListTx)
+    }
+
+    const errorAlert = (message: string) => {
+      try{
+        setAlertVariant("danger")
+      setAlertMessage(message);
+      setShowAlert(true);
+      }
+      catch(error){
+        console.log(error)
+      }
+      
     }
     
     
@@ -32,42 +85,78 @@ export default function Create(){
     
 
     async function handleSubmit(e: SyntheticEvent) {
+       setLoading(true);
+       setFormSubmitted(true);
         e.preventDefault();
         const _name = (name)?.toString().trim();
         const _stockOptions = (stockOptions)?.toString().trim();
-
-        if (_name && _stockOptions) {
-            try {
-                const tokenContract = new Contract(
-                    STOCK_OPTIONS_FACTORY_CONTRACT,
-                    STOCK_OPTIONS_FACTORY_ABI,
-                    signer,
-                  )
-                const tX = await tokenContract.createStockOptionsPlan("Example")
-                setFormSubmitted(true);
-                setLoading(true);
-                const txReceipt = await tX.wait();
-                console.log(txReceipt);
-                
-                setAlertMessage("Successfully created and Organisation");
-                setShowAlert(true);
-            } catch(error){
-                console.log(error)
-                setAlertVariant("danger")
-                setAlertMessage("An error occurred. Please try again.");
-                setShowAlert(true);
+        
+        if(window.ethereum){
+            if (_name && _stockOptions) {
+                try {
+                    const tokenContract = new Contract(
+                        STOCK_OPTIONS_FACTORY_CONTRACT,
+                        STOCK_OPTIONS_FACTORY_ABI,
+                        signer,
+                      )
+                    const tX = await soContractFactory.createStockOptionsPlan(_name, _stockOptions)
+                    
+                    
+                    const txReceipt = await tX.wait();
+                    setIfTxSuccess(true)
+                    
+                    setSoAddress(txReceipt.events[0].address);
+                    console.log(txReceipt.events[0].address);
+                    
+                    setAlertMessage("Successfully created and Organisation");
+                    setShowAlert(true);
+                } catch(error){
+                    console.log(error)
+                    setFormSubmitted(true);
+                    errorAlert("Transaction Terminated")
+                } finally {
+                    setLoading(false)
+                    setFormSubmitted(true);
+                    
+                }
+              }
+            else{
+                errorAlert("(Invalid Query ! ) To prevent spam you have to Enter a Name and StockOptionsAmount")
+                // setAlertVariant("danger")
+                // setAlertMessage("(");
+                // setShowAlert(true);
                 setFormSubmitted(false);
-            } finally {
-                setLoading(false);
-                
+            }}
+            else{
+              console.log("no wallet")
+              setFormSubmitted(true);
+              errorAlert("No Ethereum Compatible wallet was detected")
             }
     }
-    else{
-        setAlertVariant("danger")
-        setAlertMessage("(Invalid Query ! ) To prevent spam you have to Enter a Name and StockOptionsAmount");
-        setShowAlert(true);
-        setFormSubmitted(false);
-    }}
+    async function getSoContractName(_address: string){
+      if(ifTxSuccess){
+        soContract = new Contract(
+          _address,
+          STOCK_OPTIONS_CONTRACT_ABI,
+          signer
+        )
+        
+      const name = await soContract.Name();
+      console.log("This is the name",name)
+      return name}
+    }
+    async function getAddressNameList(): Promise<string[]>{
+      const adsNameList: Array<{a: string, name:string}> = [];
+      
+      for(const a of orgList){
+        const name:string = await getSoContractName(a);
+        adsNameList.push({a, name})
+      }
+      console.log(adsNameList)
+      return addressNameList
+    }
+    getAddressNameList()
+
 
     return(
         <>
@@ -89,12 +178,26 @@ export default function Create(){
 
       <Form.Group className="mb-3" controlId="formBasicName">
         <Form.Label>Total amount of stock Options</Form.Label>
-        <Form.Control type="number" placeholder="0" autoFocus onChange={e => setStockOptions(e.target.value)} disabled={formSubmitted}/>
+
+        <Form.Control type="number" placeholder="0" onChange={e => setStockOptions(e.target.value)} disabled={formSubmitted}/>
       </Form.Group>
       <Button variant="primary" type="submit" disabled={formSubmitted}>
       {loading ?<Spinner animation="border" size="sm"/>:"Submit"}
       </Button>
     </Form>
+
+    <div className="shadow p-3 mb-5 bg-white rounded">
+      <h2>Details</h2>
+      <br />
+          {ifTxSuccess ?<div><p>Address: {soAddress}</p> </div>: <div>
+            We are trying to develop the best product 
+          </div> }
+
+          <h3>All Created Accounts</h3>
+          <p></p>
+
+    
+  </div>
     </>
     )
 }
