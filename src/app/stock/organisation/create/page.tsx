@@ -65,7 +65,7 @@ export default function Create(){
       async function getList(){
       const getOrgListTx:Array<string[]> = await soContractFactory.getCreatorDeployedContracts();
       setOrgList(getOrgListTx)
-      console.log("This should be the Org List",getOrgListTx)
+      // console.log("This should be the Org List",getOrgListTx)
     }
 
     const errorAlert = (message: string) => {
@@ -134,7 +134,7 @@ export default function Create(){
             }
     }
     async function getSoContractName(_address: string){
-      if(ifTxSuccess){
+      
         soContract = new Contract(
           _address,
           STOCK_OPTIONS_CONTRACT_ABI,
@@ -142,13 +142,13 @@ export default function Create(){
         )
         
       const name = await soContract.Name();
-      console.log("This is the name",name)
-      return name}
+      // console.log("This is the name",name)
+      return name
     }
-    async function getAddressNameList(): Promise<string[]>{
+    async function getAddressNameList(): Promise<Array<{ a: string, name: string }>>{
       const adsNameList: Array<{a: string, name:string}> = [];
-      
-      for(const a of orgList){
+      let a: string = ""
+      for(a of orgList){
         const name:string = await getSoContractName(a);
         adsNameList.push({a, name})
       }
