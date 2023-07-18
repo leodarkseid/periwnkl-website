@@ -21,9 +21,13 @@ export default function Create(){
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [alertVariant, setAlertVariant] = useState("success")
     
-    
+    if((window as any).ethereum){
     const provider = new ethers.providers.Web3Provider((window as any).ethereum);
+    
     const signer = provider.getSigner();
+    }
+    
+    
 
     
 
