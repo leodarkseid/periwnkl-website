@@ -1,8 +1,16 @@
 "use client"
 import {Button, Form, Spinner, Alert } from "react-bootstrap";
 import { useState, SyntheticEvent, } from "react";
-import { STOCK_OPTIONS_ABI } from "./../../constants";
+import { STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FACTORY_CONTRACT } from "./../../constants";
 import {ethers, Contract} from "ethers";
+
+import { MetaMaskInpageProvider } from "@metamask/providers";
+
+declare global {
+  interface Window{
+    ethereum?:MetaMaskInpageProvider
+  }
+}
 
 export default function Create(){
     const [name, setName] = useState("");
@@ -12,8 +20,12 @@ export default function Create(){
     const [showAlert, setShowAlert] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [alertVariant, setAlertVariant] = useState("success")
+    
+    
+    const provider = new ethers.providers.Web3Provider((window as any).ethereum);
+    const signer = provider.getSigner();
 
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    
 
     async function handleSubmit(e: SyntheticEvent) {
         e.preventDefault();
@@ -23,12 +35,16 @@ export default function Create(){
         if (_name && _stockOptions) {
             try {
                 const tokenContract = new Contract(
-                    process.env.LOTTERY_TOKEN_CONTRACT,
-                    STOCK_OPTIONS_ABI,
-                    provider,
+                    STOCK_OPTIONS_FACTORY_CONTRACT,
+                    STOCK_OPTIONS_FACTORY_ABI,
+                    signer,
                   )
+                const tX = await tokenContract.createStockOptionsPlan("Example")
                 setFormSubmitted(true);
-                setLoading(true)
+                setLoading(true);
+                const txReceipt = await tX.wait();
+                console.log(txReceipt);
+                
                 setAlertMessage("Successfully created and Organisation");
                 setShowAlert(true);
             } catch(error){
