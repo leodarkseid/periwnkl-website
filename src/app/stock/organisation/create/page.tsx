@@ -1,5 +1,5 @@
 "use client"
-import {Button, Form, Spinner, Alert } from "react-bootstrap";
+import {Button, Form, Spinner, Alert, Card } from "react-bootstrap";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
 import { STOCK_OPTIONS_CONTRACT_ABI, STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FACTORY_CONTRACT } from "./../../constants";
 import {ethers, Contract, Signer, providers } from "ethers";
@@ -194,47 +194,40 @@ export default function Create(){
       </Button>
     </Form>
 
-    <div className="shadow p-3 mb-5 bg-white rounded">
-      
-      <br />
-          {ifTxSuccess ?<Alert variant={alertVariant} onClose={() => setShow(false)} dismissible>
-            Address: {soAddress}</Alert>: null }
+    <div className="shadow p-3 mb-5 mt-5 bg-white rounded">
+        <br />
+        {ifTxSuccess ?<Alert variant={alertVariant} onClose={() => (setShow(false))} dismissible>
+          Address: {soAddress}</Alert>: null }
 
-          <div><h3>All your Created Organisations</h3></div>
-          {/* <ul>
-      {addressNameList.map((addressName, index) => (
-        <li key={index}>
-          {index+1} - {addressName.name}: {addressName.newContractAddress}
-        </li>
-      ))}
-    </ul> */}
+          <div className="text-center"><h3>All your Created Organisations</h3></div>
+
+        <div className="shadow p-3 mb-5 mt-4 m-5 bg-white rounded table-responsive border border-light">
+            <table className="table table-hover table-responsive">
+            <thead>
+              <tr>
+                <th>Organisation Name</th>
+                <th>Address</th>
+              </tr>
+            </thead>
+            <tbody>
+              {addressNameList.map((addressName, index) => (
+                  <>
+                      <tr key={index}>
+                      <td key={index}>
+                        {addressName.name}
+                      </td>
+                      <td key={index}>
+                      {addressName.newContractAddress}
+                      </td>
+                      </tr>
+                  </>
+                  ))}
+                
+                
+              </tbody>
+            </table>
+        </div>
           
-    <table className="table table-hover">
-    <thead>
-      <tr>
-        <th>Organisation Name</th>
-        <th>Address</th>
-      </tr>
-    </thead>
-    <tbody>
-      
-        {addressNameList.map((addressName, index) => (
-          <>
-          <tr key={index}>
-          <td key={index}>
-            {addressName.name}
-          </td>
-          <td key={index}>
-          {addressName.newContractAddress}
-          </td>
-          </tr>
-          </>
-        ))}
-      
-      
-    </tbody>
-  </table>
-    
   </div>
     </>
     )
