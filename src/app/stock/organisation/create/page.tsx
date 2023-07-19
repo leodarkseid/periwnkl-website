@@ -50,8 +50,13 @@ export default function Create(){
       signer
     )
   }
-  
+  async function getAddressNames(){
+        const GetAddressNames = await soContractFactory.getCreatorDeployedContracts();
+        console.log(GetAddressNames);
+      }
     useEffect(()=>{
+      
+      getAddressNames
       function handleWindow(){
         if(window.ethereum){
           } else{
@@ -59,14 +64,7 @@ export default function Create(){
           setFormSubmitted(true);}
       }
       handleWindow();
-    },[])
-
-      getList();
-      async function getList(){
-      const getOrgListTx:Array<string[]> = await soContractFactory.getCreatorDeployedContracts();
-      setOrgList(getOrgListTx)
-      // console.log("This should be the Org List",getOrgListTx)
-    }
+    })
 
     const errorAlert = (message: string) => {
       try{
@@ -79,9 +77,6 @@ export default function Create(){
       }
       
     }
-    
-    
-
     
 
     async function handleSubmit(e: SyntheticEvent) {
@@ -133,43 +128,8 @@ export default function Create(){
               errorAlert("No Ethereum Compatible wallet was detected")
             }
     }
-    async function getSoContractName(_address: string){
-      
-        soContract = new Contract(
-          _address,
-          STOCK_OPTIONS_CONTRACT_ABI,
-          signer
-        )
-        
-      const name = await soContract.Name();
-      // console.log("This is the name",name)
-      return name
-    }
-    async function getAddressNameList(): Promise<Array<{ address: string, name: string }>>{
-      const adsNameList: Array<{address: string, name:string}> = [];
-      let address: string = ""
-      for(address of orgList){
-        const name:string = await getSoContractName(address);
-        adsNameList.push({address, name})
-      }
-      console.log("none useeffevt", adsNameList)
-      return addressNameList
-    }
-    getAddressNameList()
-
-    useEffect(() => {
-      async function getAddressNameList(): Promise<Array<{ address: string, name: string }>>{
-        const adsNameList: Array<{address: string, name:string}> = [];
-        let address: any;
-        for(address of orgList){
-          const name:string = await getSoContractName(address);
-          adsNameList.push({address, name})
-        }
-        console.log("use effect", adsNameList)
-        return addressNameList
-      }
-      getAddressNameList().then((data) => setAddressNameList(data));
-    }, [getAddressNameList, addressNameList,getSoContractName,orgList]);
+    
+    
 
 
     return(
@@ -209,7 +169,7 @@ export default function Create(){
 
           <h3>All Created Accounts</h3>
           
-        {addressNameList}
+        {/* {addressNameList} */}
           
     
   </div>

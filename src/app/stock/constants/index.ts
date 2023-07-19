@@ -1,4 +1,4 @@
-export const STOCK_OPTIONS_FACTORY_CONTRACT ='0x7faa7D7c4106A7CcC28c29b8436d396727b71c05';
+export const STOCK_OPTIONS_FACTORY_CONTRACT ='0x3f18edFa8c54d2e95231bA2890D5fd5ADD319c18';
  
  export const STOCK_OPTIONS_FACTORY_ABI= [
   {
@@ -54,9 +54,21 @@ export const STOCK_OPTIONS_FACTORY_CONTRACT ='0x7faa7D7c4106A7CcC28c29b8436d3967
     "name": "getCreatorDeployedContracts",
     "outputs": [
       {
-        "internalType": "address[]",
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "newContractAddress",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct StockOptionsFactory.AddressName[]",
         "name": "",
-        "type": "address[]"
+        "type": "tuple[]"
       }
     ],
     "stateMutability": "view",
