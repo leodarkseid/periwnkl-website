@@ -2,6 +2,7 @@
 import {ethers, Contract, Signer, providers } from "ethers";
 import { STOCK_OPTIONS_CONTRACT_ABI, STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FACTORY_CONTRACT } from "./../constants";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
+import SearchForEmployeeDetails from "./utils/get_employee"
 
 let provider: any;
     let signer: Signer;
@@ -33,13 +34,15 @@ export default function PageBox(){
       }
 
    
-
+console.log(SearchForEmployeeDetails("0x72DfA0f69739748137448474E42BDF6D7c310194", signer,"0xBB1e33e483c7F672a4f3C6856Cbdd7e3211a2a79" ))
       useEffect(()=>{
         async function connect() {
             let account =await signer.getAddress();
                 provider.on('accountsChanged', function (accounts: any[]) {
                 account = accounts[0];
                 });}connect()
+
+                
       },[])
       
     return(
