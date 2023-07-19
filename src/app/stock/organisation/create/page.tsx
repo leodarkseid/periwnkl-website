@@ -30,7 +30,7 @@ export default function Create(){
     const [ifTxSuccess, setIfTxSuccess] = useState(false)
     const [soAddress, setSoAddress] = useState("");
     const [orgList, setOrgList] = useState(Array<string[]>);
-    const [addressNameList, setAddressNameList] = useState([]);
+    const [addressNameList, setAddressNameList] = useState(Array<{ address: string, name: string }>);
 
 
     let signer: Signer;
@@ -145,17 +145,31 @@ export default function Create(){
       // console.log("This is the name",name)
       return name
     }
-    async function getAddressNameList(): Promise<Array<{ a: string, name: string }>>{
-      const adsNameList: Array<{a: string, name:string}> = [];
-      let a: string = ""
-      for(a of orgList){
-        const name:string = await getSoContractName(a);
-        adsNameList.push({a, name})
+    async function getAddressNameList(): Promise<Array<{ address: string, name: string }>>{
+      const adsNameList: Array<{address: string, name:string}> = [];
+      let address: string = ""
+      for(address of orgList){
+        const name:string = await getSoContractName(address);
+        adsNameList.push({address, name})
       }
-      console.log(adsNameList)
+      console.log("none useeffevt", adsNameList)
       return addressNameList
     }
     getAddressNameList()
+
+    useEffect(() => {
+      async function getAddressNameList(): Promise<Array<{ address: string, name: string }>>{
+        const adsNameList: Array<{address: string, name:string}> = [];
+        let address: any;
+        for(address of orgList){
+          const name:string = await getSoContractName(address);
+          adsNameList.push({address, name})
+        }
+        console.log("use effect", adsNameList)
+        return addressNameList
+      }
+      getAddressNameList().then((data) => setAddressNameList(data));
+    }, [getAddressNameList, addressNameList,getSoContractName,orgList]);
 
 
     return(
@@ -194,8 +208,9 @@ export default function Create(){
           </div> }
 
           <h3>All Created Accounts</h3>
-          <p></p>
-
+          
+        {addressNameList}
+          
     
   </div>
     </>
