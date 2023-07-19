@@ -25,14 +25,13 @@ export default function NavbarWalletButton (){
 
     
     const switchNetwork = async () => {
-      console.log("switch Network is called")
-
       try{
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: '0xe704' }],
       });
       // refresh
+      window.location.reload();
       
     } catch(error){
       console.error("something went wrong", error)

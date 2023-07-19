@@ -1,10 +1,10 @@
 "use client"
 import {Button, Form, Spinner, Alert } from "react-bootstrap";
-import { useState, useRef, SyntheticEvent, useEffect, } from "react";
+import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
 import { STOCK_OPTIONS_CONTRACT_ABI, STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FACTORY_CONTRACT } from "./../../constants";
 import {ethers, Contract, Signer, providers } from "ethers";
 import { ExternalProvider } from "@ethersproject/providers";
-import { useMetaMask } from "@/utils";
+import { connectWallet } from "@/utils";
 
 
 import { MetaMaskInpageProvider } from "@metamask/providers";
@@ -17,8 +17,13 @@ declare global {
 let provider: any;
 
 if (typeof window !== 'undefined') {
-provider = new ethers.providers.Web3Provider((window as any).ethereum);
+  try{
+  provider = new ethers.providers.Web3Provider((window as any).ethereum);
+}catch(error){
+  console.error("provider couldn't be created", error)
 }
+}
+
 export default function Create(){
     const [name, setName] = useState("");
     const [stockOptions, setStockOptions] = useState("");
@@ -30,33 +35,61 @@ export default function Create(){
     const [ifTxSuccess, setIfTxSuccess] = useState(false)
     const [soAddress, setSoAddress] = useState("");
     const [orgList, setOrgList] = useState(Array<string[]>);
-    const [addressNameList, setAddressNameList] = useState(Array<{ address: string, name: string }>);
+    const [addressNameList, setAddressNameList] = useState(Array<{ newContractAddress: string, name: string }>);
+    const [show, setShow] = useState(true);
 
 
-    let signer: Signer;
+    let signer: Signer ;
     let soContract: Contract;
-    let soContractFactory: Contract;
+    // let soContractFactory: Contract;
 
-    if (typeof window !== 'undefined') {
+  try{
     signer = provider.getSigner();
-    soContractFactory = new Contract(
-      STOCK_OPTIONS_FACTORY_CONTRACT,
-      STOCK_OPTIONS_FACTORY_ABI,
-      signer,
-    )
+    // soContractFactory = new Contract(
+    //   STOCK_OPTIONS_FACTORY_CONTRACT,
+    //   STOCK_OPTIONS_FACTORY_ABI,
+    //   signer,
+    // )
     soContract = new Contract(
       soAddress,
       STOCK_OPTIONS_CONTRACT_ABI,
       signer
     )
+  } catch(error){
+    console.error('Error creating Contracts', error)
   }
-  async function getAddressNames(){
+  const soContractFactory: Contract = useMemo(() => {
+    try {
+      const signer = provider.getSigner();
+      return new Contract(
+        STOCK_OPTIONS_FACTORY_CONTRACT,
+        STOCK_OPTIONS_FACTORY_ABI,
+        signer,
+      );
+    } catch (error) {
+      console.error('Error creating soContractFactory:', error);
+      const signer = provider ? provider.getSigner(): null;
+      return new Contract(
+        STOCK_OPTIONS_FACTORY_CONTRACT,
+        STOCK_OPTIONS_FACTORY_ABI,
+        signer,
+      );
+    }
+  }, []);
+  
+  const getAddressNames = useCallback(async () => {
+    if (soContractFactory) {
         const GetAddressNames = await soContractFactory.getCreatorDeployedContracts();
-        console.log(GetAddressNames);
+        setAddressNameList(GetAddressNames);
+        ifTxSuccess
+      } else {
+        console.error('soContractFactory is not defined');
       }
-    useEffect(()=>{
+      }, [soContractFactory, ifTxSuccess]);
       
-      getAddressNames
+    useEffect(()=>{
+      connectWallet
+      getAddressNames()
       function handleWindow(){
         if(window.ethereum){
           } else{
@@ -64,7 +97,7 @@ export default function Create(){
           setFormSubmitted(true);}
       }
       handleWindow();
-    })
+    },[getAddressNames])
 
     const errorAlert = (message: string) => {
       try{
@@ -116,11 +149,12 @@ export default function Create(){
                 }
               }
             else{
-                errorAlert("(Invalid Query ! ) To prevent spam you have to Enter a Name and StockOptionsAmount")
+                errorAlert("(Invalid Query ! ) To prevent spam, you have to Enter a Name and StockOptionsAmount")
                 // setAlertVariant("danger")
                 // setAlertMessage("(");
                 // setShowAlert(true);
                 setFormSubmitted(false);
+                setLoading(false);
             }}
             else{
               console.log("no wallet")
@@ -136,7 +170,7 @@ export default function Create(){
         <>
                {/* Conditionally render the alert */}
         {showAlert && (
-          <Alert variant={alertVariant}>
+          <Alert variant={alertVariant} onClose={() => setShow(false)} dismissible>
             {alertMessage}
           </Alert>
           
@@ -161,16 +195,45 @@ export default function Create(){
     </Form>
 
     <div className="shadow p-3 mb-5 bg-white rounded">
-      <h2>Details</h2>
+      
       <br />
-          {ifTxSuccess ?<div><p>Address: {soAddress}</p> </div>: <div>
-            We are trying to develop the best product 
-          </div> }
+          {ifTxSuccess ?<Alert variant={alertVariant} onClose={() => setShow(false)} dismissible>
+            Address: {soAddress}</Alert>: null }
 
-          <h3>All Created Accounts</h3>
+          <div><h3>All your Created Organisations</h3></div>
+          {/* <ul>
+      {addressNameList.map((addressName, index) => (
+        <li key={index}>
+          {index+1} - {addressName.name}: {addressName.newContractAddress}
+        </li>
+      ))}
+    </ul> */}
           
-        {/* {addressNameList} */}
-          
+    <table className="table table-hover">
+    <thead>
+      <tr>
+        <th>Organisation Name</th>
+        <th>Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        {addressNameList.map((addressName, index) => (
+          <>
+          <tr key={index}>
+          <td key={index}>
+            {addressName.name}
+          </td>
+          <td key={index}>
+          {addressName.newContractAddress}
+          </td>
+          </tr>
+          </>
+        ))}
+      
+      
+    </tbody>
+  </table>
     
   </div>
     </>

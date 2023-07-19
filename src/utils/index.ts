@@ -21,3 +21,8 @@ export const useMetaMask = () => {
   if (!ethereum || !ethereum.isMetaMask) return;
   return ethereum as unknown as MetaMaskInpageProvider;
 };
+
+export const connectWallet = async () => {
+  const accounts= await window.ethereum.request({method: 'eth_requestAccounts'});
+  console.log(accounts)
+  }
