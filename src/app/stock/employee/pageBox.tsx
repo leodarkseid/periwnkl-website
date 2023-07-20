@@ -30,7 +30,7 @@ export default function PageBox(){
           signer
         )
       } catch(error){
-        console.error('Error creating Contracts', error)
+        console.error(error)
       }
 
    
@@ -41,8 +41,6 @@ console.log(SearchForEmployeeDetails("0x72DfA0f69739748137448474E42BDF6D7c310194
                 provider.on('accountsChanged', function (accounts: any[]) {
                 account = accounts[0];
                 });}connect()
-
-                
       },[])
       
     return(

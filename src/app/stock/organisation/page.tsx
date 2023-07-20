@@ -1,5 +1,5 @@
 "use client";
-import {Button, Form, Spinner } from "react-bootstrap";
+import {Button, Form, Spinner, Col, Row } from "react-bootstrap";
 import { useState, FormEvent } from "react";
 
 export default function Organisation() {
@@ -16,30 +16,30 @@ export default function Organisation() {
 
     return (
         <div>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="search-input">
-                    <Form.Label>Find Organisation </Form.Label>
-                    <div style={{ position: "relative" }}>
-                    <Form.Control
-                    name="query"
-                    placeholder="0x00000..."
-                    />
-                
-                <Button type="submit" className="mb-3" disabled={searchResultsLoading}
-                style={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-                    height: "100%",
-                    borderRadius: 0,
-                }}
-                >
-                    Search
-                </Button>
-                </div><Form.Text id="inputHelpBlock" muted>
-                        Your address should be a valid Ethereum Contract Address
-                    </Form.Text>
-                </Form.Group>
+                    <Form>
+            <Row className="align-items-center">
+                <Col xs="auto">
+                <Form.Label htmlFor="inlineFormInput" visuallyHidden>
+                    Username
+                </Form.Label>
+                <Form.Control
+                    className="mb-2"
+                    id="inlineFormInput"
+                    placeholder="Username"
+                />
+                </Col>
+                <Col xs="auto">
+                <Form.Label htmlFor="inlineFormInputGroup" visuallyHidden>
+                    Password
+                </Form.Label>
+                <Form.Control
+                    type="password"
+                    className="mb-2"
+                    id="inlineFormInputGroup"
+                    placeholder="Password"
+                />
+                </Col>
+            </Row>
             </Form>
             </div>
     );
