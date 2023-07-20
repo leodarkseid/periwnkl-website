@@ -22,11 +22,7 @@ export default function Employee() {
         const _organisation:string = (organisation)?.toString().trim() as string;
         const _employee: string = (employee)?.toString().trim() as string;
         
-        if( organisation_ === ""? checkIfValidAddress([employee_]) === true : checkIfValidAddress([organisation_,employee_]) === true){
-            null
-        } else{
-            null
-        }
+        console.log("doesn't do anything")
     }
 
     function handleClose(){

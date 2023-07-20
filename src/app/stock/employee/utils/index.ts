@@ -1,0 +1,1 @@
+import type Employee from "./get_employee"

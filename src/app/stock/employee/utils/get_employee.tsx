@@ -5,7 +5,7 @@ import {ethers, Contract, Signer, providers, utils, BigNumber } from "ethers";
 //stock options contract
 let soContract: Contract;
 
-interface Employee{
+export interface Employee{
     checkSO: string,
     checkVS: string,
     organisationName: string,
