@@ -5,6 +5,7 @@ import PageBox from "./pageBox";
 import { BiSearchAlt } from 'react-icons/bi';
 import { checkIfValidAddress } from "@/utils";
 
+
 export default function Employee() {
     const [organisation, setOrganisation] =useState("");
     const [employee, setEmployee] = useState("");
@@ -35,10 +36,6 @@ export default function Employee() {
 
     useEffect(()=>{
     const handleFormChanges = (()=>{
-        async function search(){
-            
-        }
-
         handleClose();
         
         const organisation_:string = (organisation)?.toString().trim() as string;
@@ -62,6 +59,7 @@ export default function Employee() {
         console.error
     } finally{
         setValidated(false)
+        PageBox(organisation_, employee_)
     }
     
     })

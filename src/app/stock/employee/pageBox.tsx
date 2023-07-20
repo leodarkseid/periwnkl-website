@@ -4,7 +4,7 @@ import { STOCK_OPTIONS_CONTRACT_ABI, STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FA
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
 import SearchForEmployeeDetails from "./utils/get_employee"
 
-let provider: any;
+    let provider: any;
     let signer: Signer;
     let soContract: Contract;
     let accounts: any[];
@@ -18,30 +18,27 @@ let provider: any;
       }
       
 
-export default function PageBox(){
+export default function PageBox(organisation:string, employee: string){
     const [soAddress, setSoAddress] = useState("");
 
+    async function getD(){
     try{
-        signer = provider.getSigner();
-        account = signer.getAddress();
-        soContract = new Contract(
-          soAddress,
-          STOCK_OPTIONS_CONTRACT_ABI,
-          signer
-        )
+        provider ? signer = provider.getSigner(): signer = signer
+        const result = await SearchForEmployeeDetails(organisation, signer, employee);
+        console.log(result)
       } catch(error){
         console.error(error)
-      }
+      }}
 
    
-console.log(SearchForEmployeeDetails("0x72DfA0f69739748137448474E42BDF6D7c310194", signer,"0xBB1e33e483c7F672a4f3C6856Cbdd7e3211a2a79" ))
-      useEffect(()=>{
-        async function connect() {
-            let account =await signer.getAddress();
-                provider.on('accountsChanged', function (accounts: any[]) {
-                account = accounts[0];
-                });}connect()
-      },[])
+
+      // useEffect(()=>{
+      //   async function connect() {
+      //       let account =await signer.getAddress();
+      //           provider.on('accountsChanged', function (accounts: any[]) {
+      //           account = accounts[0];
+      //           });}connect()
+      // },[])
       
     return(
         <div className="shadow p-3 mb-5 mt-5 bg-white rounded">
