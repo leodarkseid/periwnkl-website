@@ -48,13 +48,7 @@ export default function Employee() {
     const [alertVariant, setAlertVariant] = useState("success")
     const [show, setShow] = useState(true);
     const [disableSubmit, setDisableSubmit] = useState(false);
-    const [organisationName_, setOrganisationName] = useState("");
-    const [totalStockOptions_, setTotalStockOptions] = useState("");
-    const [stockOptions_, setStockOptions] = useState("");
-    const [vestingSchedule_, setVestingSchedule] = useState("");
-    const [vestingCountdown_, setVestingCountdown] = useState("");
-    const [vestedOptions_, setVestedOptions] = useState("");
-    const [excercisedOptions_, setExcercisedOptions] = useState("");
+
 
     async function handleSubmit(e: SyntheticEvent) {
         e.preventDefault();
