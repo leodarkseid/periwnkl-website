@@ -1,1 +1,1 @@
-import type Employee from "./get_employee"
+import type Employee from "./search"

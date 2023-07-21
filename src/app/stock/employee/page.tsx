@@ -1,12 +1,12 @@
 "use client";
 import {Button, Form, Spinner, Row,Col, Alert} from "react-bootstrap";
 import { useState, FormEvent , SyntheticEvent,useEffect} from "react";
-import PageBox from "./pageBox";
 import { BiSearchAlt } from 'react-icons/bi';
 import { checkIfValidAddress } from "@/utils";
 import {ethers, Contract, Signer} from "ethers";
-import { Employee } from "./utils/get_employee"
-import SearchForEmployeeDetails from "./utils/get_employee"
+import { Employee } from "./utils/search"
+import {SearchForEmployeeDetails, SearchForOrganisation} from "./utils/search"
+
 
 interface PageBoxProps {
     organisation: string;
@@ -60,10 +60,20 @@ export default function Employee() {
         e.preventDefault();
         if(S_employee_ !=="" ){
             connect();
-        getD(S_organisation_, S_employee_);
-        console.log("submit called")}
-        else{handleAlert("danger", "Invalid")}
-        
+                if (S_organisation_ === ""){
+                    const orgs: string[] | any = SearchForOrganisation(signer, S_employee_);
+                    console.log("from page", orgs)
+                
+                    for(const temp of orgs){
+                        getD(temp, S_employee_);
+                        console.log("submit called")
+                    }
+                }
+                else if(S_organisation_ !== ""){getD(S_organisation_, S_employee_)}
+                else{
+                    handleAlert("danger", "Invalid")
+                    }
+            }   
     }
 
     async function getD(organisation:string, employee: string){

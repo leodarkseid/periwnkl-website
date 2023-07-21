@@ -1,11 +1,12 @@
 // import { Spinner } from "@/components/bootstrap";
-import  './loading.module.css'
+import styles from './loading.module.css'
 
 export default function Loading() {
+    
     return (
-        <html>
-            <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-        </html>
+            
+            <div className={styles.lds_roller}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        
     )
     // <Spinner animation="border" className="d-block mx-auto" />
 }
