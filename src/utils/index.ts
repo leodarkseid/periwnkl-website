@@ -28,19 +28,15 @@ export const connectWallet = async () => {
   }
 
 export const checkIfValidAddress = (Arr: Array<string>)=> {
-  console.log("from utils", Arr)
   try{
     for(const str of Arr){  
     if(str.length !== 42 || !str.startsWith('0x')){
-      console.log("from utils", false)
       return false
     }
   }
-  console.log("from utils", true)
   return true
 }catch(error){
     console.error(error)
-    console.log("from utils", false)
     return false
   }
 };

@@ -18,7 +18,9 @@ export default async function SearchForEmployeeDetails(organisationAddress: stri
     
     // const [employeeDetails, setEmployeeDetails] = useState(Array<Employee>);
     
-    
+        console.log("get employee starting up")
+        console.log("org from getEmpl",organisationAddress)
+        console.log("emp from geEmpl",employeeAddress)
         soContract = new Contract(
             organisationAddress,
             STOCK_OPTIONS_CONTRACT_ABI,
@@ -41,10 +43,10 @@ export default async function SearchForEmployeeDetails(organisationAddress: stri
         const getExcercised: string = utils.formatEther(_getExcercised)
         const ar: Employee = {checkSO, checkVS, organisationName, totalStockOptions, vestingCountdown, getVestedOptions, getExcercised}
         // setEmployeeDetails([ar]);
-    console.log(ar)
+    console.log("arr from employee",ar)
     return (ar)
 } catch(error){
-    console.error(error)
+    console.error("from getEmployee",error)
 }
 }
     

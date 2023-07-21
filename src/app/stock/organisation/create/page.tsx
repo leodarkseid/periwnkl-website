@@ -5,6 +5,7 @@ import { STOCK_OPTIONS_CONTRACT_ABI, STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FA
 import {ethers, Contract, Signer, providers } from "ethers";
 import { ExternalProvider } from "@ethersproject/providers";
 import { connectWallet } from "@/utils";
+import Loading from "@/app/loading";
 
 
 import { MetaMaskInpageProvider } from "@metamask/providers";
