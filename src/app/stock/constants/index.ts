@@ -1,4 +1,4 @@
-export const STOCK_OPTIONS_FACTORY_CONTRACT ='0x3f18edFa8c54d2e95231bA2890D5fd5ADD319c18';
+export const STOCK_OPTIONS_FACTORY_CONTRACT ='0x002C1602d023Fa966de8D9504CfecA647F3cCCe0';
  
  export const STOCK_OPTIONS_FACTORY_ABI= [
   {
@@ -184,30 +184,6 @@ export const STOCK_OPTIONS_CONTRACT_ABI = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "employee",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "stockOptions",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "vestingSchedule",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "exerciseOptions",
     "outputs": [],
@@ -222,6 +198,37 @@ export const STOCK_OPTIONS_CONTRACT_ABI = [
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_employeeAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getEmployee",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "stockOptions",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "vestingSchedule",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct EmployeeStockOptionPlan.Employee",
+        "name": "",
+        "type": "tuple"
       }
     ],
     "stateMutability": "view",
@@ -281,6 +288,25 @@ export const STOCK_OPTIONS_CONTRACT_ABI = [
     "name": "grantStockOptions",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_employeeAddress",
+        "type": "address"
+      }
+    ],
+    "name": "isEmployee",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

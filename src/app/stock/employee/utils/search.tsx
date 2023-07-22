@@ -28,7 +28,7 @@ export async function SearchForEmployeeDetails(organisationAddress: string, sign
             signer)
         // check stock options and vesting schedule
         try{
-        const checkSO_VS: any = await soContract.employee(employeeAddress);
+        const checkSO_VS: any = await soContract.getEmployee(employeeAddress);
         const _checkSO: BigNumber = await checkSO_VS.stockOptions;
         const checkSO: string = utils.formatEther(_checkSO)
         const _checkVS: BigNumber = await checkSO_VS.vestingSchedule;

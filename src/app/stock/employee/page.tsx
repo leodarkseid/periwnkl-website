@@ -6,6 +6,7 @@ import { checkIfValidAddress } from "@/utils";
 import {ethers, Contract, Signer} from "ethers";
 import { Employee } from "./utils/search"
 import {SearchForEmployeeDetails, SearchForOrganisation} from "./utils/search"
+import { useRouter } from "next/navigation";
 
 
 interface PageBoxProps {
@@ -15,9 +16,6 @@ interface PageBoxProps {
   
       let provider:any;
       let signer: Signer;
-      let soContract: Contract;
-      let accounts: any[];
-      let account:Promise<string>;
       let result: Employee ;
 
 
@@ -48,45 +46,27 @@ export default function Employee() {
     const [alertVariant, setAlertVariant] = useState("success")
     const [show, setShow] = useState(true);
     const [disableSubmit, setDisableSubmit] = useState(false);
+    const [orgList, setOrgList] = useState<string[]>([]);
 
-
+    const router = useRouter()
     async function handleSubmit(e: SyntheticEvent) {
         e.preventDefault();
         if(S_employee_ !=="" ){
-            connect();
+            
                 if (S_organisation_ === ""){
                     const orgs: string[] | any = SearchForOrganisation(signer, S_employee_);
-                    console.log("from page", orgs)
-                
-                    for(const temp of orgs){
-                        getD(temp, S_employee_);
-                        console.log("submit called")
-                    }
+                    setOrgList(orgs)
                 }
-                else if(S_organisation_ !== ""){getD(S_organisation_, S_employee_)}
+                else if(S_organisation_ !== ""){
+                router.push(`/stock/employee/${S_organisation_}/${S_employee_}`);
+                    }
                 else{
                     handleAlert("danger", "Invalid")
                     }
             }   
     }
 
-    async function getD(organisation:string, employee: string){
-        try{  
-           
-            console.log("expected signer", signer)
-            result = await SearchForEmployeeDetails(organisation, signer, employee) as Employee;
-            console.log(result)
-            setOrganisationName(result?.organisationName)    
-            setTotalStockOptions(result?.totalStockOptions)
-            setStockOptions(result?.checkSO)
-            setVestingSchedule(result?.checkVS)
-            setVestingCountdown(result?.vestingCountdown)
-            setVestedOptions(result?.getVestedOptions)
-            setExcercisedOptions(result?.getExcercised)       
-            console.log(result)
-          } catch(error){
-            console.error("error is from 2",error)
-          }}
+
 
     function handleClose(){
         setShow(false)
@@ -94,6 +74,7 @@ export default function Employee() {
     }
 
     useEffect(()=>{
+    connect();
     const handleFormChanges = (()=>{
         handleClose();
         
@@ -166,50 +147,19 @@ const handleAlert = ((variant: string, msg:string) => {
             <div className="shadow p-3 mb-5 mt-5 bg-white rounded">
           <table className="table table-hover table-responsive">
           <thead>
-              <tr>
-                <th>Organisation Name</th>
-                <td> 
-                  {organisationName_}
-                  </td>
-              </tr>
-              <tr>
-                <th>Total Stock Options</th>
-                <td> 
-                  {totalStockOptions_}
-                  </td>
-              </tr>
-              <tr>
-                <th>Stock Options</th>
-                <td> 
-                    {stockOptions_}
-                  </td>
-              </tr>
-              <tr>
-                <th>Vesting Schedule</th>
-                <td> 
-                    {vestingSchedule_}
-                  </td>
-              </tr>
-              <tr>
-                <th>Vesting Countdown</th>
-                <td> 
-                  {vestingCountdown_}
-                  </td>
-              </tr>
-              <tr>
-                <th>Vested Options</th>
-                <td> 
-                  {vestedOptions_}
-                  </td>
-              </tr>
-              <tr>
-                <th>Excercised Options</th>
-                <td> 
-                  {excercisedOptions_}
-                  </td>
-              </tr>
+                <tr>
+                    <th>List of Organisations you belong to</th>
+                </tr>
             </thead>
             <tbody>
+                {/* {orgList.map((org, index) => (
+                    <>
+                    <tr key={index}>
+                    <td>{org}</td>
+                    </tr>
+                    </>
+                ))} */}
+                
             </tbody>
           </table>
         </div>
