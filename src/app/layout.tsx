@@ -1,4 +1,5 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap/dist/css/bootstrap.min.css'
+import '../../css/main.min.css'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { Container, SSRProvider } from '@/components/bootstrap'

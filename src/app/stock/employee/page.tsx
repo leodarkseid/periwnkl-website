@@ -51,6 +51,8 @@ export default function Employee() {
     const router = useRouter()
     async function handleSubmit(e: SyntheticEvent) {
         e.preventDefault();
+        setSearchResultsLoading(true)
+        try{
         if(S_employee_ !=="" ){
             
                 if (S_organisation_ === ""){
@@ -64,6 +66,8 @@ export default function Employee() {
                     handleAlert("danger", "Invalid")
                     }
             }   
+        } catch(error){console.error(error)}
+        finally{setSearchResultsLoading(false)}
     }
 
 
