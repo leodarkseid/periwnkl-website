@@ -1,13 +1,16 @@
 // import 'bootstrap/dist/css/bootstrap.min.css'
 import '../../css/main.min.css'
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Inter, Roboto } from 'next/font/google'
 import { Container, SSRProvider } from '@/components/bootstrap'
 import { Metadata } from 'next'
 import { Setup } from '@/components/utils';
 import NavBar from './NavBar'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Roboto({ 
+  weight: ['400'],
+  subsets: ['latin'], 
+  display: 'swap'})
 
 export const metadata: Metadata = {
   title: 'Periwnkl',

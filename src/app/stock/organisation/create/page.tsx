@@ -6,9 +6,10 @@ import {ethers, Contract, Signer, providers } from "ethers";
 import { ExternalProvider } from "@ethersproject/providers";
 import { connectWallet } from "@/utils";
 import Loading from "@/app/loading";
+import { GoOrganization } from "react-icons/go";
 
 
-import { MetaMaskInpageProvider } from "@metamask/providers";
+
 
 declare global {
   interface Window{
@@ -38,6 +39,7 @@ export default function Create(){
     const [orgList, setOrgList] = useState(Array<string[]>);
     const [addressNameList, setAddressNameList] = useState(Array<{ newContractAddress: string, name: string }>);
     const [show, setShow] = useState(true);
+    const [hover, setHover] = useState<string>("0");
 
 
     let signer: Signer ;
@@ -164,6 +166,14 @@ export default function Create(){
             }
     }
     
+    const [isHovered, setIsHovered] = useState(false);
+    const [cardColor, setCardColor] = useState<any>('white');
+  
+    function handleHover() {
+      setIsHovered(!isHovered);
+      (isHovered)? setCardColor('#eee'):setCardColor('primary');
+      }
+    
     
 
 
@@ -190,46 +200,68 @@ export default function Create(){
 
         <Form.Control type="number" placeholder="0" onChange={e => setStockOptions(e.target.value)} disabled={formSubmitted}/>
       </Form.Group>
-      <Button variant="primary" type="submit" disabled={formSubmitted}>
+      <Button className="w-full" variant="primary" type="submit" disabled={formSubmitted}>
       {loading ?<Spinner animation="border" size="sm"/>:"Submit"}
       </Button>
     </Form>
 
-    <div className="shadow p-3 mb-5 mt-5 bg-white rounded">
-        <br />
+    
         {ifTxSuccess ?<Alert variant={alertVariant} onClose={() => (setShow(false))} dismissible>
           Address: {soAddress}</Alert>: null }
 
-          <div className="text-center"><h3>All your Created Organisations</h3></div>
+          
 
-        <div className="shadow p-3 mb-5 mt-4 m-5 bg-white rounded table-responsive border border-light">
+        <div className="mt-5">
             <table className="table table-hover table-responsive">
             <thead>
               <tr>
-                <th>Organisation Name</th>
-                <th>Address</th>
+                <div className="text-white text-center bg-primary w-100 px-5 rounded"> <h3>Created Organisation(s)</h3></div>
               </tr>
             </thead>
             <tbody>
               {addressNameList.map((addressName, index) => (
                   <>
                       <tr key={index}>
-                      <td key={index}>
+                      <td className="text-white bg-primary" key={index}>
                         {addressName.name}
                       </td>
-                      <td key={index}>
+                      <td className="text-white bg-primary" key={index}>
                       {addressName.newContractAddress}
                       </td>
                       </tr>
                   </>
                   ))}
-                
+                <tr className="text-left">
+                  
+                   <div className="mt-3 px-3 h- text-primary rounded">Make</div> 
+                  
+                </tr>
+                <tr>
+
+                  <span className="text-start"><GoOrganization className="text-primary"/></span>
+                   <div className="text-end mt-3 px-3  text-primary rounded">  0x574221AE56AFCef087E7b400Ad145f0B4d962c85</div> 
+                </tr>
                 
               </tbody>
             </table>
-        </div>
-          
-  </div>
+            </div>
+
+            <div className="col-xl-3 col-md-6 mb-4">
+                            <div className="card border-left-primary shadow h-100 py-2">
+                                <div className="card-body">
+                                    <div className="row no-gutters align-items-center">
+                                        <div className="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Earnings (Annual)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
     </>
     )
 }
