@@ -4,6 +4,7 @@ import { Button, Container } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import {ethers } from "ethers";
 import { useMetaMask } from "../../hooks/useMetaMask";
+import { formatAddress, switchNetwork } from "@/utils";
 
 import MetamaskLogo from "./MetamaskLogo";
 
@@ -18,28 +19,16 @@ interface Window {
 export default function NavbarWalletButton (){
 
   const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask()
-    // const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false);
     // const [showWallet, setShowWallet] = useState("Connect Wallet");
     // const [showMetamask, setShowMetamask] = useState("Connect MetaMask")
     // const [walletActive, setWalletActive] = useState(false)
 
-    // const targetNetworkId = 59140;
+    const targetNetworkId = "0xe704";
     // const [currentChainId, setCurrentChain] = useState<number>();
 
     
-    // const switchNetwork = async () => {
-    //   try{
-    //   await window.ethereum.request({
-    //     method: 'wallet_switchEthereumChain',
-    //     params: [{ chainId: '0xe704' }],
-    //   });
-    //   // refresh
-    //   window.location.reload();
-      
-    // } catch(error){
-    //   console.error("something went wrong", error)
-    // }
-    // };
+  
     
     // useEffect(() => {
     //     requestAccount();
@@ -76,13 +65,19 @@ export default function NavbarWalletButton (){
             Install MetaMask
        </Button>}
 
-        { walletActive && currentChainId === targetNetworkId &&
-        <Button variant="success" onClick={() => setShow(true)}>
-            {showWallet}
+       {window.ethereum?.isMetaMask && wallet.accounts.length < 1 &&
+            <Button variant="success" disabled={isConnecting} onClick={() => setShow(true)}>
+              Connect MetaMask
+            </Button>
+          }
+
+        { window.ethereum?.isMetaMask && wallet.chainId == targetNetworkId &&
+        <Button variant="success" disabled={isConnecting} onClick={() => setShow(true)}>
+            {wallet.accounts.length < 1? "Connect MetaMask" : formatAddress(wallet.accounts[0])}
        </Button>}
-       { walletActive && currentChainId !== targetNetworkId &&
-        <Button variant="danger" onClick={switchNetwork}>
-            Wrong Network !
+       { wallet.chainId !== targetNetworkId && wallet.accounts.length >= 1 &&
+        <Button variant="danger" onClick={() => setShow(true)}>
+            Switch Network !
        </Button>}
 
       <Modal
@@ -101,7 +96,21 @@ export default function NavbarWalletButton (){
             <MetamaskLogo />
             </>
             <div className="text-center">
-          <Button onClick={requestAccount} >{showMetamask}</Button>
+            { window.ethereum?.isMetaMask && wallet.chainId == targetNetworkId &&
+                <Button variant="success"  onClick={connectMetaMask}>
+                  {wallet.accounts.length < 1? "Connect MetaMask" : <a className="text-white" href={`https://etherscan.io/address/${wallet.accounts[0]}`}>{formatAddress(wallet.accounts[0])}</a>}
+                </Button>}
+
+            { wallet.chainId !== targetNetworkId && wallet.accounts.length >= 1 &&
+                <Button variant="danger" onClick={switchNetwork}>
+                  Switch Network !
+                </Button>}
+
+                {window.ethereum?.isMetaMask && wallet.accounts.length < 1 &&
+            <Button variant="success" disabled={isConnecting} onClick={connectMetaMask}>
+              Connect MetaMask
+            </Button>
+          }
           </div>
         </Modal.Body>
       </Modal>

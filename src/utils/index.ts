@@ -11,20 +11,7 @@ export const formatBalance = (rawBalance: string) => {
   }
 
   export const formatAddress = (addr: string) => {
-    return `${addr.substring(0, 8)}...`
-  }
-
-  
-
-export const useMetaMask = () => {
-  const ethereum = global?.window?.ethereum;
-  if (!ethereum || !ethereum.isMetaMask) return;
-  return ethereum as unknown as MetaMaskInpageProvider;
-};
-
-export const connectWallet = async () => {
-  const accounts= await window.ethereum.request({method: 'eth_requestAccounts'});
-  console.log(accounts)
+    return `${addr.substring(0, 6) + "..." + addr.substring(addr.length - 4)}`
   }
 
 export const checkIfValidAddress = (Arr: Array<string>)=> {
@@ -39,4 +26,18 @@ export const checkIfValidAddress = (Arr: Array<string>)=> {
     console.error(error)
     return false
   }
+};
+
+export const switchNetwork = async () => {
+  try{
+  await window.ethereum.request({
+    method: 'wallet_switchEthereumChain',
+    params: [{ chainId: '0xe704' }],
+  });
+  // refresh
+  window.location.reload();
+  
+} catch(error){
+  console.error("something went wrong", error)
+}
 };
