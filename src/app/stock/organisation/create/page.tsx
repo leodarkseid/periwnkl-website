@@ -7,6 +7,7 @@ import { ExternalProvider } from "@ethersproject/providers";
 import { connectWallet } from "@/utils";
 import Loading from "@/app/loading";
 import { GoOrganization } from "react-icons/go";
+import styles from "./page.module.css"
 
 
 
@@ -246,22 +247,15 @@ export default function Create(){
             </table>
             </div>
 
-            <div className="col-xl-3 col-md-6 mb-4">
-                            <div className="card border-left-primary shadow h-100 py-2">
-                                <div className="card-body">
-                                    <div className="row no-gutters align-items-center">
-                                        <div className="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+           <div className={styles.org_card}>
+           <div clasName="org_card__content">
+            <div className={styles.org_card__text}>This is the test</div>
+            <span><GoOrganization/></span>
+            <div className={styles.org_card__value}>21 Employees</div>
+           </div>
+           </div>
+
+
     </>
     )
 }
