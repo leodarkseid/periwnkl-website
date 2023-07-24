@@ -3,7 +3,7 @@
 import {Button, Navbar, Container, Nav, NavDropdown} from "react-bootstrap";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams} from "next/navigation"
-import NavbarWalletButton from "./stock/components/navbarWalletButton"
+import NavbarWalletButton from "./navbarWalletButton"
 
 export default function NavBar() {
     const pathname = usePathname();

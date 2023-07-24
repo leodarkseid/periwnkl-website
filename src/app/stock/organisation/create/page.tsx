@@ -166,18 +166,7 @@ export default function Create(){
               setFormSubmitted(true);
               errorAlert("No Ethereum Compatible wallet was detected")
             }
-    }
-    
-    const [isHovered, setIsHovered] = useState(false);
-    const [cardColor, setCardColor] = useState<any>('white');
-  
-    function handleHover() {
-      setIsHovered(!isHovered);
-      (isHovered)? setCardColor('#eee'):setCardColor('primary');
-      }
-    
-    
-
+    }    
 
     return(
         <>
@@ -202,42 +191,20 @@ export default function Create(){
 
         <Form.Control type="number" placeholder="0" onChange={e => setStockOptions(e.target.value)} disabled={formSubmitted}/>
       </Form.Group>
-      <Button className="w-full" variant="primary" type="submit" disabled={formSubmitted}>
+      <Button className="w-full" variant="primary" type="submit" disabled={formSubmitted} style={{minWidth:"80px"}}>
       {loading ?<Spinner animation="border" size="sm"/>:"Submit"}
       </Button>
     </Form>
-
+     
+     {/* End of form */}
     
-        {ifTxSuccess ?<Alert variant={alertVariant} onClose={() => (setShow(false))} dismissible>
-          Address: {soAddress}</Alert>: null }
-
-          
-
+        {ifTxSuccess ? <Alert variant={alertVariant} onClose={() => (setShow(false))} dismissible>Address: {soAddress}</Alert>: null }
         <div className="mt-5">
-            
                <ListTitle title="Created Organisations"  />
-              
-            
-              {addressNameList.map((addressName, index) => (
-                  <>
-                      <tr key={index}>
-                      <td className="text-white bg-primary" key={index}>
-                        {addressName.name}
-                      </td>
-                      <td className="text-white bg-primary" key={index}>
-                      {addressName.newContractAddress}
-                      </td>
-                      </tr>
-                  </>
-                  ))}
-              
-            
-
-            <ListCard name="Goat" address="22sdsd32421421" emp={1} />
-            <ListCard name="Goat435" address="0x574221AE56AFCef087E7b400Ad145f0B4d962c85eer" emp={14} />
-            <ListCard name="Goat" address="22sdsd32421421" emp={14} />
-                
-           </div>
+              {addressNameList.map((addressName, index) => ( 
+                      <ListCard key={index} name={addressName.name} address={addressName.newContractAddress} emp={1} />
+                  ))}   
+        </div>
               
            
 

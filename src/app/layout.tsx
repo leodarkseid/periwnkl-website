@@ -2,10 +2,11 @@
 import '../../css/main.min.css'
 import './globals.css'
 import { Inter, Roboto } from 'next/font/google'
-import { Container, SSRProvider } from '@/components/bootstrap'
+import { Container} from '@/components/bootstrap'
 import { Metadata } from 'next'
-import { Setup } from '@/components/utils';
-import NavBar from './NavBar'
+import NavBar from './navbar/NavBar'
+import  { MetaMaskContextProvider} from '../hooks/useMetaMask'
+
 
 const inter = Roboto({ 
   weight: ['400'],
@@ -24,6 +25,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+    <MetaMaskContextProvider>
     <html lang="en">
       <body className={inter.className}>
           <NavBar />
@@ -34,5 +36,6 @@ export default function RootLayout({
           </main>
       </body>
     </html>
+    </MetaMaskContextProvider>
   )
 }
