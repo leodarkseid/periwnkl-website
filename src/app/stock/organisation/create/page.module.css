@@ -1,12 +1,12 @@
 .org_card{
+    margin-top: 20px;
     font-family: "Source Sans Pro", sans-serif;
     background-color: #fff;
     display: flex;
-    
+    position: relative;
     width: 100%;
-    
     height: 60px;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 0px 10px;
     align-content: center;
     vertical-align: middle;
     transition-property: all;
@@ -17,24 +17,85 @@
     cursor: pointer;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .org_card:hover{
     --tw-translate-y: -0.25rem;
     transform: translateY(var(--tw-translate-y));
     transform: scale(1.01);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
-.org_card__content {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+
+.org_card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3px;
+    height: 100%;
+    background-color: #009658; /* Change this to the desired color */
 }
 
+.org_card__grid {
+    display: grid;
+    gap: 1.5rem;
 
-.org_card__text{
+    grid-template-columns: repeat(4, 1fr);
+    align-items :start;
+    width: 100%;
+    padding-right: 20px;
+    padding-left: 20px;
     
-    text-align: center;
+}
+.org_card__icon{
+    color: #009658;
+    grid-column: 1 / 2;
+    justify-self: start;
+}
+.org_card h4{
+    color: #009658;
+    grid-column: 2 / 3;
+    justify-self: start;
+}
+.org_card__text{
+    color: #979cb0;
+    opacity: 0.8;
+    grid-column: 3 / 4;
+    justify-self: start;
 }
 
 .org_card__value{
-    text-align: right;
+    color: #009658;
+    grid-column: 4 / 5;
+    justify-self: start;
+}
+
+/* Small screens */
+
+@media (max-width: 300px) {
+    .org_card__text,
+    .org_card__value{
+        display: none;
+    }
+    .org_card h4{
+        transform: scale(0.93);
+        padding: auto;
+    }
+    .org_card__icon{
+        transform: scale(1);
+    }
+    .org_card__content{
+        padding: 0 10px 0 10px;
+    }
+    
+}
+@media (max-width: 576px) {
+    .org_card__text,
+    .org_card__value{
+        display: none;
+    }
+}
+@media (max-width: 912px) {
+    .org_card__text{
+        display: none;
+    }
 }

@@ -8,6 +8,8 @@ import { connectWallet } from "@/utils";
 import Loading from "@/app/loading";
 import { GoOrganization } from "react-icons/go";
 import styles from "./page.module.css"
+import { ListCard } from "./components/listCard";
+import sty from "./pageX.module.css"
 
 
 
@@ -232,29 +234,32 @@ export default function Create(){
                       </tr>
                   </>
                   ))}
-                <tr className="text-left">
-                  
-                   <div className="mt-3 px-3 h- text-primary rounded">Make</div> 
-                  
-                </tr>
-                <tr>
-
-                  <span className="text-start"><GoOrganization className="text-primary"/></span>
-                   <div className="text-end mt-3 px-3  text-primary rounded">  0x574221AE56AFCef087E7b400Ad145f0B4d962c85</div> 
-                </tr>
-                
               </tbody>
             </table>
             </div>
 
+            <ListCard name="Goat" address="22sdsd32421421" emp={1} />
+            <ListCard name="Goat435" address="0x574221AE56AFCef087E7b400Ad145f0B4d962c85eer" emp={14} />
+            <ListCard name="Goat" address="22sdsd32421421" emp={14} />
+                
            <div className={styles.org_card}>
-           <div clasName="org_card__content">
-            <div className={styles.org_card__text}>This is the test</div>
-            <span><GoOrganization/></span>
-            <div className={styles.org_card__value}>21 Employees</div>
-           </div>
+              <div className={styles.org_card__grid}>
+                  <span><GoOrganization/></span>
+                  <h4>The Belgian waffles</h4>
+                  <div className={styles.org_card__text}>0x574221AE56AFCef087E7b400Ad145f0B4d962c85</div>
+                  <div className={styles.org_card__value}>21 Employees</div>
+              </div>
            </div>
 
+           
+              <div className={sty.org_card__grid}>
+                  <span><GoOrganization/></span>
+                  <h4>The Belgian waffles</h4>
+                  <div className={sty.org_card__text}>0x574221AE56AFCef087E7b400Ad145f0B4d962c85</div>
+                  <div className={sty.org_card__value}>21 Employees</div>
+              </div>
+
+           
 
     </>
     )
