@@ -7,17 +7,27 @@ interface ListCardProps {
     emp: number;
 }
 
+interface TitleCardProps {
+    title: string
+}
+
 export function ListCard(props: ListCardProps){
 
     return(
-        <div className={styles.org_card}>
+        
         <div className={styles.org_card__grid}>
          <span><GoOrganization/></span>
-         <h4>{props.name}</h4>
-         <div className={styles.org_card__text}>{props.address}</div>
+         <div className={styles.org_card__name}>{props.name}</div>
+         <div className={styles.org_card__addr}>{props.address}</div>
          
-         <div className={styles.org_card__value}>{props.emp > 1 ? `${props.emp} employees` : `${props.emp} employee`}</div>
+         <div className={styles.org_card__value}>{props.emp > 1 ? `${props.emp} Employees` : `${props.emp} Employee`}</div>
         </div>
-        </div>
+        
+    )
+}
+
+export function ListTitle(props: TitleCardProps){
+    return(
+        <div className={styles.title}>{props.title}</div>
     )
 }
