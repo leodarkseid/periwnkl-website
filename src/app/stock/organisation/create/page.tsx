@@ -3,7 +3,7 @@ import {Button, Form, Spinner, Alert, Card } from "react-bootstrap";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
 import { ListCard, ListTitle } from "@/components/list";
 import { useMetaMask } from "@/hooks/useMetaMask";
-import { CreateStockOptionsPlan } from "@/utils/contracts";
+import { CreateStockOptionsPlan, GetListOfCreatedOrgs, ListOfCreatedOrgs} from "@/utils/contracts";
     
 export default function Create(){
     const [name, setName] = useState("");
@@ -16,7 +16,7 @@ export default function Create(){
     const [alertVariant, setAlertVariant] = useState("success")
     const [ifTxSuccess, setIfTxSuccess] = useState(false)
     const [soAddress, setSoAddress] = useState("");
-    const [addressNameList, setAddressNameList] = useState(Array<{ newContractAddress: string, name: string }>);
+    const [addressNameList, setAddressNameList] = useState(Array<{contractAddress: string, name: string}>);
     //for alert
     const [show, setShow] = useState(true);
     
@@ -26,8 +26,6 @@ export default function Create(){
 
 
     async function handleSubmit(e: SyntheticEvent){
-      console.log("handle submit called")
-      
         e.preventDefault();
         setSubmitLoading(true);
         setPageDisabled(true);
@@ -42,17 +40,24 @@ export default function Create(){
                 setIfTxSuccess(true)
                 setSoAddress(soAddress);
                } catch(error){
-                console.log("error from create org page", error)
+                console.error("error from create org page", error)
                 } finally {
                     setSubmitLoading(false)
                     setPageDisabled(false);
                }
         }  
-    }
+      }
+
+  
 
     useEffect(()=>{
       (wallet.accounts.length < 1 || submitLoading == true || resultLoading == true ) ?setPageDisabled(true):setPageDisabled(false);
-      
+      (async () => {
+        try{
+        const listResult = await GetListOfCreatedOrgs();
+        setAddressNameList(listResult);
+      }catch(error){console.error(error)}
+      })();
     }, [wallet.accounts.length,submitLoading, resultLoading])
     
     return(
@@ -88,7 +93,7 @@ export default function Create(){
         <div className="mt-5">
                <ListTitle title="Created Organisations"  />
               {addressNameList.map((addressName, index) => ( 
-                      <ListCard key={index} name={addressName.name} address={addressName.newContractAddress} emp={1} />
+                      <ListCard key={index} name={addressName.name} address={addressName.contractAddress} emp={1} />
                   ))}   
         </div>
               
