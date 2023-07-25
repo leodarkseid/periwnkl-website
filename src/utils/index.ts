@@ -14,6 +14,8 @@ export const formatBalance = (rawBalance: string) => {
     return `${addr.substring(0, 6) + "..." + addr.substring(addr.length - 4)}`
   }
 
+
+
 export const checkIfValidAddress = (Arr: Array<string>)=> {
   try{
     for(const str of Arr){  

@@ -4,7 +4,7 @@ import { GoOrganization } from "react-icons/go";
 interface ListCardProps {
     name: string;
     address: string;
-    emp: number;
+    emp: string;
 }
 
 interface TitleCardProps {

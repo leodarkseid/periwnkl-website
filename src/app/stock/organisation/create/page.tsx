@@ -3,7 +3,7 @@ import {Button, Form, Spinner, Alert, Card } from "react-bootstrap";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
 import { ListCard, ListTitle } from "@/components/list";
 import { useMetaMask } from "@/hooks/useMetaMask";
-import { CreateStockOptionsPlan, GetListOfCreatedOrgs } from "@/utils/contracts";
+import { CreateStockOptionsPlan, GetListOfCreatedOrgs, GetNumberOfEmployee } from "@/utils/contracts";
 
 import { useRouter } from "next/navigation";
 
@@ -58,6 +58,7 @@ export default function Create(){
       (async () => {
         try{
         const listResult = await GetListOfCreatedOrgs();
+        const amount = await 
         setAddressNameList(listResult);
       }catch(error){console.error(error)}
       })();
@@ -98,7 +99,7 @@ export default function Create(){
         <div className="mt-2">
                <ListTitle title="Created Organisations"  />
               {addressNameList.map((addressName, index) => ( 
-                      <div onClick={(()=>router.push("/stock"))} key={index}><ListCard key={index} name={addressName.name} address={addressName.contractAddress} emp={1} /></div>
+                      <div onClick={(()=>router.push("/stock"))} key={index}><ListCard key={index} name={addressName.name} address={addressName.contractAddress} emp={GetNumberOfEmployee(addressName.contractAddress).toString()} /></div>
                   ))}   
         </div>
               
