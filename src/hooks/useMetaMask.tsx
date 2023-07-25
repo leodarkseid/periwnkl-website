@@ -84,7 +84,8 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         const provideR = new ethers.providers.Web3Provider((window as any).ethereum);
         const signer = provideR.getSigner();
         updateWalletAndAccounts();
-        setSigner(signer)
+        setSigner(signer);
+        console.log("from useMetamask",signer)
         window.ethereum.on('accountsChanged', updateWallet)
         window.ethereum.on('chainChanged', updateWalletAndAccounts)
       }

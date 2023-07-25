@@ -1,13 +1,9 @@
 "use client"
 import {Button, Form, Spinner, Alert, Card } from "react-bootstrap";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
-import { STOCK_OPTIONS_CONTRACT_ABI, STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FACTORY_CONTRACT } from "./../../constants";
-import {ethers, Contract, Signer, providers } from "ethers";
-import submitLoading from "@/app/submitLoading";
-import { GoOrganization } from "react-icons/go";
 import { ListCard, ListTitle } from "@/components/list";
-import { CreateStockOptionsPlan, soContractFactory } from "@/utils/contracts";
 import { useMetaMask } from "@/hooks/useMetaMask";
+import { CreateStockOptionsPlan } from "@/utils/contracts";
     
 export default function Create(){
     const [name, setName] = useState("");
@@ -25,7 +21,13 @@ export default function Create(){
     const [show, setShow] = useState(true);
     
 
+    const { wallet, hasProvider, isConnecting,signer, connectMetaMask } = useMetaMask()
+
+
+
     async function handleSubmit(e: SyntheticEvent){
+      console.log("handle submit called")
+      
         e.preventDefault();
         setSubmitLoading(true);
         setPageDisabled(true);
@@ -40,7 +42,7 @@ export default function Create(){
                 setIfTxSuccess(true)
                 setSoAddress(soAddress);
                } catch(error){
-                console.log(error)
+                console.log("error from create org page", error)
                 } finally {
                     setSubmitLoading(false)
                     setPageDisabled(false);
@@ -64,7 +66,7 @@ export default function Create(){
       <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Organisation Name</Form.Label>
-            <Form.Control type="name" placeholder="Enter Organisation Name" autoFocus onChange={e => setName(e.target.value)} disabled={pageDisabled} required/>
+            <Form.Control type="name" placeholder="Enter Organisation Name"  onChange={e => setName(e.target.value)} disabled={pageDisabled} required/>
             <Form.Text className="text-muted">
             You can always change the name later
             </Form.Text>
@@ -73,7 +75,7 @@ export default function Create(){
       <Form.Group className="mb-3" controlId="formBasicName">
         <Form.Label>Total amount of stock Options</Form.Label>
 
-        <Form.Control type="number" placeholder="0" onChange={e => setStockOptions(e.target.value)} disabled={pageDisabled} required/>
+        <Form.Control type="number" placeholder="0" onChange={e => setStockOptions(Number(e.target.value))} disabled={pageDisabled} required/>
       </Form.Group>
       <Button className="w-full" variant="primary" type="submit" disabled={pageDisabled} style={{minWidth:"80px"}}>
       {submitLoading ?<Spinner animation="border" size="sm"/>:"Submit"}

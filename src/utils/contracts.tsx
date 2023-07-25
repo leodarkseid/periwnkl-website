@@ -1,22 +1,17 @@
 import { STOCK_OPTIONS_CONTRACT_ABI, STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FACTORY_CONTRACT } from "@/app/stock/constants";
-import { Contract, Signer } from "ethers";
+import { Contract, Signer, ethers } from "ethers";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
 import { useMetaMask } from "../hooks/useMetaMask";
 
 
-
+    const provideR = new ethers.providers.Web3Provider((window as any).ethereum);
+    const signer = provideR.getSigner();
 export function SoContractFactory(): Contract{
-  const { signer } = useMetaMask();
-    try {
-      
-      return new Contract(
+  console.log("from so contract",signer) 
+    return new Contract(
         STOCK_OPTIONS_FACTORY_CONTRACT,
         STOCK_OPTIONS_FACTORY_ABI,
-        signer,
-      );
-    } catch (error) {
-      console.error('Error creating soContractFactory:', error);
-    }
+        signer,)
   }
 export const soContract =((soAddress:string, signer:Signer)=>{ new Contract(
     soAddress,
@@ -25,10 +20,10 @@ export const soContract =((soAddress:string, signer:Signer)=>{ new Contract(
   )})
 
 export async function CreateStockOptionsPlan(name: string, stockOptions:number): Promise<string>{
+  console.log("create stocks called")
   const soContractFactory = SoContractFactory();
   const tx = await soContractFactory.createStockOptionsPlan(name, stockOptions);
   const txReceipt = await tx.wait();
   const result: string = txReceipt.events[0].address;               
-  
   return result
 }
