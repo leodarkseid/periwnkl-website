@@ -1,8 +1,10 @@
 "use client"
 import { useState, useEffect, createContext, PropsWithChildren, useContext, useCallback } from 'react'
+import { STOCK_OPTIONS_CONTRACT_ABI, STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FACTORY_CONTRACT } from "@/app/stock/constants";
 
 import detectEthereumProvider from '@metamask/detect-provider'
 import { formatBalance } from '../utils'
+import { Contract, Signer, ethers } from 'ethers'
 
 interface WalletState {
   accounts: any[]
@@ -16,6 +18,7 @@ interface MetaMaskContextData {
   error: boolean
   errorMessage: string
   isConnecting: boolean
+  signer: Signer
   connectMetaMask: () => void
   clearError: () => void
 }
@@ -30,6 +33,11 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const [isConnecting, setIsConnecting] = useState(false)
 
   const [errorMessage, setErrorMessage] = useState('')
+
+  const [signer, setSigner] = useState<any>(null)
+
+  const [contract, setSOcontract] = useState<any>(undefined)
+
   const clearError = () => setErrorMessage('')
 
   const [wallet, setWallet] = useState(disconnectedState)
@@ -54,6 +62,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     })
 
     setWallet({ accounts, balance, chainId })
+  
   }, [])
 
   const updateWalletAndAccounts = useCallback(() => _updateWallet(), [_updateWallet])
@@ -69,15 +78,20 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     const getProvider = async () => {
       const provider = await detectEthereumProvider({ silent: true })
       setHasProvider(Boolean(provider))
+      
 
       if (provider) {
-        updateWalletAndAccounts()
+        const provideR = new ethers.providers.Web3Provider((window as any).ethereum);
+        const signer = provideR.getSigner();
+        updateWalletAndAccounts();
+        setSigner(signer)
         window.ethereum.on('accountsChanged', updateWallet)
         window.ethereum.on('chainChanged', updateWalletAndAccounts)
       }
     }
 
     getProvider()
+    
 
     return () => {
       window.ethereum?.removeListener('accountsChanged', updateWallet)
@@ -108,6 +122,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         error: !!errorMessage,
         errorMessage,
         isConnecting,
+        signer,
         connectMetaMask,
         clearError,
       }}

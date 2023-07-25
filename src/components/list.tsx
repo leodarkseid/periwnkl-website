@@ -1,4 +1,4 @@
-import styles from "../page.module.css"
+import styles from "./css/list.module.css"
 import { GoOrganization } from "react-icons/go";
 
 interface ListCardProps {

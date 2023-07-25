@@ -3,11 +3,9 @@ import {Button, Form, Spinner, Alert, Card } from "react-bootstrap";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
 import { STOCK_OPTIONS_CONTRACT_ABI, STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FACTORY_CONTRACT } from "./../../constants";
 import {ethers, Contract, Signer, providers } from "ethers";
-import { ExternalProvider } from "@ethersproject/providers";
-import { connectWallet } from "@/utils";
 import Loading from "@/app/loading";
 import { GoOrganization } from "react-icons/go";
-import { ListCard, ListTitle } from "./components/listCard";
+import { ListCard, ListTitle } from "@/components/list";
 
 
 

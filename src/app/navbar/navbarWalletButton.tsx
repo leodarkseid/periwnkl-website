@@ -18,7 +18,7 @@ interface Window {
   }
 export default function NavbarWalletButton (){
 
-  const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask()
+  const { wallet, hasProvider, isConnecting,signer, connectMetaMask } = useMetaMask()
     const [show, setShow] = useState(false);
     // const [showWallet, setShowWallet] = useState("Connect Wallet");
     // const [showMetamask, setShowMetamask] = useState("Connect MetaMask")
