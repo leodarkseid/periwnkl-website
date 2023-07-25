@@ -3,17 +3,18 @@ import {Button, Form, Spinner, Alert, Card } from "react-bootstrap";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
 import { ListCard, ListTitle } from "@/components/list";
 import { useMetaMask } from "@/hooks/useMetaMask";
-import { CreateStockOptionsPlan, GetListOfCreatedOrgs, ListOfCreatedOrgs} from "@/utils/contracts";
+import { CreateStockOptionsPlan, GetListOfCreatedOrgs } from "@/utils/contracts";
+
+import { useRouter } from "next/navigation";
+
+
     
 export default function Create(){
     const [name, setName] = useState("");
     const [stockOptions, setStockOptions] = useState(0);
     const [submitLoading, setSubmitLoading] = useState(false);
     const [resultLoading, setResultLoading] = useState(false);
-    const [alertMessage, setAlertMessage] = useState("");
-    const [showAlert, setShowAlert] = useState(false);
     const [pageDisabled, setPageDisabled] = useState(false);
-    const [alertVariant, setAlertVariant] = useState("success")
     const [ifTxSuccess, setIfTxSuccess] = useState(false)
     const [soAddress, setSoAddress] = useState("");
     const [addressNameList, setAddressNameList] = useState(Array<{contractAddress: string, name: string}>);
@@ -23,7 +24,7 @@ export default function Create(){
 
     const { wallet, hasProvider, isConnecting,signer, connectMetaMask } = useMetaMask()
 
-
+    const router = useRouter()
 
     async function handleSubmit(e: SyntheticEvent){
         e.preventDefault();
@@ -37,7 +38,7 @@ export default function Create(){
                 try{
                 const soAddress = await CreateStockOptionsPlan(_name, _stockOptions);
 
-                setIfTxSuccess(true)
+                setIfTxSuccess(true);
                 setSoAddress(soAddress);
                } catch(error){
                 console.error("error from create org page", error)
@@ -45,30 +46,34 @@ export default function Create(){
                     setSubmitLoading(false)
                     setPageDisabled(false);
                }
-        }  
+        } else{
+          e.stopPropagation();
+        }
       }
 
   
 
     useEffect(()=>{
-      (wallet.accounts.length < 1 || submitLoading == true || resultLoading == true ) ?setPageDisabled(true):setPageDisabled(false);
+      setPageDisabled(wallet.accounts.length < 1 || submitLoading == true || resultLoading == true );
       (async () => {
         try{
         const listResult = await GetListOfCreatedOrgs();
         setAddressNameList(listResult);
       }catch(error){console.error(error)}
       })();
-    }, [wallet.accounts.length,submitLoading, resultLoading])
+
+      setTimeout(()=>{
+        if(ifTxSuccess === true){
+          setIfTxSuccess(false)
+        }
+      },300000)
+    }, [wallet.accounts.length,submitLoading, resultLoading, ifTxSuccess])
     
     return(
         <>
-        {/* Conditionally render the alert */}
-        {showAlert && (
-          <Alert variant={alertVariant} onClose={() => setShow(false)} dismissible>
-            {alertMessage}
-          </Alert>)}
+       
 
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} className="mb-5">
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Organisation Name</Form.Label>
             <Form.Control type="name" placeholder="Enter Organisation Name"  onChange={e => setName(e.target.value)} disabled={pageDisabled} required/>
@@ -89,11 +94,11 @@ export default function Create(){
      
      {/* End of form */}
     
-        {ifTxSuccess ? <Alert variant={alertVariant} onClose={() => (setShow(false))} dismissible>Address: {soAddress}</Alert>: null }
-        <div className="mt-5">
+        {ifTxSuccess && <Alert variant="success" onClose={() => (setShow(false))} dismissible>New Organisation Successfully Created !  <br /><br />  Address: <a href={`https://explorer.goerli.linea.build/address/${soAddress}`} target="_blank" rel="noopener noreferrer">{soAddress}</a></Alert>}
+        <div className="mt-2">
                <ListTitle title="Created Organisations"  />
               {addressNameList.map((addressName, index) => ( 
-                      <ListCard key={index} name={addressName.name} address={addressName.contractAddress} emp={1} />
+                      <div onClick={(()=>router.push("/stock"))} key={index}><ListCard key={index} name={addressName.name} address={addressName.contractAddress} emp={1} /></div>
                   ))}   
         </div>
               
