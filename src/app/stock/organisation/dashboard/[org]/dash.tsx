@@ -1,20 +1,47 @@
 "use client"
 import { ListCard, ListEmployee} from "@/components/list"
-import { Button, Modal,Form } from "react-bootstrap"
+import { Button, Modal,Form, Spinner } from "react-bootstrap"
 import styles from "./css/dash.module.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {BiTime} from "react-icons/bi"
 import {CgProfile} from "react-icons/cg"
 import {BsBank} from "react-icons/Bs"
 import {LiaSuitcaseSolid} from "react-icons/lia"
 import { PieChart } from 'react-minimal-pie-chart';
+import { GetOrgName, GetPieData } from "@/utils/contracts"
 
+interface DashProps{
+    address:string
+}
 
-export default function Dashboard(){
-    const [show, setShow] = useState(false)
+interface PieData{
+    color: string;
+    title: string;
+    value: number; 
+}
+
+export default function Dashboard(props : DashProps){
+    const [show, setShow] = useState(false);
+    const [data, setData] = useState<PieData[]>([]);
+    const [pieLoading, setPieLoading] = useState(false);
+    const [address, setAddress] = useState("");
+    const [name, setName] = useState("");
+
+    useEffect(()=>{
+        setPieLoading(true);
+        async function FetchData(){
+    const result = await GetPieData(props.address);
+    const _name = await GetOrgName(props.address)
+    setAddress(props.address)
+    setData(result)
+    setName(_name)
+    setPieLoading(false)
+}
+    FetchData()
+},[props])
     return(
         <>
-        <div className="bg-primary rounded text-center text-white p-2 w-100 "> Name of Org </div>
+        <div className="bg-primary rounded text-center text-white p-2 w-100 "> {name == "" ? <Spinner/> : name} </div>
         <div className={styles.dash_grid}>
             
             <div className={styles.emp_grid}>
@@ -62,39 +89,29 @@ export default function Dashboard(){
                     <div className="bg-ff6f61 w-75 p-3 text-white  rounded-end-pill mb-3"><BsBank style={{"transform":"scale(1.5)", "marginRight":"10px"}}/>Gross Vested options </div>
                     <div ></div>
                 </div>
-                <PieChart
+                {pieLoading && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success"/>}
+                { !pieLoading &&
+               <PieChart className="mt-4"
                 style={{"transform":"scale(1)","height":"50%"}}
-   animate
-   reveal={100}
-   animationDuration={500}
-   animationEasing="ease-out"
-   center={[50, 50]}
-   data={[
-     {
-     color: "#E38627",
-     title: "One",
-     value: 10,
-     },
-     {
-     color: "#C13C37",
-     title: "Two",
-     value: 15,
-     },
-     {
-     color: "#6A2135",
-     title: "Three",
-     value: 20,
-     },
-   ]}
-   labelPosition={50}
-   lengthAngle={360}
-   lineWidth={35}
-   paddingAngle={0}
-   radius={50}
-   rounded
-   startAngle={0}
-   viewBoxSize={[100, 100]}
-      />
+                        animate
+                        reveal={100}
+                        animationDuration={500}
+                        animationEasing="ease-out"
+                        center={[50, 50]}
+                        data={data}
+                        labelPosition={50}
+                        lengthAngle={360}
+                        lineWidth={35}
+                        paddingAngle={0}
+                        radius={50}
+                        rounded
+                        startAngle={0}
+                        viewBoxSize={[100, 100]}/>
+            }
+
+            { !pieLoading && <div className="text-center text-white bg-primary rounded-pill w-75 mx-auto p-1 mt-3 mb-3">Employee StockOptions InfoGraph</div>}
+       
+                
             </div>
         </div>
         </>

@@ -2,6 +2,7 @@ import { STOCK_OPTIONS_CONTRACT_ABI, STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FA
 import { BigNumber, Contract, Signer, ethers, utils } from "ethers";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
 import { useMetaMask } from "../hooks/useMetaMask";
+import { ReturnColor } from ".";
 
 let provideR: any;
 let signer: Signer
@@ -41,7 +42,6 @@ export async function CreateStockOptionsPlan(name: string, stockOptions:number):
 
 export async function GetListOfCreatedOrgs(){
   const names = await soContractFactory.getCreatorDeployedContracts();
-  console.log("names", names)
   return names
 }
 
@@ -55,8 +55,9 @@ export async function GetNumberOfEmployee(address:string){
 }
 
 export async function ListOfEmployees(address:string) {
+  console.log("list of employees called")
   const contract = soContract(address)
-  const _total = GetNumberOfEmployee(address);
+  const _total = await GetNumberOfEmployee(address);
   const total = Number(_total)
   const listOfEmployees = [];
   for (let i = 0; i < total; i++) {
@@ -64,6 +65,7 @@ export async function ListOfEmployees(address:string) {
     const employee = await contract.employees(id);
     listOfEmployees.push(employee);
   }
+  console.log(listOfEmployees)
   return listOfEmployees;  
 }
 
@@ -75,8 +77,36 @@ export async function TimeStamp(address:string){
   return timeStamp
 }
 
-export async function getPieData(address:string) {
-  const contract = soContract(address)
-  const list = await ListOfEmployees(address);
-  
+export async function GetStockOptionsAmount(employeeAddress: string, address:string) {
+  const contract = soContract(address);
+  const a = await contract.getEmployee(employeeAddress);
+  const _amount:BigNumber = a.stockOptions;
+  const amount = _amount.toNumber();
+  return amount
+}
+
+export async function GetPieData(address:string) {
+  console.log("called lets go")
+  const listResult = await ListOfEmployees(address);
+          const data = await Promise.all(
+            listResult.map(async (addressObj: string, index:number) => {
+              const stockAmount = await GetStockOptionsAmount(addressObj, address);
+              const color = ReturnColor(index);
+              console.log("if index", index)
+              console.log("stockAmount", stockAmount)
+              console.log("returned color", color)
+              return {
+                color: color,
+                title: addressObj,
+                value: stockAmount
+              };
+            })
+          );
+          return data
+}
+
+export async function GetOrgName(address:string) {
+  const contract = soContract(address);
+  const name = await contract.name();
+  return name
 }
