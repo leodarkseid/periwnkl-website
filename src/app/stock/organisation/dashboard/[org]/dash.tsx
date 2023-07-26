@@ -7,6 +7,7 @@ import {BiTime} from "react-icons/bi"
 import {CgProfile} from "react-icons/cg"
 import {BsBank} from "react-icons/Bs"
 import {LiaSuitcaseSolid} from "react-icons/lia"
+import { PieChart } from 'react-minimal-pie-chart';
 
 
 export default function Dashboard(){
@@ -61,6 +62,39 @@ export default function Dashboard(){
                     <div className="bg-ff6f61 w-75 p-3 text-white  rounded-end-pill mb-3"><BsBank style={{"transform":"scale(1.5)", "marginRight":"10px"}}/>Gross Vested options </div>
                     <div ></div>
                 </div>
+                <PieChart
+                style={{"transform":"scale(1)","height":"50%"}}
+   animate
+   reveal={100}
+   animationDuration={500}
+   animationEasing="ease-out"
+   center={[50, 50]}
+   data={[
+     {
+     color: "#E38627",
+     title: "One",
+     value: 10,
+     },
+     {
+     color: "#C13C37",
+     title: "Two",
+     value: 15,
+     },
+     {
+     color: "#6A2135",
+     title: "Three",
+     value: 20,
+     },
+   ]}
+   labelPosition={50}
+   lengthAngle={360}
+   lineWidth={35}
+   paddingAngle={0}
+   radius={50}
+   rounded
+   startAngle={0}
+   viewBoxSize={[100, 100]}
+      />
             </div>
         </div>
         </>

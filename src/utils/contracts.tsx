@@ -1,5 +1,5 @@
 import { STOCK_OPTIONS_CONTRACT_ABI, STOCK_OPTIONS_FACTORY_ABI, STOCK_OPTIONS_FACTORY_CONTRACT } from "@/app/stock/constants";
-import { Contract, Signer, ethers, utils } from "ethers";
+import { BigNumber, Contract, Signer, ethers, utils } from "ethers";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
 import { useMetaMask } from "../hooks/useMetaMask";
 
@@ -73,4 +73,10 @@ export async function TimeStamp(address:string){
   const time = utils.formatEther(_time);
   const timeStamp = Number(time)
   return timeStamp
+}
+
+export async function getPieData(address:string) {
+  const contract = soContract(address)
+  const list = await ListOfEmployees(address);
+  
 }
