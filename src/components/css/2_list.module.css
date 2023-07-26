@@ -1,0 +1,105 @@
+.emp__grid{
+    font-family: "Source Sans Pro", sans-serif;
+    background-color: #fff;
+    width: 80%;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 5% 5% 90%;
+    overflow: hidden;
+    position: relative;
+    height: 30px;
+    align-items:center;
+    border-radius: 0 0 10px 10px;
+    border-bottom:3px solid #009658;
+    
+    
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px 2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-property: all;
+    transition-duration: 500ms;
+}
+.emp__grid:hover{
+    --tw-translate-y: -0.25rem;
+    transform: translateY(var(--tw-translate-y));
+    transform: scale(1.01);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+
+.emp__addr{
+    color: #979cb0;
+}
+.emp__id{
+    color: #979cb0; 
+}
+
+.emp__grid span{
+    color: #009658;
+}
+/* Small screens */
+
+@media (max-width: 300px) {
+    .emp__addr,
+    .emp__value{
+        display: none;
+    }
+    .emp__grid h4{
+        transform: scale(0.93);
+        padding: auto;
+    }
+    .emp__icon{
+        transform: scale(1);
+    }
+    .emp__content{
+        padding: 0 10px 0 10px;
+    }
+    .emp__grid{
+        grid-template-columns: 20% 80%;
+    }
+    
+}
+
+@media (max-width: 378px) {
+    .emp__addr,
+    .emp__value{
+        display: none;
+    }
+    .emp__grid{
+        grid-template-columns: 30% 70%;
+    }
+
+}
+@media (max-width: 576px) {
+    .emp__addr,
+    .emp__value{
+        display: none;
+    }
+    .emp__grid{
+        grid-template-columns: 10% 90%;
+    }
+}
+@media (max-width: 912px) {
+    .emp__addr{
+        display: none;
+    }
+    .emp__grid{
+        grid-template-columns: 10% 60% 30%;
+    }
+}
+@media (max-width: 1024px) {
+    .emp__addr{
+        display: none;
+    }
+    .emp__grid{
+        grid-template-columns: 10% 60% 30%;
+    }
+}
+@media (max-width: 1024px) {
+    .emp__grid{
+        grid-template-columns: 5% 30% 40% 25%;
+    }
+}

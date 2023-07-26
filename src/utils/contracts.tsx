@@ -3,9 +3,18 @@ import { Contract, Signer, ethers, utils } from "ethers";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
 import { useMetaMask } from "../hooks/useMetaMask";
 
+let provideR: any;
+let signer: Signer
 
-const provideR = new ethers.providers.Web3Provider((window as any).ethereum);
-const signer = provideR.getSigner();
+if (typeof window !== 'undefined') {
+  try{
+  provideR = new ethers.providers.Web3Provider((window as any).ethereum);
+}catch(error){
+  console.error("provider couldn't be created", error)
+}
+}
+
+if(provideR){signer = provideR.getSigner();}
 const soContractFactory = SoContractFactory();
 
 
@@ -15,11 +24,11 @@ export function SoContractFactory(): Contract{
         STOCK_OPTIONS_FACTORY_ABI,
         signer,)
   }
-export const soContract =((soAddress:string)=>{ new Contract(
-    soAddress,
+export function soContract(soAddress:string): Contract{
+    return new Contract(soAddress,
       STOCK_OPTIONS_CONTRACT_ABI,
-      signer
-  )})
+      signer)
+  }
 
 export async function CreateStockOptionsPlan(name: string, stockOptions:number): Promise<string>{
   const tx = await soContractFactory.createStockOptionsPlan(name, stockOptions);
@@ -32,13 +41,36 @@ export async function CreateStockOptionsPlan(name: string, stockOptions:number):
 
 export async function GetListOfCreatedOrgs(){
   const names = await soContractFactory.getCreatorDeployedContracts();
+  console.log("names", names)
   return names
 }
 
 
 export async function GetNumberOfEmployee(address:string){
-  const contract = await soContract(address)
-  const _getNumber = await contract.totalEmployees();
-  const getNumber: string = utils.formatEther(_getNumber);
+  console.log("get number called")
+  const contract = soContract(address)
+  const getNumber = await contract.getTotalEmployees();
   return getNumber
+  
+}
+
+export async function ListOfEmployees(address:string) {
+  const contract = soContract(address)
+  const _total = GetNumberOfEmployee(address);
+  const total = Number(_total)
+  const listOfEmployees = [];
+  for (let i = 0; i < total; i++) {
+    const id = i;
+    const employee = await contract.employees(id);
+    listOfEmployees.push(employee);
+  }
+  return listOfEmployees;  
+}
+
+export async function TimeStamp(address:string){
+  const contract = soContract(address)
+  const _time = contract.getBlockTimeStamp();
+  const time = utils.formatEther(_time);
+  const timeStamp = Number(time)
+  return timeStamp
 }

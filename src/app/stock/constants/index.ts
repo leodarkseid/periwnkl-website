@@ -1,4 +1,4 @@
-export const STOCK_OPTIONS_FACTORY_CONTRACT ='0x002C1602d023Fa966de8D9504CfecA647F3cCCe0';
+export const STOCK_OPTIONS_FACTORY_CONTRACT ='0xF752F73EAe6BA72D7593332B510d235ACf5447bC';
  
  export const STOCK_OPTIONS_FACTORY_ABI= [
   {
@@ -145,32 +145,6 @@ export const STOCK_OPTIONS_CONTRACT_ABI = [
     "type": "event"
   },
   {
-    "inputs": [],
-    "name": "Name",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "TotalStockOptions",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -181,6 +155,25 @@ export const STOCK_OPTIONS_CONTRACT_ABI = [
     "name": "addEmployee",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "employees",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -224,9 +217,14 @@ export const STOCK_OPTIONS_CONTRACT_ABI = [
             "internalType": "uint256",
             "name": "vestingSchedule",
             "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "isEmployee",
+            "type": "bool"
           }
         ],
-        "internalType": "struct EmployeeStockOptionPlan.Employee",
+        "internalType": "struct EmployeeStockOptionPlan.employee_",
         "name": "",
         "type": "tuple"
       }
@@ -243,6 +241,19 @@ export const STOCK_OPTIONS_CONTRACT_ABI = [
       }
     ],
     "name": "getExcercisedOptions",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTotalEmployees",
     "outputs": [
       {
         "internalType": "uint256",
@@ -311,6 +322,19 @@ export const STOCK_OPTIONS_CONTRACT_ABI = [
   },
   {
     "inputs": [],
+    "name": "name",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "owner",
     "outputs": [
       {
@@ -345,6 +369,19 @@ export const STOCK_OPTIONS_CONTRACT_ABI = [
     "name": "setVestingSchedule",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalStockOptions",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

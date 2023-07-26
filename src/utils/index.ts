@@ -13,6 +13,9 @@ export const formatBalance = (rawBalance: string) => {
   export const formatAddress = (addr: string) => {
     return `${addr.substring(0, 6) + "..." + addr.substring(addr.length - 4)}`
   }
+  export const shortenAddress = (addr: string) => {
+    return `${addr.substring(0, 20) + "..." + addr.substring(addr.length - 4)}`
+  }
 
 
 

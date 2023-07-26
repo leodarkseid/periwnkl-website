@@ -25,7 +25,7 @@ export default function NavBar() {
                         
                         <NavDropdown title="Organisation" id="topics-dropdown" active={pathname.startsWith("/stock/organisation")}>
                             <NavDropdown.Item as={Link} href="/stock/organisation/create" active={pathname === "/stock/organisation/create"}>Create</NavDropdown.Item>
-                            <NavDropdown.Item as={Link} href="/stock/organisation" active={pathname === "/stock/organisation"}>View</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} href="/stock/organisation/dashboard" active={pathname.startsWith("/stock/organisation/dashboard")}>Dashboard</NavDropdown.Item>
                         </NavDropdown>
                         < NavbarWalletButton/>
                     </Nav>
