@@ -9,10 +9,6 @@ interface PageProps {
 }
 
 export default function Page({ params: {org} }: PageProps) {
-
-    console.log({org}.org);
-    GetPieData({org}.org);
-
     return (
         <div>
            

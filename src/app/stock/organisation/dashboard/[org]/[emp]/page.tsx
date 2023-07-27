@@ -2,21 +2,20 @@
 import { useState, FormEvent , SyntheticEvent,useEffect} from "react";
 
 import { GetPieData } from "@/utils/contracts";
+import { EmpDashBoard } from "./orgEmpDash";
 
 
 interface PageProps {
-    params: {org :string}
+    params: {emp :string}
 }
 
-export default function Page({ params: {org} }: PageProps) {
+export default function Page({ params: {emp} }: PageProps) {
 
-    console.log({org}.org);
-    GetPieData({org}.org);
 
     return (
         <div>
            
-            {}
+            <EmpDashBoard address={{emp}.emp}/>
         </div>
     )
 }
