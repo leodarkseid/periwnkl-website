@@ -98,7 +98,7 @@
 }
 
 .main_grid__timer_box_days__val {
-  font-weight:900;
+  font-weight: 900;
   font-size: 60px;
   align-items: center;
   justify-content: center;
@@ -106,7 +106,7 @@
   justify-self: center;
 }
 .main_grid__timer_box_hours__val {
-  font-weight:900;
+  font-weight: 900;
   font-size: 60px;
   align-items: center;
   justify-content: center;
@@ -114,7 +114,7 @@
   justify-self: center;
 }
 .main_grid__timer_box_mins__val {
-  font-weight:900;
+  font-weight: 900;
   font-size: 60px;
   align-items: center;
   justify-content: center;
@@ -122,7 +122,6 @@
   justify-self: center;
 }
 .main_grid__timer_box_days {
-  
   font-size: 20px;
   align-items: center;
   justify-content: center;
@@ -130,7 +129,6 @@
   justify-self: center;
 }
 .main_grid__timer_box_hours {
- 
   font-size: 20px;
   align-items: center;
   justify-content: center;
@@ -138,11 +136,20 @@
   justify-self: center;
 }
 .main_grid__timer_box_mins {
-  
   font-size: 20px;
   align-items: center;
   justify-content: center;
   align-self: center;
   justify-self: center;
-  
+}
+
+.main_grid__timer_box_small_card {
+  display: flex;
+  background-color: transparent;
+  border: solid 2px#0d6efd;
+  width: 20vw;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
 }

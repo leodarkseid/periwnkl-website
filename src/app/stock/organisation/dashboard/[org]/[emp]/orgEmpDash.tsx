@@ -13,6 +13,7 @@ export function EmpDashBoard(props: EmpDashProps) {
             <div className={styles.main}>
                 <div className={styles.main_grid1}>
                     <div className={styles.main_grid1__col}>
+
                         <div className={styles.main_grid__timer_box}>
                             <div className={styles.main_grid__timer_box__small_grid}>
                                 <div className={styles.main_grid__timer_box_days__val}>21</div>
@@ -23,6 +24,12 @@ export function EmpDashBoard(props: EmpDashProps) {
                                 <div className={styles.main_grid__timer_box_mins}>Min</div>
                             </div>
                         </div>
+                        <div className="bg-primary text-center rounded-pill text-white mx-auto w-50 mb-5">Countdown For Stock Options to Vest</div>
+
+                        <div className={styles.main_grid__timer_box_small_card}>Stock Options</div>
+                        <div className={styles.main_grid__timer_box_small_card}>Vested Options</div>
+                        <div className={styles.main_grid__timer_box_small_card}>Excercised Options</div>
+
                     </div>
                 </div>
 
