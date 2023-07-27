@@ -42,11 +42,10 @@
 .main_grid2__row {
   display: grid;
   grid-template-columns: 70% 30%;
-  
 }
 
 .main_grid2__row_display {
-    display: flex;
+  display: flex;
   background-color: #ffffff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
   min-width: 300px;
@@ -55,17 +54,95 @@
   max-height: 50px;
   height: 50px;
   color: #0d6efd;
-  border: solid 0.1px #0d6efd ;
+  border: solid 0.1px #0d6efd;
   align-items: center;
   justify-content: center;
 }
 .main_grid2__row_button {
-    display: flex;
+  display: flex;
   background-color: #0d6efd;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 1);
   border-radius: 0 10px 10px 0;
   color: #fff;
   align-items: center;
   justify-content: center;
   max-height: 50px;
   height: 50px;
+}
+
+.main_grid__timer_box {
+  color: #0d6efd;
+  display: flex;
+  background-color: transparent;
+  border: solid 2px#0d6efd;
+  border-radius: 10px;
+  height: 200px;
+  width: 500px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+
+.main_grid1__col {
+  display: flex;
+  flex-direction: column;
+}
+.main_grid__timer_box__small_grid {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: 70% 30%;
+  row-gap: 2px;
+  column-gap: 50px;
+  justify-content: center;
+}
+
+.main_grid__timer_box_days__val {
+  font-weight:900;
+  font-size: 60px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+.main_grid__timer_box_hours__val {
+  font-weight:900;
+  font-size: 60px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+.main_grid__timer_box_mins__val {
+  font-weight:900;
+  font-size: 60px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+.main_grid__timer_box_days {
+  
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+.main_grid__timer_box_hours {
+ 
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+.main_grid__timer_box_mins {
+  
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+  
 }
