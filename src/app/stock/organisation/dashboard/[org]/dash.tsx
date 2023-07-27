@@ -8,7 +8,7 @@ import {CgProfile} from "react-icons/cg"
 import {BsBank} from "react-icons/Bs"
 import {LiaSuitcaseSolid} from "react-icons/lia"
 import { PieChart } from 'react-minimal-pie-chart';
-import { GetOrgName, GetPieData } from "@/utils/contracts"
+import { GetNumberOfEmployee, GetOrgName, GetPieData } from "@/utils/contracts"
 
 interface DashProps{
     address:string
@@ -26,15 +26,18 @@ export default function Dashboard(props : DashProps){
     const [pieLoading, setPieLoading] = useState(false);
     const [address, setAddress] = useState("");
     const [name, setName] = useState("");
+    const [empAmount, setEmpAmount] = useState(0);
 
     useEffect(()=>{
         setPieLoading(true);
         async function FetchData(){
     const result = await GetPieData(props.address);
     const _name = await GetOrgName(props.address)
+    const empAmount = await GetNumberOfEmployee(props.address);
     setAddress(props.address)
     setData(result)
     setName(_name)
+    setEmpAmount(empAmount);
     setPieLoading(false)
 }
     FetchData()
@@ -83,8 +86,8 @@ export default function Dashboard(props : DashProps){
             </div>
             <div className={styles.emp_others}>
                 <div className={styles.emp_slab1}>
-                    <div className="bg-36b9cc w-75 p-3 text-white  rounded-end-pill mb-3"> <BiTime style={{"transform":"scale(1.5)", "marginRight":"10px"}}/> Block Time</div>
-                    <div className="bg-f6c23e w-75 p-3 text-white  rounded-end-pill mb-3"> <CgProfile style={{"transform":"scale(1.5)", "marginRight":"10px"}}/>Total Employees</div>
+                    <div className="bg-36b9cc w-75 p-3 text-white  rounded-end-pill mb-3"> <BiTime style={{"transform":"scale(1.5)", "marginRight":"10px"}}/> Block Time </div>
+                    <div className="bg-f6c23e w-75 p-3 text-white  rounded-end-pill mb-3"> <CgProfile style={{"transform":"scale(1.5)", "marginRight":"10px"}}/>Total Employees : {empAmount == 0 ? <Spinner/> : name}</div>
                     <div className="bg-primary w-75 p-3 text-white  rounded-end-pill mb-3"><LiaSuitcaseSolid style={{"transform":"scale(1.5)", "marginRight":"10px"}}/>Gross Excercised options</div>
                     <div className="bg-ff6f61 w-75 p-3 text-white  rounded-end-pill mb-3"><BsBank style={{"transform":"scale(1.5)", "marginRight":"10px"}}/>Gross Vested options </div>
                     <div ></div>

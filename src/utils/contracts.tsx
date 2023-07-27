@@ -49,8 +49,8 @@ export async function GetListOfCreatedOrgs(){
 export async function GetNumberOfEmployee(address:string){
   console.log("get number called")
   const contract = soContract(address)
-  const getNumber = await contract.getTotalEmployees();
-  return getNumber
+  const getNumber:BigNumber = await contract.getTotalEmployees();
+  return getNumber.toNumber();
   
 }
 
