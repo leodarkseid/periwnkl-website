@@ -77,11 +77,11 @@ export default function Create(){
           const listResult = await GetListOfCreatedOrgs();
           const data = await Promise.all(
             listResult.map(async (addressObj: { newContractAddress: string; name: any; }) => {
-              const empCount:BigNumber = await GetNumberOfEmployee(addressObj.newContractAddress);
+              const empCount = await GetNumberOfEmployee(addressObj.newContractAddress);
               return {
                 name: addressObj.name,
                 address: addressObj.newContractAddress,
-                emp: (empCount).toNumber(),
+                emp: (empCount),
               };
             })
           );

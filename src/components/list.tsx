@@ -15,7 +15,7 @@ interface TitleCardProps {
 }
 
 interface empListProps {
-    id: string;
+    id: number;
     address: string;
 }
 
