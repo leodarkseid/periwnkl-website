@@ -61,7 +61,6 @@ enum colorFactory {
 }
 
 export function ReturnColor(index: number){
-  console.log("colors called")
   if(index == 1){
     return colorFactory[1]
   }

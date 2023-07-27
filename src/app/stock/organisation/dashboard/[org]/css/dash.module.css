@@ -9,7 +9,7 @@
     flex-direction: column;
     background-color: #fff;
 
-    margin-top: 50px;
+    margin-top: 25px;
     padding: 0;
     border-radius: 30px;
     height: 70vh;
@@ -28,7 +28,7 @@
     
     background-color: #fff;
     padding: 20px;
-    margin-top: 50px;
+    margin-top: 25px;
     border-radius: 30px;
     height: 70vh;
     min-height: 70vh;

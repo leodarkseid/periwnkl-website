@@ -47,7 +47,6 @@ export async function GetListOfCreatedOrgs(){
 
 
 export async function GetNumberOfEmployee(address:string){
-  console.log("get number called")
   const contract = soContract(address)
   const getNumber:BigNumber = await contract.getTotalEmployees();
   return getNumber.toNumber();
@@ -55,7 +54,6 @@ export async function GetNumberOfEmployee(address:string){
 }
 
 export async function ListOfEmployees(address:string) {
-  console.log("list of employees called")
   const contract = soContract(address)
   const _total = await GetNumberOfEmployee(address);
   const total = Number(_total)
@@ -65,7 +63,6 @@ export async function ListOfEmployees(address:string) {
     const employee = await contract.employees(id);
     listOfEmployees.push(employee);
   }
-  console.log(listOfEmployees)
   return listOfEmployees;  
 }
 
@@ -75,7 +72,6 @@ export async function GetTimeStamp(address:string){
   
   const timeStamp = time
   const date = new Date(timeStamp * 1000);
-  console.log(date.toLocaleString(undefined, { dateStyle: 'short' }))
   return date.toLocaleString(undefined, { dateStyle: 'medium' });
 }
 
@@ -104,14 +100,12 @@ export async function ExcercisedOptions(address: string,employeeAddress: string)
 
 export async function GetGrossVestedOptions(address: string) {
   const contract = soContract(address);
-  console.log("gross total called")
   const list = await ListOfEmployees(address);
   let total = 0
   for(const i of list){
       const vs =await VestedOptions(address, i)
       total += vs
    }
-   console.log("gross total",total)
    return total 
 }
 export async function GetGrossExcercisedOptions(address: string) {
@@ -134,15 +128,11 @@ export async function GetStockOptionsAmount(employeeAddress: string, address:str
 }
 
 export async function GetPieData(address:string) {
-  console.log("called lets go")
   const listResult = await ListOfEmployees(address);
           const data = await Promise.all(
             listResult.map(async (addressObj: string, index:number) => {
               const stockAmount = await GetStockOptionsAmount(addressObj, address);
               const color = ReturnColor(index++);
-              console.log("if index", index)
-              console.log("stockAmount", stockAmount)
-              console.log("returned color", color)
               return {
                 color: color,
                 title: addressObj,
@@ -163,6 +153,8 @@ export async function AddEmployee(employee: string, address:string){
   try{
   const contract = soContract(address);
   const add = await contract.addEmployee(employee)
+  const addReceipt = add.wait();
+  return addReceipt
   }catch(error){
     console.error(error)
   }

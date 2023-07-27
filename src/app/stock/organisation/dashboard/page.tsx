@@ -34,20 +34,20 @@ export default function Create(){
         //cache
         const cache = await caches.open('my-cache');
         const cachedResponse = await cache.match('employee-data');
+        if(wallet.accounts.length >= 1 && hasProvider){
         if (cachedResponse) {
-          // If the data is cached, use it
           const data = await cachedResponse.json();
           setEmployeeData(data);
-        }
+        }}
 
           const listResult = await GetListOfCreatedOrgs();
           const data = await Promise.all(
             listResult.map(async (addressObj: { newContractAddress: string; name: any; }) => {
-              const empCount: BigNumber = await GetNumberOfEmployee(addressObj.newContractAddress);
+              const empCount = await GetNumberOfEmployee(addressObj.newContractAddress);
               return {
                 name: addressObj.name,
                 address: addressObj.newContractAddress,
-                emp: empCount.toNumber(),
+                emp: empCount,
               };
             })
           );
@@ -71,11 +71,11 @@ export default function Create(){
       fetchData();
       
       
-    }, [wallet.accounts.length,submitLoading])
+    }, [wallet.accounts.length,submitLoading, hasProvider])
 
     return(
         <><div>
-            <div className="bg-primary rounded text-white text-center p-2 mb-2"> Organisations</div>
+            <div className="bg-primary rounded text-white text-center p-2 mb-2 mx-auto"> Organisations</div>
                
             {resultLoading && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success" />} 
               {employeeData.map((data, index) => ( 
