@@ -1,117 +1,74 @@
 "use client"
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { ethers, Contract, Signer } from "ethers";
-import { Employee, SearchForEmployeeDetails } from "../../utils/search";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
+import { useParams } from "next/navigation"
+import styles from "./css/orgEmpDash.module.css"
+import { Form } from "react-bootstrap"
 
-let provider: any;
-let signer: Signer;
-let result: Employee;
-
-async function connect() {
-  if (typeof window !== "undefined") {
-    try {
-      provider = new ethers.providers.Web3Provider(window.ethereum)
-      signer = provider.getSigner();
-      console.log("ths should be  new signer", signer)
-    } catch (error) {
-      console.error("provider couldn't be found: Error,", error);
-    } finally {
-
-    }
-  }
-}
-
-
-export default function Page() {
-  const [organisationName_, setOrganisationName] = useState("");
-  const [totalStockOptions_, setTotalStockOptions] = useState("");
-  const [stockOptions_, setStockOptions] = useState("");
-  const [vestingSchedule_, setVestingSchedule] = useState("");
-  const [vestingCountdown_, setVestingCountdown] = useState("");
-  const [vestedOptions_, setVestedOptions] = useState("");
-  const [excercisedOptions_, setExcercisedOptions] = useState("");
-  const [emp, setEmp] = useState("")
-  const [org, setOrg] = useState(Array<string[]>)
-  const [resultL, setResult] = useState<Employee | null>(null);
-
-
-
+export default function EmployeeDash() {
   const params: Params = useParams()
   const empL = params.emp
   const orgL = params.org
-
-
-  async function getD(organisation: string, employee: string) {
-    try {
-      connect()
-      console.log("expected signer", signer)
-      result = await SearchForEmployeeDetails(organisation, signer, employee) as Employee;
-      console.log(result)
-      setResult(result)
-
-      console.log(result)
-    } catch (error) {
-      console.error("error is from 2", error)
-    }
-  }
-
-  useEffect(() => {
-    getD(orgL, empL);
-  }, [orgL, empL])
-
-
   return (
-    <div className="shadow p-3 mb-5 mt-5 bg-white rounded">
-      <table className="table table-hover table-responsive">
-        <thead>
-          <tr>
-            <th>Organisation Name</th>
-            <td>
-              {resultL?.organisationName}
-            </td>
-          </tr>
-          <tr>
-            <th>Total Stock Options</th>
-            <td>
-              {resultL?.totalStockOptions}
-            </td>
-          </tr>
-          <tr>
-            <th>Stock Options</th>
-            <td>
-              {resultL?.checkSO}
-            </td>
-          </tr>
-          <tr>
-            <th>Vesting Schedule</th>
-            <td>
-              {resultL?.checkVS}
-            </td>
-          </tr>
-          <tr>
-            <th>Vesting Countdown</th>
-            <td>
-              {resultL?.vestingCountdown}
-            </td>
-          </tr>
-          <tr>
-            <th>Vested Options</th>
-            <td>
-              {resultL?.getVestedOptions}
-            </td>
-          </tr>
-          <tr>
-            <th>Excercised Options</th>
-            <td>
-              {resultL?.getExcercised}
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className="bg-primary rounded text-center text-white p-2 w-100">This is the Address of Employee</div>
+      <div className={styles.main}>
+        <div className={styles.main_grid1}>
+          <div className={styles.main_grid1__col}>
+
+            <div className={styles.main_grid__timer_box}>
+              <div className={styles.main_grid__timer_box__small_grid}>
+                <div className={styles.main_grid__timer_box_days__val}>21</div>
+                <div className={styles.main_grid__timer_box_hours__val}>21</div>
+                <div className={styles.main_grid__timer_box_mins__val}>21</div>
+                <div className={styles.main_grid__timer_box_days}>Days</div>
+                <div className={styles.main_grid__timer_box_hours}>Hours</div>
+                <div className={styles.main_grid__timer_box_mins}>Min</div>
+              </div>
+            </div>
+            <div className="bg-primary text-center rounded-pill text-white mx-auto w-50 mb-5">Countdown For Stock Options to Vest</div>
+
+            <div className={styles.main_grid__timer_box_small_card}>Stock Options: 42424242</div>
+            <div className={styles.main_grid__timer_box_small_card}>Vested Options: 42424242</div>
+            <div className={styles.main_grid__timer_box_small_card}>Excercised Options: 42424242</div>
+
+          </div>
+        </div>
+
+
+
+
+
+        <div className={styles.main_grid2}>
+          <div className={styles.main_grid2__col}>
+            <div className={styles.main_grid2__row}>
+              <div className={styles.main_grid2__row_display}>1</div>
+              <div className={styles.main_grid2__row_button}>Vest</div>
+
+            </div>
+            <div className={styles.main_grid2__row}>
+              <div className={styles.main_grid2__row_display}>1</div>
+              <div className={styles.main_grid2__row_button}>Exercise</div>
+
+            </div>
+            <div className={styles.main_grid2__row}>
+              <div className={styles.main_grid2__row_display}><Form className="w-100"><Form.Control placeholder="0x0000..." /></Form></div>
+              <div className={styles.main_grid2__row_button}>Transfer</div>
+
+            </div>
+            <div className={styles.main_grid2__row}>
+              <div className={styles.main_grid2__row_display}>1</div>
+              <div className={styles.main_grid2__row_button}>2</div>
+
+            </div>
+            <div className={styles.main_grid2__row}>
+              <div className={styles.main_grid2__row_display}>1</div>
+              <div className={styles.main_grid2__row_button}>2</div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </>
   )
 }

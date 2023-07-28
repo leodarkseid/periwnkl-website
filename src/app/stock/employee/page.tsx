@@ -3,7 +3,7 @@ import { Button, Form, Spinner, Alert, Card } from "react-bootstrap";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
 import { ListCard, ListTitle } from "@/components/list";
 import { useMetaMask } from "@/hooks/useMetaMask";
-import { CreateStockOptionsPlan, GetListOfCreatedOrgs, GetNumberOfEmployee, SearchForOrganisation } from "@/utils/contracts";
+import { CreateStockOptionsPlan, GetListOfCreatedOrgs, GetNumberOfEmployee, GetOrgName, SearchForOrganisation } from "@/utils/contracts";
 
 import { useRouter } from "next/navigation";
 import { BigNumber } from "ethers";
@@ -43,11 +43,12 @@ export default function Create() {
 
                 const listResult = await SearchForOrganisation(wallet.accounts[0]);
                 const data = await Promise.all(
-                    listResult.map(async (addressObj: { newContractAddress: string; name: any; }) => {
-                        const empCount = await GetNumberOfEmployee(addressObj.newContractAddress);
+                    listResult.map(async (orgAddress: string) => {
+                        const empCount = await GetNumberOfEmployee(orgAddress);
+                        const name_ = await GetOrgName(orgAddress);
                         return {
-                            name: addressObj.name,
-                            address: addressObj.newContractAddress,
+                            name: name_,
+                            address: orgAddress,
                             emp: empCount,
                         };
                     })
@@ -72,7 +73,7 @@ export default function Create() {
         fetchData();
 
 
-    }, [wallet.accounts.length, submitLoading, hasProvider])
+    }, [wallet.accounts, submitLoading, hasProvider])
 
     return (
         <><div>
@@ -80,7 +81,7 @@ export default function Create() {
 
             {resultLoading && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success" />}
             {employeeData.map((data, index) => (
-                <div onClick={(() => router.push(`/stock/organisation/dashboard/${data.address}`))} key={index}><ListCard key={index} name={data.name} address={data.address} emp={data.emp} /></div>
+                <div onClick={(() => router.push(`/stock/employee/${data.address}/${wallet.accounts[0]}`))} key={index}><ListCard key={index} name={data.name} address={data.address} emp={data.emp} /></div>
             ))}
         </div>
         </>

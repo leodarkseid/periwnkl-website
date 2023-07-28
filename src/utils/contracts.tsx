@@ -176,11 +176,12 @@ export async function SearchForOrganisation(employeeAddress: string): Promise<st
   let listOfOrgs: string[] = [];
   const contract = soContractFactory
   const listOfContracts: Array<string> = await contract.getDeployedStockOptions();
-  for (const org of listOfContracts) {
+  await Promise.all(listOfContracts.map(async (org) => {
     console.log("sorting through orgs", org)
     if (await checkIfAnEmployee(org, employeeAddress)) {
       listOfOrgs.push(org)
     }
-  }
+  }));
   return listOfOrgs
 }
+GetOrgName

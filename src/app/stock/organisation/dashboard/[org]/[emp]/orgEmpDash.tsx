@@ -39,31 +39,17 @@ export function EmpDashBoard(props: EmpDashProps) {
 
                 <div className={styles.main_grid2}>
                     <div className={styles.main_grid2__col}>
-                        <div className={styles.main_grid2__row}>
-                            <div className={styles.main_grid2__row_display}>1</div>
-                            <div className={styles.main_grid2__row_button}>Vest</div>
 
-                        </div>
-                        <div className={styles.main_grid2__row}>
-                            <div className={styles.main_grid2__row_display}>1</div>
-                            <div className={styles.main_grid2__row_button}>Exercise</div>
-
-                        </div>
                         <div className={styles.main_grid2__row}>
                             <div className={styles.main_grid2__row_display}><Form className="w-100"><Form.Control placeholder="0x0000..." /></Form></div>
-                            <div className={styles.main_grid2__row_button}>Transfer</div>
-
+                            <div className={styles.main_grid2__row_button}>Grant Options</div>
                         </div>
+
                         <div className={styles.main_grid2__row}>
                             <div className={styles.main_grid2__row_display}>1</div>
-                            <div className={styles.main_grid2__row_button}>2</div>
-
+                            <div className={styles.main_grid2__row_button}>Set Schedule</div>
                         </div>
-                        <div className={styles.main_grid2__row}>
-                            <div className={styles.main_grid2__row_display}>1</div>
-                            <div className={styles.main_grid2__row_button}>2</div>
 
-                        </div>
 
                     </div>
                 </div>
