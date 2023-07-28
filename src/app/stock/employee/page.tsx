@@ -1,172 +1,88 @@
-"use client";
-import {Button, Form, Spinner, Row,Col, Alert} from "react-bootstrap";
-import { useState, FormEvent , SyntheticEvent,useEffect} from "react";
-import { BiSearchAlt } from 'react-icons/bi';
-import { checkIfValidAddress } from "@/utils";
-import {ethers, Contract, Signer} from "ethers";
-import { Employee } from "./utils/search"
-import {SearchForEmployeeDetails, SearchForOrganisation} from "./utils/search"
+"use client"
+import { Button, Form, Spinner, Alert, Card } from "react-bootstrap";
+import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
+import { ListCard, ListTitle } from "@/components/list";
+import { useMetaMask } from "@/hooks/useMetaMask";
+import { CreateStockOptionsPlan, GetListOfCreatedOrgs, GetNumberOfEmployee, SearchForOrganisation } from "@/utils/contracts";
+
 import { useRouter } from "next/navigation";
+import { BigNumber } from "ethers";
+
+interface EmployeeData {
+    name: string;
+    address: string;
+    emp: number;
+}
+
+export default function Create() {
+    const [resultLoading, setResultLoading] = useState(false);
+    const [pageDisabled, setPageDisabled] = useState(false);
+    const [addressNameList, setAddressNameList] = useState(Array<{ contractAddress: string, name: string }>);
+    const [employeeData, setEmployeeData] = useState<EmployeeData[]>([]);
+    const [submitLoading, setSubmitLoading] = useState(false);
+    //for alert
 
 
-interface PageBoxProps {
-    organisation: string;
-    employee: string;
-  }
-  
-      let provider:any;
-      let signer: Signer;
-      let result: Employee ;
-
-
-
-async function  connect() {
-    if (typeof window !== "undefined") {
-        try {
-          provider = new ethers.providers.Web3Provider(window.ethereum)
-          signer = provider.getSigner();
-          console.log("ths should be  new signer",signer)
-        } catch (error) {
-          console.error("provider couldn't be found: Error,", error);
-        } finally{
-          
-        }
-      }
-  }
-
-export default function Employee() {
-    const [organisation, setOrganisation] =useState("");
-    const [employee, setEmployee] = useState("");
-    const [S_organisation_, setOrganisation_] =useState("");
-    const [S_employee_, setEmployee_] = useState("");
-    const [searchResultsLoading, setSearchResultsLoading] = useState(false);
-    const [validated, setValidated] = useState(false);
-    const [alertMessage, setAlertMessage] = useState("");
-    const [showAlert, setShowAlert] = useState(false);
-    const [alertVariant, setAlertVariant] = useState("success")
-    const [show, setShow] = useState(true);
-    const [disableSubmit, setDisableSubmit] = useState(false);
-    const [orgList, setOrgList] = useState<string[]>([]);
+    const { wallet, hasProvider, isConnecting, signer, connectMetaMask } = useMetaMask()
 
     const router = useRouter()
-    async function handleSubmit(e: SyntheticEvent) {
-        e.preventDefault();
-        setSearchResultsLoading(true)
-        try{
-        if(S_employee_ !=="" ){
-            
-                if (S_organisation_ === ""){
-                    const orgs: string[] | any = SearchForOrganisation(signer, S_employee_);
-                    setOrgList(orgs)
+    useEffect(() => {
+        setPageDisabled(wallet.accounts.length < 1 || submitLoading == true);
+        const fetchData = async () => {
+            setResultLoading(true);
+            try {
+                //cache
+                const cache = await caches.open('my-cache');
+                const cachedResponse = await cache.match('employee-organisation-data');
+                if (wallet.accounts.length >= 1 && hasProvider) {
+                    if (cachedResponse) {
+                        const data = await cachedResponse.json();
+                        setEmployeeData(data);
+                    }
                 }
-                else if(S_organisation_ !== ""){
-                router.push(`/stock/employee/${S_organisation_}/${S_employee_}`);
-                    }
-                else{
-                    handleAlert("danger", "Invalid")
-                    }
-            }   
-        } catch(error){console.error(error)}
-        finally{setSearchResultsLoading(false)}
-    }
+
+                const listResult = await SearchForOrganisation(wallet.accounts[0]);
+                const data = await Promise.all(
+                    listResult.map(async (addressObj: { newContractAddress: string; name: any; }) => {
+                        const empCount = await GetNumberOfEmployee(addressObj.newContractAddress);
+                        return {
+                            name: addressObj.name,
+                            address: addressObj.newContractAddress,
+                            emp: empCount,
+                        };
+                    })
+                );
+
+                await cache.put(
+                    'employee-organisation-data',
+                    new Response(JSON.stringify(data), {
+                        headers: { 'Content-Type': 'application/json' },
+                    })
+                );
 
 
-
-    function handleClose(){
-        setShow(false)
-        setShowAlert(false)
-    }
-
-    useEffect(()=>{
-    connect();
-    const handleFormChanges = (()=>{
-        handleClose();
-        
-        const organisation_:string = (organisation)?.toString().trim() as string;
-        const employee_:string = (employee)?.toString().trim() as string;
-        try{
-        if(organisation_ !== "" || employee_ !== ""){  
-            if( organisation_ === ""? checkIfValidAddress([employee_]) === true : checkIfValidAddress([organisation_,employee_]) === true){
-                setDisableSubmit(false);
-                setValidated(true);
-                handleAlert("success", "Looks Good !")
-                setOrganisation_(organisation_);
-                setEmployee_(employee_);
-            } else{
-                setDisableSubmit(true)
-                setValidated(false);
-                console.log("success")
-                handleAlert("danger","Please use a valid Address !")
-                setShowAlert(true)
+                setResultLoading(false);
+                setEmployeeData(data);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setResultLoading(false);
             }
-        }
-    }catch(error){
-        console.error
-    } finally{
-        setValidated(false)
-        
-    }
-    
-    })
-    handleFormChanges()
-}, [employee,organisation])
+        };
+        fetchData();
 
 
-const handleAlert = ((variant: string, msg:string) => {
-    setAlertMessage(msg);
-    setAlertVariant(variant);
-    setShowAlert(true);
-    setTimeout(()=>{
-        setShowAlert(false);
-        setAlertMessage("");
-    },10000)
-})
+    }, [wallet.accounts.length, submitLoading, hasProvider])
 
     return (
-        <>
-        {showAlert && (
-        <Alert variant={alertVariant} onClose={() => handleClose()} dismissible className="w-25 justify-content-center text-center mx-auto">
-        {alertMessage}
-        </Alert>)}
-            <div className="container d-flex justify-content-center p-2">
-                
-                <Form noValidate validated={validated} onSubmit={handleSubmit}  className="w-50">
-                    <Form.Group className="mb-3" controlId="search-input">
-                        <Form.Label>Search for Employee </Form.Label>
-                            <Row className="p-0">
-                                <Col className="px-0">
-                                    <Form.Control className="border-end-0 rounded-0 rounded-start" name="organisation" onChange={e => setOrganisation(e.target.value)} placeholder="Organisation Address"/>
-                                    <Form.Control.Feedback type="valid">Thanks</Form.Control.Feedback>
-                                  </Col>
-                                <Col className="px-0">
-                                    <Form.Control className="border-end-0 rounded-0" name="employee" onChange={e => setEmployee(e.target.value)} placeholder="Employee Address"/>
-                               </Col>
-                                <Col className="p-0" xs={1} >
-                                    <Button type="submit" className=" rounded-0 rounded-end" disabled={disableSubmit} >
-                                        <BiSearchAlt />
-                                    </Button></Col></Row>
-                    </Form.Group>
-                </Form>
-            </div>
-            <div className="shadow p-3 mb-5 mt-5 bg-white rounded">
-          <table className="table table-hover table-responsive">
-          <thead>
-                <tr>
-                    <th>List of Organisations you belong to</th>
-                </tr>
-            </thead>
-            <tbody>
-                {/* {orgList.map((org, index) => (
-                    <>
-                    <tr key={index}>
-                    <td>{org}</td>
-                    </tr>
-                    </>
-                ))} */}
-                
-            </tbody>
-          </table>
+        <><div>
+            <div className="bg-primary rounded text-white text-center p-2 mb-2 mx-auto"> Organisations</div>
+
+            {resultLoading && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success" />}
+            {employeeData.map((data, index) => (
+                <div onClick={(() => router.push(`/stock/organisation/dashboard/${data.address}`))} key={index}><ListCard key={index} name={data.name} address={data.address} emp={data.emp} /></div>
+            ))}
         </div>
         </>
-    );
+    )
 }

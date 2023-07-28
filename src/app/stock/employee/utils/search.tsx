@@ -51,31 +51,7 @@ export async function SearchForEmployeeDetails(organisationAddress: string, sign
 }
 }
 
-async function checkIfAnEmployee(organisationAddress: string, employeeAddress: string, signer: Signer): Promise<boolean>{
-    soContract = new Contract(
-        organisationAddress, 
-        STOCK_OPTIONS_CONTRACT_ABI,
-        signer
-    )
-    const isEmployee: boolean = await soContract.isEmployee(employeeAddress)
-    return isEmployee
 
-}
 
-export async function SearchForOrganisation(signer:Signer, employeeAddress: string): Promise<string[]>{
-    console.log("called search")
-    let listOfOrgs: string[] = [];
-    soContractFactory = new Contract(
-        STOCK_OPTIONS_FACTORY_CONTRACT,
-        STOCK_OPTIONS_FACTORY_ABI,
-        signer)
-    const listOfContracts: Array<string> = await soContractFactory.getDeployedStockOptions();
-    for(const org of listOfContracts){
-        console.log("sorting through orgs",org )
-        if(await checkIfAnEmployee(org, employeeAddress, signer)){
-            listOfOrgs.push(org)
-        }
-    }
-    return listOfOrgs
-}
+
     

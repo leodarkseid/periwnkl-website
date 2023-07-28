@@ -26,9 +26,9 @@ export function EmpDashBoard(props: EmpDashProps) {
                         </div>
                         <div className="bg-primary text-center rounded-pill text-white mx-auto w-50 mb-5">Countdown For Stock Options to Vest</div>
 
-                        <div className={styles.main_grid__timer_box_small_card}>Stock Options</div>
-                        <div className={styles.main_grid__timer_box_small_card}>Vested Options</div>
-                        <div className={styles.main_grid__timer_box_small_card}>Excercised Options</div>
+                        <div className={styles.main_grid__timer_box_small_card}>Stock Options: 42424242</div>
+                        <div className={styles.main_grid__timer_box_small_card}>Vested Options: 42424242</div>
+                        <div className={styles.main_grid__timer_box_small_card}>Excercised Options: 42424242</div>
 
                     </div>
                 </div>

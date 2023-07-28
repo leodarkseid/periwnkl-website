@@ -7,6 +7,7 @@
 .main_grid1 {
   background-color: #fff;
   padding: 20px;
+  padding-top: 60px;
   margin-top: 25px;
   border-radius: 30px;
   height: 70vh;
@@ -68,6 +69,10 @@
   justify-content: center;
   max-height: 50px;
   height: 50px;
+  cursor: pointer;
+}
+.main_grid2__row_button:hover{
+background-color: #4d94ff;
 }
 
 .main_grid__timer_box {
@@ -147,9 +152,13 @@
   display: flex;
   background-color: transparent;
   border: solid 2px#0d6efd;
+  border-bottom: solid 10px#0d6efd;
+  border-radius: 10px;
+  color: #0d6efd;;
   width: 20vw;
   align-items: center;
   justify-content: center;
   align-self: center;
   justify-self: center;
+  margin-bottom: 30px;
 }

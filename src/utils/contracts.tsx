@@ -164,3 +164,23 @@ async function CheckIfAnAdminOrg(address: string): Promise<boolean> {
   const names = await GetListOfCreatedOrgs();
   return names.includes(address);
 }
+
+async function checkIfAnEmployee(organisationAddress: string, employeeAddress: string): Promise<boolean> {
+  const contract = soContract(organisationAddress);
+  const isEmployee: boolean = await contract.isEmployee(employeeAddress)
+  return isEmployee
+}
+
+export async function SearchForOrganisation(employeeAddress: string): Promise<string[]> {
+  console.log("called search")
+  let listOfOrgs: string[] = [];
+  const contract = soContractFactory
+  const listOfContracts: Array<string> = await contract.getDeployedStockOptions();
+  for (const org of listOfContracts) {
+    console.log("sorting through orgs", org)
+    if (await checkIfAnEmployee(org, employeeAddress)) {
+      listOfOrgs.push(org)
+    }
+  }
+  return listOfOrgs
+}
