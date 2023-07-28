@@ -1,4 +1,5 @@
 import type { MetaMaskInpageProvider } from "@metamask/providers";
+import { ethers } from "ethers";
 
 export const formatBalance = (rawBalance: string) => {
     const balance = (parseInt(rawBalance) / 1000000000000000000).toFixed(2)
@@ -22,7 +23,7 @@ export const formatBalance = (rawBalance: string) => {
 export const checkIfValidAddress = (Arr: Array<string>)=> {
   try{
     for(const str of Arr){  
-    if(str.length !== 42 || !str.startsWith('0x')){
+    if((str.length !== 42 || !str.startsWith('0x')) && ethers.utils.isAddress(str)){
       return false
     }
   }

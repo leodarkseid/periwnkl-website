@@ -2,10 +2,15 @@
 
 import { Col, Form, Row } from "react-bootstrap"
 import styles from "./css/orgEmpDash.module.css"
+
+
+
+
 interface EmpDashProps {
     address: string
 }
 export function EmpDashBoard(props: EmpDashProps) {
+
 
     return (
         <>
@@ -41,12 +46,12 @@ export function EmpDashBoard(props: EmpDashProps) {
                     <div className={styles.main_grid2__col}>
 
                         <div className={styles.main_grid2__row}>
-                            <div className={styles.main_grid2__row_display}><Form className="w-100"><Form.Control placeholder="0x0000..." /></Form></div>
+                            <div className={styles.main_grid2__row_display}><Form style={{ "width": "90%" }} className=""><Form.Control className="w-100 shadow-none border-white" type="wallet" placeholder="0x0000..." /></Form></div>
                             <div className={styles.main_grid2__row_button}>Grant Options</div>
                         </div>
 
                         <div className={styles.main_grid2__row}>
-                            <div className={styles.main_grid2__row_display}>1</div>
+                            <div className={styles.main_grid2__row_display}><Form  style={{ "width": "90%" }}><Form.Control className="w-100 shadow-none border-white" type="date" placeholder="0x0000..." /></Form></div>
                             <div className={styles.main_grid2__row_button}>Set Schedule</div>
                         </div>
 

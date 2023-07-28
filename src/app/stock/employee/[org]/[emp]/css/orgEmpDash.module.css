@@ -44,6 +44,26 @@
   display: grid;
   grid-template-columns: 70% 30%;
 }
+.main_grid2__row_transfer{
+  display: grid;
+  grid-template-columns: 70% 30%;
+}
+.main_grid2__row_button_transfer{
+  
+  display: flex;
+  background-color: #0d6efd;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 1);
+  border-radius: 0 10px 10px 0;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  max-height: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+.main_grid2__row_button_transfer:hover{
+background-color: #0355d1;
+}
 
 .main_grid2__row_display {
   display: flex;
@@ -56,8 +76,10 @@
   height: 50px;
   color: #0d6efd;
   border: solid 0.1px #0d6efd;
+  border-right: 0px;
   align-items: center;
   justify-content: center;
+  z-index: 0.2;
 }
 .main_grid2__row_button {
   display: flex;
@@ -70,6 +92,7 @@
   max-height: 50px;
   height: 50px;
   cursor: pointer;
+  z-index: 1;
 }
 .main_grid2__row_button:hover{
 background-color: #0355d1;

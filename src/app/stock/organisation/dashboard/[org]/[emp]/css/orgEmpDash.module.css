@@ -39,6 +39,7 @@
   grid-template-columns: 100%;
   padding-top: 30px;
   gap: 1.5rem;
+  padding-top: 15vw;
 }
 .main_grid2__row {
   display: grid;
