@@ -24,7 +24,7 @@ export default function EmployeeDash() {
   const [invalidData, setInvalidData] = useState(false);
   const [alertCountdown, setAlertCountdown] = useState(false);
   const [vestable, setVestable] = useState(0);
-  const [disableVestButton, setDisableVestButton] = useState(false);
+  const [disableVestButton, setDisableVestButton] = useState(true);
 
   const params: Params = useParams()
   const empAddr = params.emp
