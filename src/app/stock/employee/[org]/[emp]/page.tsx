@@ -88,9 +88,6 @@ export default function EmployeeDash() {
         setAlertCountdown(true);
       }
 
-      if(vestAble <= 0){
-        setDisableVestButton(true)
-      }
     }
     if (wallet.accounts.length >= 1 && hasProvider) {
       FetchData()
@@ -150,7 +147,7 @@ export default function EmployeeDash() {
           <div className={styles.main_grid2__col}>
             <div className={styles.main_grid2__row}>
               <div className={styles.main_grid2__row_display}>{vestable}</div>
-               <Button disabled={disableVestButton} className={styles.main_grid2__row_button}>{countdownLoading ? <Spinner
+               <Button disabled={vestable < 1} className={styles.main_grid2__row_button}>{countdownLoading ? <Spinner
                 as="span"
                 animation="border"
                 size="sm"
@@ -161,13 +158,13 @@ export default function EmployeeDash() {
             </div>
             <div className={styles.main_grid2__row}>
               <div className={styles.main_grid2__row_display}>{vestedOptions}</div>
-              <div className={styles.main_grid2__row_button}>{countdownLoading ? <Spinner
+              <Button disabled={vestedOptions < 1} className={styles.main_grid2__row_button}>{countdownLoading ? <Spinner
                 as="span"
                 animation="border"
                 size="sm"
                 role="status"
                 aria-hidden="true"
-              /> : "Exercise"}</div>
+              /> : "Exercise"}</Button>
 
             </div>
 
@@ -180,7 +177,7 @@ export default function EmployeeDash() {
                     <div className={styles.main_grid2__row_display}><Form.Control type="address" name="address" onChange={e => setRecipient(e.target.value)} className="w-100 shadow-none border-white" placeholder="0x0000..." /></div>
                     <div className={styles.main_grid2__row_display}><Form.Control type="number" name="amount" onChange={e => setAmount(Number(e.target.value))} className="w-100 shadow-none border-white" placeholder="0" /></div>
                   </div>
-                  <Button type="submit" className={styles.main_grid2__row_button_transfer}>{transferLoading ? <Spinner
+                  <Button type="submit" disabled={recipient == "" || amount < 1} className={styles.main_grid2__row_button_transfer}>{transferLoading ? <Spinner
                     as="span"
                     animation="border"
                     role="status"
