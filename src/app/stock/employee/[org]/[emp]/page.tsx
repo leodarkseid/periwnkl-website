@@ -41,9 +41,9 @@ export default function EmployeeDash() {
         try {
           setTransferLoading(true)
           setInvalidData(false);
-          const _transfer = await Transfer(orgAddr, empAddr, amount)
-          const txReceipt = await _transfer.wait();
-          console.log(txReceipt);
+          const transfer = await Transfer(orgAddr, empAddr, amount)
+          
+          console.log(transfer);
         } catch (error) {
           console.error("handle submit emp dash", error)
         } finally {
@@ -89,13 +89,22 @@ export default function EmployeeDash() {
       }
 
     }
+   
+    
     if (wallet.accounts.length >= 1 && hasProvider) {
       FetchData()
     }
   }, [empAddr, orgAddr, wallet.accounts, hasProvider])
+
+  useEffect(()=>{
+     if (!checkIfValidAddress([recipient]) && recipient != ""){
+      setInvalidData(true)
+    }
+    else{setInvalidData(false)}
+  },[recipient])
   return (
     <>
-      <div className="bg-primary rounded text-center text-white p-2 w-100">This is the Address of Employee</div>
+      <div className="bg-primary rounded text-center text-white p-2 w-100">{empAddr}</div>
       <div className={styles.main}>
         <div className={styles.main_grid1}>
           <div className={styles.main_grid1__col}>
@@ -177,7 +186,7 @@ export default function EmployeeDash() {
                     <div className={styles.main_grid2__row_display}><Form.Control type="address" name="address" onChange={e => setRecipient(e.target.value)} className="w-100 shadow-none border-white" placeholder="0x0000..." /></div>
                     <div className={styles.main_grid2__row_display}><Form.Control type="number" name="amount" onChange={e => setAmount(Number(e.target.value))} className="w-100 shadow-none border-white" placeholder="0" /></div>
                   </div>
-                  <Button type="submit" disabled={recipient == "" || amount < 1} className={styles.main_grid2__row_button_transfer}>{transferLoading ? <Spinner
+                  <Button type="submit" disabled={recipient == "" || amount < 1 || vestedOptions < 1} className={styles.main_grid2__row_button_transfer}>{transferLoading ? <Spinner
                     as="span"
                     animation="border"
                     role="status"

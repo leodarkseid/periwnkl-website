@@ -23,11 +23,11 @@ export const formatBalance = (rawBalance: string) => {
 export const checkIfValidAddress = (Arr: Array<string>)=> {
   try{
     for(const str of Arr){  
-    if((str.length !== 42 || !str.startsWith('0x')) && ethers.utils.isAddress(str)){
-      return false
+    if(str.length == 42 && str.startsWith('0x') && ethers.utils.isAddress(str) === true){
+      return true
     }
   }
-  return true
+  return false
 }catch(error){
     console.error(error)
     return false
@@ -36,9 +36,9 @@ export const checkIfValidAddress = (Arr: Array<string>)=> {
 
 export const switchNetwork = async () => {
   try{
-  await window.ethereum.request({
-    method: 'wallet_switchEthereumChain',
-    params: [{ chainId: '0xe704' }],
+  await((window as any).ethereum).request({
+    method: "wallet_switchEthereumChain",
+    params: [{ chainId: "0xe704" }],
   });
   // refresh
   window.location.reload();

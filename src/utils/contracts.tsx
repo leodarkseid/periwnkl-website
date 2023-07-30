@@ -79,8 +79,9 @@ export async function VestedOptions(address: string, employeeAddress: string) {
   let vs: number = 0;
   try {
     const contract = soContract(address);
-    const _vs: BigNumber = await contract.getVestedOptions(employeeAddress);
-    vs = _vs.toNumber();
+    const _result = await contract.getVestedOptions(employeeAddress);
+    const result = Number(ethers.utils.formatEther(_result.toString()));
+    vs = result
   } catch (error) {
     console.error("from vested options", error)
   }
@@ -122,9 +123,9 @@ export async function GetGrossExcercisedOptions(address: string) {
 export async function GetStockOptionsAmount(employeeAddress: string, address: string) {
   const contract = soContract(address);
   const a = await contract.getEmployee(employeeAddress);
-  const _amount: BigNumber = a.stockOptions;
-  const amount = _amount.toNumber();
-  return amount
+  const amount = ethers.utils.formatEther(a.stockOptions.toString());
+  console.log(amount)
+  return Number(amount)
 }
 
 export async function GetPieData(address: string) {
@@ -207,7 +208,8 @@ export async function GetVestingCountdown(organisationAddress: string, employeeA
 
 export async function Transfer(organisationAddress: string, recipientAddress: string, amount: number) {
   try{
-  const _amount = ethers.utils.formatEther(amount) 
+    const temp: string = amount.toString();
+    const _amount = ethers.utils.parseEther(temp) 
   const contract = soContract(organisationAddress);
   const transfer = await contract.transferOptions(recipientAddress, _amount);
   const transferTx =await transfer.wait();
@@ -222,10 +224,29 @@ export async function CheckForVestAble(organisationAddress: string, employeeAddr
   const count = await GetVestingCountdown(organisationAddress, employeeAddress);
   const stock = await GetStockOptionsAmount(employeeAddress, organisationAddress)
   if (stock >= 1 && count.days > 0 && count.hours > 0 && count.minutes > 0) {
-    return stock
+    const _stock= ethers.utils.formatEther(stock.toString());
+    return Number(_stock)
   }
   else{
     return 0
   }
+}
+
+export async function GrantOptions(organisationAddress: string, employeeAddress: string , amount: number){
+  const contract = soContract(organisationAddress);
+  const _amount = ethers.utils.parseEther(amount.toString());
+  const grant = await contract.grantStockOptions(employeeAddress,_amount );
+  const grantTx = await grant.wait();
+  return grantTx
+}
+export async function SetScheduleOptions(organisationAddress: string, employeeAddress: string , time: string){
+  const contract = soContract(organisationAddress);
+  const timestamp = new Date(time).getTime();
+  const _timestamp = timestamp/1000
+  console.log("time stamp is ", _timestamp)
+ 
+  const grant = await contract.setVestingSchedule(employeeAddress,_timestamp );
+  const grantTx = await grant.wait();
+  return grantTx
 }
 
