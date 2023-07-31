@@ -1,0 +1,165 @@
+.main {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: 1.5rem;
+}
+
+.main_grid1 {
+  background-color: #fff;
+  padding: 20px;
+  padding-top: 60px;
+  margin-top: 25px;
+  border-radius: 30px;
+  height: 70vh;
+  min-height: 70vh;
+  max-height: 70vh;
+  justify-content: center;
+  align-content: center;
+  overflow: auto;
+}
+
+.main_grid2 {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  margin-top: 25px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 30px;
+  height: 70vh;
+  min-height: 70vh;
+  max-height: 70vh;
+  width: 90%;
+  align-items: center;
+  overflow: auto;
+}
+
+.main_grid2__col {
+  display: grid;
+  grid-template-columns: 100%;
+  padding-top: 30px;
+  gap: 1.5rem;
+  padding-top: 15vw;
+}
+.main_grid2__row {
+  display: grid;
+  grid-template-columns: 70% 30%;
+}
+
+.main_grid2__row_display {
+  display: flex;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+  min-width: 300px;
+  max-width: 300px;
+  width: 300px;
+  max-height: 50px;
+  height: 50px;
+  color: #0d6efd;
+  border: solid 0.1px #0d6efd;
+  align-items: center;
+  justify-content: center;
+}
+.main_grid2__row_button {
+  display: flex;
+  background-color: #0d6efd;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 1);
+  border-radius: 0 10px 10px 0;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  max-height: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+.main_grid2__row_button:hover{
+background-color: #0355d1;
+}
+
+.main_grid__timer_box {
+  color: #0d6efd;
+  display: flex;
+  background-color: transparent;
+  border: solid 2px#0d6efd;
+  border-radius: 10px;
+  height: 200px;
+  width: 500px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+
+.main_grid1__col {
+  display: flex;
+  flex-direction: column;
+}
+.main_grid__timer_box__small_grid {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: 70% 30%;
+  row-gap: 2px;
+  column-gap: 50px;
+  justify-content: center;
+}
+
+.main_grid__timer_box_days__val {
+  font-weight: 900;
+  font-size: 60px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+.main_grid__timer_box_hours__val {
+  font-weight: 900;
+  font-size: 60px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+.main_grid__timer_box_mins__val {
+  font-weight: 900;
+  font-size: 60px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+.main_grid__timer_box_days {
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+.main_grid__timer_box_hours {
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+.main_grid__timer_box_mins {
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+
+.main_grid__timer_box_small_card {
+  display: flex;
+  background-color: transparent;
+  border: solid 2px#0d6efd;
+  border-bottom: solid 10px#0d6efd;
+  border-radius: 10px;
+  color: #0d6efd;;
+  width: 20vw;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+  margin-bottom: 30px;
+}

@@ -33,7 +33,7 @@ export default function Create() {
             try {
                 //cache
                 const cache = await caches.open('my-cache');
-                const cachedResponse = await cache.match('employee-organisation-data');
+                const cachedResponse = await cache.match('wage_pay-employee-organisation-data');
                 if (wallet.accounts.length >= 1 && hasProvider) {
                     if (cachedResponse) {
                         const data = await cachedResponse.json();
@@ -55,7 +55,7 @@ export default function Create() {
                 );
 
                 await cache.put(
-                    'employee-organisation-data',
+                    'wage_pay-employee-organisation-data',
                     new Response(JSON.stringify(data), {
                         headers: { 'Content-Type': 'application/json' },
                     })

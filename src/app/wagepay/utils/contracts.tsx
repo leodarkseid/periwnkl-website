@@ -53,20 +53,80 @@ export async function SearchForOrganisation(employeeAddress: string): Promise<st
     return listOfOrgs
 }
 
-export async function GetNumberOfEmployee(address: string) {
-    const contract = Wagepay(address)
+export async function GetNumberOfEmployee(organisationAddress: string) {
+    const contract = Wagepay(organisationAddress)
     const getNumber: BigNumber = await contract.employeesCOunt();
     return getNumber.toNumber();
 }
 
-export async function GetOrgName(address: string) {
-    const contract = Wagepay(address);
+export async function GetOrgName(organisationAddress: string) {
+    const contract = Wagepay(organisationAddress);
     const name = await contract.name_();
     return name
+}
+
+
+
+export async function GetLastWithdrawal(organisationAddress: string, employeeAddress: string){
+    const contract = Wagepay(organisationAddress);
+    const date_ = await contract.lastWithdrawal(employeeAddress);
+    const date = new Date(date_ * 1000);
+    return date.toLocaleString(undefined, { dateStyle: 'medium' });
+}
+
+export async function GetTokenAddress(organisationAddress: string) {
+    const contract = Wagepay(organisationAddress)
+    const token = await contract.tokenAddress()
+    const tokenTx = await token.wait()
+    return token
+}
+export async function GetBalance(organisationAddress: string, employeeAddress: string ) {
+    const contract = Wagepay(organisationAddress)
+    const tx = await contract.tokenAddress(employeeAddress)
+    const txReceipt = await tx.wait()
+    return tx
+}
+export async function WithdrawAll(organisationAddress: string) {
+    const contract = Wagepay(organisationAddress)
+    const tx = await contract.withdrawAll()
+    const txReceipt = await tx.wait()
+    console.log(txReceipt)
+    return tx
+}
+export async function EstimatedBalance(organisationAddress: string, employeeAddress: string) {
+    const contract = Wagepay(organisationAddress)
+    const tx = await contract.calculateIntervalToBeAdded()
+    const txWage = await contract.wage()
+    const txReceipt = await tx.wait()
+    const txReceipt2 = await txWage.wait()
+    console.log(txReceipt)
+    return tx * txWage
+}
+
+export async function SetUpdateBalance(organisationAddress: string) {
+    const contract = Wagepay(organisationAddress)
+    const tx = await contract.updateBalance()
+    const txReceipt = await tx.wait()
+    return tx
 }
 
 export interface CountdownProp {
     days: number;
     hours: number;
     minutes: number;
+}
+
+export async function GetNextWageCountdown(organisationAddress: string, employeeAddress: string): Promise<CountdownProp> {
+    try {
+        const contract = Wagepay(organisationAddress);
+        const vestingCountdown = await contract.vestingCountdown(employeeAddress);
+        const days = Math.floor(vestingCountdown / (24 * 60 * 60));
+        const hours = Math.floor((vestingCountdown % (24 * 60 * 60)) / (60 * 60));
+        const minutes = Math.floor((vestingCountdown % (60 * 60)) / 60);
+        const data = { days, hours, minutes };
+        return data
+    } catch (error) {
+        console.error("countdown error", error)
+        return { days: 0, hours: 0, minutes: 0 }
+    }
 }
