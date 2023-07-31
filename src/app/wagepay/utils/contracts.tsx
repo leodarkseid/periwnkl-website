@@ -139,6 +139,24 @@ export async function GetBalance(organisationAddress: string, employeeAddress: s
     const txReceipt = await tx.wait()
     return tx
 }
+export async function GetContractBalance(organisationAddress: string) {
+    const contract = Wagepay(organisationAddress)
+    const tx = await contract.contractBalance()
+    const txReceipt = await tx.wait()
+    return tx
+}
+export async function GetWageBill(organisationAddress: string) {
+    const contract = Wagepay(organisationAddress)
+    const tx = await contract.totalWageBill()
+    const txReceipt = await tx.wait()
+    return tx
+}
+export async function GetTotalEmployeesBalance(organisationAddress: string) {
+    const contract = Wagepay(organisationAddress)
+    const tx = await contract.totalEmployeesBalance()
+    const txReceipt = await tx.wait()
+    return tx
+}
 export async function WithdrawAll(organisationAddress: string) {
     const contract = Wagepay(organisationAddress)
     const tx = await contract.withdrawAll()

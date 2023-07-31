@@ -8,7 +8,7 @@ import { CgProfile } from "react-icons/cg"
 import { BsBank } from "react-icons/Bs"
 import { IoMdArrowRoundBack } from "react-icons/io"
 import { LiaSuitcaseSolid } from "react-icons/lia"
-import { AddEmployee, GetNumberOfEmployee, GetOrgName, GetPieData, GetTimeStamp, ListOfEmployees } from "../../utils/contracts"
+import { AddEmployee, GetContractBalance, GetNumberOfEmployee, GetOrgName, GetPieData, GetTimeStamp, GetTotalEmployeesBalance, GetWageBill, ListOfEmployees } from "../../utils/contracts"
 import { Placehold } from "@/components/placeholder"
 import { checkIfValidAddress } from "@/utils"
 import { useMetaMask } from "@/hooks/useMetaMask"
@@ -42,7 +42,7 @@ export default function Page() {
     const [empAmount, setEmpAmount] = useState(Infinity);
     const [data, setData] = useState<PieData[]>([]);
     const [contractBalance, setContractBalance] = useState(0);
-    const [wageBill, seWageBill] = useState(0);
+    const [wageBill, setWageBill] = useState(0);
     const [totalEmployeesBalance, setEmployeesBalance] = useState(0);
 
     const { wallet, hasProvider, isConnecting, signer, connectMetaMask } = useMetaMask()
@@ -69,6 +69,16 @@ export default function Page() {
         const result = await GetPieData(orgAddr);
         setData(result);
         setPieLoading(false);
+        const contractBal = await GetContractBalance(orgAddr);
+        setContractBalance(contractBal);
+
+        const wageBill = await GetWageBill(orgAddr);
+        setWageBill(wageBill);
+
+        const totalEmployeesBalance = await GetTotalEmployeesBalance(orgAddr);
+        setEmployeesBalance(totalEmployeesBalance);
+
+    
 
     }, [orgAddr]);
 
