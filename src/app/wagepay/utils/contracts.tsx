@@ -1,3 +1,4 @@
+import { ReturnColor } from "@/utils";
 import {PAYWAGES_ABI, PAYWAGES_FACTORY_ABI, PAYWAGES_FACTORY_CONTRACT} from "../constants";
 
 import { BigNumber, Contract, Signer, ethers, utils } from "ethers";
@@ -55,7 +56,7 @@ export async function SearchForOrganisation(employeeAddress: string): Promise<st
 
 export async function GetNumberOfEmployee(organisationAddress: string) {
     const contract = Wagepay(organisationAddress)
-    const getNumber: BigNumber = await contract.employeesCOunt();
+    const getNumber: BigNumber = await contract.employeesCount();
     return getNumber.toNumber();
 }
 
@@ -80,6 +81,58 @@ export async function GetTokenAddress(organisationAddress: string) {
     const tokenTx = await token.wait()
     return token
 }
+export async function GetTimeStamp(organisationAddress: string) {
+    const contract = Wagepay(organisationAddress)
+    const token = await contract.blockTimeStamp()
+    const tokenTx = await token.wait()
+    return token
+}
+
+
+export async function ListOfEmployees(address: string) {
+    const contract = Wagepay(address)
+    const _total = await GetNumberOfEmployee(address);
+    const total = Number(_total)
+    const listOfEmployees = [];
+    for (let i = 0; i < total; i++) {
+        const id = i;
+        const employee = await contract.employee(id);
+        listOfEmployees.push(employee);
+    }
+    return listOfEmployees;
+}
+
+export async function GetWages(organisationAddress: string, employeeAddress: string) {
+    const contract = Wagepay(organisationAddress)
+    const tx = await contract.wage(employeeAddress)
+    const txReceipt = await tx.wait()
+    return tx
+}
+    
+export async function GetInterval(organisationAddress: string, employeeAddress: string) {
+    const contract = Wagepay(organisationAddress);
+    const tx = await contract.interval(employeeAddress)
+    const txReceipt = await tx.wait()
+    return tx
+}
+
+export async function GetPieData(address: string) {
+    const listResult = await ListOfEmployees(address);
+    const data = await Promise.all(
+        listResult.map(async (addressObj: string, index: number) => {
+            const wage = await GetWages(addressObj, address);
+            const color = ReturnColor(index++);
+            return {
+                color: color,
+                title: addressObj,
+                value: wage
+            };
+        })
+    );
+    return data
+}
+
+
 export async function GetBalance(organisationAddress: string, employeeAddress: string ) {
     const contract = Wagepay(organisationAddress)
     const tx = await contract.tokenAddress(employeeAddress)
@@ -116,6 +169,12 @@ export async function updateBalance_withdraw(organisationAddress: string) {
     return tx
 }
 
+export async function AddEmployee(organisationAddress: string, employeeAddress: string, wage: number, interval: number) {
+    const contract = Wagepay(organisationAddress)
+    const tx = await contract.addEmployee(employeeAddress, wage, interval)
+    const txReceipt = await tx.wait()
+    return tx
+}
 
 
 export interface CountdownProp {
