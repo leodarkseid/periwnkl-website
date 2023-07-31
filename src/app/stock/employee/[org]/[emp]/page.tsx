@@ -42,7 +42,7 @@ export default function EmployeeDash() {
           setTransferLoading(true)
           setInvalidData(false);
           const transfer = await Transfer(orgAddr, empAddr, amount)
-          
+
           console.log(transfer);
         } catch (error) {
           console.error("handle submit emp dash", error)
@@ -89,19 +89,19 @@ export default function EmployeeDash() {
       }
 
     }
-   
-    
+
+
     if (wallet.accounts.length >= 1 && hasProvider) {
       FetchData()
     }
   }, [empAddr, orgAddr, wallet.accounts, hasProvider])
 
-  useEffect(()=>{
-     if (!checkIfValidAddress([recipient]) && recipient != ""){
+  useEffect(() => {
+    if (!checkIfValidAddress([recipient]) && recipient != "") {
       setInvalidData(true)
     }
-    else{setInvalidData(false)}
-  },[recipient])
+    else { setInvalidData(false) }
+  }, [recipient])
   return (
     <>
       <div className="bg-primary rounded text-center text-white p-2 w-100">{empAddr}</div>
@@ -156,7 +156,7 @@ export default function EmployeeDash() {
           <div className={styles.main_grid2__col}>
             <div className={styles.main_grid2__row}>
               <div className={styles.main_grid2__row_display}>{vestable}</div>
-               <Button disabled={vestable < 1} className={styles.main_grid2__row_button}>{countdownLoading ? <Spinner
+              <Button disabled={vestable < 1} className={styles.main_grid2__row_button}>{countdownLoading ? <Spinner
                 as="span"
                 animation="border"
                 size="sm"

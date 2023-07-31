@@ -3,7 +3,7 @@ import { Button, Form, Spinner, Alert, Card } from "react-bootstrap";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
 import { ListCard, ListTitle } from "@/components/list";
 import { useMetaMask } from "@/hooks/useMetaMask";
-import { CreateStockOptionsPlan, GetListOfCreatedOrgs, GetNumberOfEmployee, GetOrgName, SearchForOrganisation } from "@/utils/contracts";
+import { GetNumberOfEmployee, GetOrgName, SearchForOrganisation } from "../utils/contracts";
 
 import { useRouter } from "next/navigation";
 import { BigNumber } from "ethers";

@@ -40,7 +40,7 @@ export default function NavBar() {
             <Navbar bg="primary" variant="dark" sticky="top" expand="sm" collapseOnSelect>
                 <Container>
                     < Navbar.Brand as={Link} href="/wagepay">
-                        Stock Manager
+                        Wage Pay
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="main-navbar" />
                     <Navbar.Collapse className="justify-content-end" id="main-navbar">

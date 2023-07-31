@@ -5,8 +5,6 @@ import { useState, FormEvent, SyntheticEvent, useEffect } from "react";
 import { BiSearchAlt } from 'react-icons/bi';
 import { checkIfValidAddress } from "@/utils";
 import { ethers, Contract, Signer } from "ethers";
-import { Employee } from "./utils/search"
-import { SearchForEmployeeDetails, SearchForOrganisation } from "./utils/search"
 import { useRouter } from "next/navigation";
 export default function Body() {
     const [organisation, setOrganisation] = useState("");
