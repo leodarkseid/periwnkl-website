@@ -77,7 +77,7 @@ export default function Create() {
 
     return (
         <><div>
-            <div className="bg-primary rounded text-white text-center p-2 mb-2 mx-auto">List Of Organisations In Which You Have Stocks</div>
+            <div className="bg-primary rounded text-white text-center p-2 mb-2 mx-auto">Organisations Which You Work For</div>
 
             {resultLoading && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success" />}
             {employeeData.map((data, index) => (
