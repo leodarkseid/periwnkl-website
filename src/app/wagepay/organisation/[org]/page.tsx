@@ -13,8 +13,9 @@ import { Placehold } from "@/components/placeholder"
 import { checkIfValidAddress } from "@/utils"
 import { useMetaMask } from "@/hooks/useMetaMask"
 import { Piechart } from "@/components/pieChart"
-import { useRouter } from "next/navigation"
+import { useRouter, useParams } from "next/navigation"
 import { ethers } from "ethers"
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
 
 interface DashProps {
     address: string
@@ -26,51 +27,26 @@ interface PieData {
     value: number;
 }
 
-export default function Dashboard(props: DashProps) {
-    const [show, setShow] = useState(false);
-    const [data, setData] = useState<PieData[]>([]);
-    const [pieLoading, setPieLoading] = useState(false);
-    const [address, setAddress] = useState("");
+export default function Page() {
     const [name, setName] = useState("");
-    const [empAmount, setEmpAmount] = useState(Infinity);
-    const [grossExcercised, setGrossExcercised] = useState(Infinity);
-    const [grossVested, setGrossVested] = useState(Infinity);
-    const [date, setDate] = useState("");
-    const [list, setList] = useState<string[]>([]);
+    const [open, setOpen] = useState(false);
     const [addLoading, setAddLoading] = useState(false);
     const [addDisabled, setAddDisabled] = useState(false);
-    const [addr, setAddr] = useState("");
-    const [submitFail, setSubmitFail] = useState(false);
-    const [open, setOpen] = useState(false);
+    const [address_, setAddress_] = useState("");
+    const [wage_, setWage_] = useState(0);
+    const [interval_, setInterval_] = useState(0);
 
     const { wallet, hasProvider, isConnecting, signer, connectMetaMask } = useMetaMask()
     const router = useRouter();
+    const params: Params = useParams()
+    const orgAddr = params.org
 
     const allValuesZero = data.every((item) => item.value === 0);
 
 
     const FetchData = useCallback(async () => {
-        if (wallet.accounts.length >= 1 && hasProvider) {
-
-            setPieLoading(true);
-            const _name = await GetOrgName(props.address)
-            setName(_name)
-            setAddress(props.address);
-            const date = await GetTimeStamp(props.address);
-            setDate(date);
-            const listEmployees = await ListOfEmployees(props.address);
-            setList(listEmployees);
-            const empAmount = await GetNumberOfEmployee(props.address);
-            setEmpAmount(empAmount);
-            const result = await GetPieData(props.address);
-            setData(result)
-            setPieLoading(false)
-            const grossExcercised = await GetGrossExcercisedOptions(props.address);
-            setGrossExcercised(grossExcercised);
-            const grossVested = await GetGrossVestedOptions(props.address);
-            setGrossVested(grossVested);
-        }
-    }, [props, wallet, hasProvider])
+           
+    }, []);
 
     useEffect(() => {
         if (wallet.accounts.length >= 1 && hasProvider) {
@@ -111,7 +87,7 @@ export default function Dashboard(props: DashProps) {
 
     return (
         <>
-            <div className="bg-primary rounded text-center text-white p-2 w-100 "> {name == "" ? <Placehold size={3} /> : name} - {address} </div>
+            <div className="bg-primary rounded text-center text-white p-2 w-100 "> {name == "" ? <Placehold size={3} /> : name} - {orgAddr} </div>
 
             <Button onClick={(() => router.back())} className="mt-1 mb-0 border-0 bg-altYellow "><IoMdArrowRoundBack />Dashboard</Button>
             <div className={styles.dash_grid}>
@@ -123,38 +99,38 @@ export default function Dashboard(props: DashProps) {
                         <Form onSubmit={handleSubmit} >
                             <Row style={{ "width": "350px" }}>
                                 <InputGroup>
-                                <InputGroup.Text id="inputGroup-sizing-sm">Address</InputGroup.Text>
+                                    <InputGroup.Text className="text-primary" id="inputGroup-sizing-sm">Address</InputGroup.Text>
                                 <Form.Control
                                     type="address"
                                     placeholder="0x00000..."
                                     autoFocus
-                                    onChange={e => setAddr(e.target.value)}
+                                    onChange={e => setAddress_(e.target.value)}
                                     disabled={addDisabled}
                                     required /></InputGroup>
-                                {submitFail && <div className="text-danger " style={{ "fontSize": "12px" }}>Invalid Address !!</div>}
+                                {/* {submitFail && <div className="text-danger " style={{ "fontSize": "12px" }}>Invalid Address !!</div>} */}
                             </Row>
                             <Row style={{ "width": "350px", "marginTop": "10px" }}>
                                 <InputGroup>
-                                    <InputGroup.Text id="inputGroup-sizing-sm">Wage</InputGroup.Text>
+                                    <InputGroup.Text className="text-primary" id="inputGroup-sizing-sm">Wage</InputGroup.Text>
                                 <Form.Control
                                     type="number"
                                     autoFocus
-                                    onChange={e => setAddr(e.target.value)}
+                                    onChange={e => setWage_(Number(e.target.value))}
                                     disabled={addDisabled}
                                         required /></InputGroup>
-                                {submitFail && <div className="text-danger " style={{ "fontSize": "12px" }}>Invalid Address !!</div>}
+                                {/* {submitFail && <div className="text-danger " style={{ "fontSize": "12px" }}>Invalid Address !!</div>} */}
                             </Row>
                             <Row style={{ "width": "350px", "marginTop": "10px" }}>
                                 <InputGroup>
-                                    <InputGroup.Text id="inputGroup-sizing-sm">Interval</InputGroup.Text>
+                                    <InputGroup.Text className="text-primary" id="inputGroup-sizing-sm">Interval</InputGroup.Text>
                                 <Form.Control
                                     type="number"
                                     min={1}
                                     autoFocus
-                                    onChange={e => setAddr(e.target.value)}
+                                    onChange={e => setInterval_(Number(e.target.value))}
                                     disabled={addDisabled}
                                         required /></InputGroup>
-                                {submitFail && <div className="text-danger " style={{ "fontSize": "12px" }}>Invalid Address !!</div>}
+                                {/* {submitFail && <div className="text-danger " style={{ "fontSize": "12px" }}>Invalid Address !!</div>} */}
                             </Row>
                             <Row className="w-50 mx-auto mt-2 mb-3"><Button type="submit" disabled={addDisabled} >Add</Button></Row>
                         </Form>

@@ -3,7 +3,7 @@ import { useParams } from "next/navigation"
 import styles from "./css/page.module.css"
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
 import { useEffect, useState } from "react";
-import { CountdownProp, GetBalance, GetLastWithdrawal, GetNextWageCountdown, GetTokenAddress, SetUpdateBalance } from "../../utils/contracts";
+import { CountdownProp, GetBalance, GetEstimatedBalance, GetLastWithdrawal, GetNextWageCountdown, GetTokenAddress, SetUpdateBalance, WithdrawAll, updateBalance_withdraw } from "../../utils/contracts";
 import { Alert, Button, Card, Col, Row, Spinner } from "react-bootstrap";
 
 import { useMetaMask } from "@/hooks/useMetaMask";
@@ -18,6 +18,9 @@ export default function Page() {
     const [employeeBalanceLoading, setEmployeeBalanceLoading] = useState(false);
     const [updateLoading, setUpdateLoading] = useState(false);
     const [withdrawLoading, setWithdrawLoading] = useState(false);
+    const [estimatedBalance, setEstimatedBalance] = useState(0);
+    const [estimatedBalanceLoading, setEstimatedBalanceLoading] = useState(false);
+    const [updateBalanceWithdrawLoading, SetUpdateBalanceWithdraw] = useState(false);
 
     const { wallet, hasProvider, isConnecting, signer, connectMetaMask } = useMetaMask()
 
@@ -31,6 +34,8 @@ export default function Page() {
             setEmployeeBalanceLoading(true);
             setUpdateLoading(true);
             setWithdrawLoading(true);
+            setEstimatedBalanceLoading(true);
+            SetUpdateBalanceWithdraw(true);
 
 
             const getTokenAddress = await GetTokenAddress(orgAddr);
@@ -49,7 +54,16 @@ export default function Page() {
 
             const withdrawAll = await WithdrawAll(orgAddr);
             setWithdrawLoading(false);
-            
+
+            const getEstimatedBalance = await GetEstimatedBalance(orgAddr, account);
+            setEstimatedBalance(getEstimatedBalance);
+            setEstimatedBalanceLoading(false);
+
+            const updateAndWithdraw = await updateBalance_withdraw(orgAddr);
+            SetUpdateBalanceWithdraw(false);
+
+
+
 
 
             const vestingCountdown: CountdownProp = await GetNextWageCountdown(orgAddr, account);
@@ -72,7 +86,7 @@ export default function Page() {
                         size="sm"
                         role="status"
                         aria-hidden="true" /> : lastWithdrawal} </div>
-                <div className="rounded w-50 bg-transparent mx-auto text-center text-primary mb-5 border border-primary border-2">Token Address : 
+                <div className="rounded w-50 bg-transparent mx-auto text-center text-primary mb-5 border border-primary border-2">Token Address :
                     {tokenAddress == "" ?
                         <Spinner
                             as="span"
@@ -100,33 +114,44 @@ export default function Page() {
                 <Card className="bg-transparent border-0 border-1 shadow-lg w-75 mx-auto mt-3 px-5 pb-3 pt-4">
 
                     <div className={styles.update_card}>
-                        <div className={styles.update_balance}> Balance:{employeeBalanceLoading ? 
-                        <Spinner as="span"
-                            animation="border"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true" /> : employeeBalance}</div>
-                        <Button disabled={updateLoading} className={styles.update_update}>{updateLoading ? 
-                        <Spinner as="span"
-                            animation="border"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true" />: "Update"}</Button>
-                        <Button disabled={withdrawLoading} className={styles.update_withdraw}>{withdrawLoading ? 
-                        <Spinner as="span"
-                            animation="border"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true" /> : "Withdraw"}</Button>
+                        <div className={styles.update_balance}> Balance:{employeeBalanceLoading ?
+                            <Spinner as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true" /> : employeeBalance}</div>
+                        <Button disabled={updateLoading} className={styles.update_update}>{updateLoading ?
+                            <Spinner as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true" /> : "Update"}</Button>
+                        <Button disabled={withdrawLoading} className={styles.update_withdraw}>
+                            {withdrawLoading ?
+                                <Spinner as="span"
+                                    animation="border"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true" /> : "Withdraw"}</Button>
 
                     </div>
 
                     <Col className="mt-3">
                         <div className="bg-transparent border rounded-top  border-primary border-2 w-50 shadow d-flex justify-content-center text-primary mx-auto">
-                            0
+                            {estimatedBalanceLoading ?
+                                <Spinner as="span"
+                                    animation="border"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true" /> : estimatedBalance}
                         </div>
                         <Button className="bg-primary bg-gradient border-0 text-white rounded-pill rounded-top w-50 d-flex shadow justify-content-center mx-auto">
-                            Update and Withdraw
+                            {updateBalanceWithdrawLoading ? 
+                            <Spinner as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true" /> : "Update and Withdraw"}
                         </Button>
                     </Col>
                 </Card>

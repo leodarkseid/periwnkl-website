@@ -93,10 +93,10 @@ export async function WithdrawAll(organisationAddress: string) {
     console.log(txReceipt)
     return tx
 }
-export async function EstimatedBalance(organisationAddress: string, employeeAddress: string) {
+export async function GetEstimatedBalance(organisationAddress: string, employeeAddress: string) {
     const contract = Wagepay(organisationAddress)
     const tx = await contract.calculateIntervalToBeAdded()
-    const txWage = await contract.wage()
+    const txWage = await contract.wage(employeeAddress)
     const txReceipt = await tx.wait()
     const txReceipt2 = await txWage.wait()
     console.log(txReceipt)
@@ -109,6 +109,14 @@ export async function SetUpdateBalance(organisationAddress: string) {
     const txReceipt = await tx.wait()
     return tx
 }
+export async function updateBalance_withdraw(organisationAddress: string) {
+    const contract = Wagepay(organisationAddress)
+    const tx = await contract.update_withdraw()
+    const txReceipt = await tx.wait()
+    return tx
+}
+
+
 
 export interface CountdownProp {
     days: number;

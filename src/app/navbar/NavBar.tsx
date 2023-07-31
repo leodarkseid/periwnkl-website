@@ -46,11 +46,7 @@ export default function NavBar() {
                     <Navbar.Collapse className="justify-content-end" id="main-navbar">
                         <Nav className="justify-content-end" activeKey="/wagepay">
                             <Nav.Link as={Link} href="/wagepay/employee" active={pathname === "/wagepay/employee"}>Employee</Nav.Link>
-
-                            <NavDropdown title="Organisation" id="topics-dropdown" active={pathname.startsWith("/wagepay/organisation")}>
-                                <NavDropdown.Item as={Link} href="/wagepay/organisation/create" active={pathname === "/wagepay/organisation/create"}>Create</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} href="/wagepay/organisation/dashboard" active={pathname.startsWith("/wagepay/organisation/dashboard")}>Dashboard</NavDropdown.Item>
-                            </NavDropdown>
+                            <Nav.Link as={Link} href="/wagepay/organisation" active={pathname === "/wagepay/organisation"}>Organisation</Nav.Link>
                             < NavbarWalletButton />
                         </Nav>
                     </Navbar.Collapse>
