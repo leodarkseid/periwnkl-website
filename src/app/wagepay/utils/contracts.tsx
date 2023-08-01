@@ -74,6 +74,36 @@ export async function GetLastWithdrawal(organisationAddress: string, employeeAdd
     const date = new Date(date_ * 1000);
     return date.toLocaleString(undefined, { dateStyle: 'medium' });
 }
+export async function IsSuspended(organisationAddress: string, employeeAddress: string){
+    const contract = Wagepay(organisationAddress);
+    const status = await contract.suspended(employeeAddress);
+    const tx = await status.wait();
+    return status
+}
+export async function UnSuspendEmployee(organisationAddress: string, employeeAddress: string){
+    const contract = Wagepay(organisationAddress);
+    const status = await contract.unSuspendEmployee(employeeAddress);
+    const tx = await status.wait();
+    return status
+}
+export async function SuspendEmployee(organisationAddress: string, employeeAddress: string){
+    const contract = Wagepay(organisationAddress);
+    const status = await contract.suspendEmployee(employeeAddress);
+    const tx = await status.wait();
+    return status
+}
+export async function IntervalChange(organisationAddress: string, employeeAddress: string, _newInterval: number ){
+    const contract = Wagepay(organisationAddress);
+    const status = await contract.changeEmployeeInterval(employeeAddress, _newInterval);
+    const tx = await status.wait();
+    return status
+}
+export async function WageChange(organisationAddress: string, employeeAddress: string, _newWage: number ){
+    const contract = Wagepay(organisationAddress);
+    const status = await contract.changeEmployeeWage(employeeAddress, _newWage);
+    const tx = await status.wait();
+    return status
+}
 
 export async function GetTokenAddress(organisationAddress: string) {
     const contract = Wagepay(organisationAddress)
