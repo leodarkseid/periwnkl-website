@@ -29,6 +29,7 @@ interface PieData {
 
 export default function Page() {
     const [name, setName] = useState("");
+    console.log(name, "name")
     const [open, setOpen] = useState(false);
     const [addLoading, setAddLoading] = useState(false);
     const [addDisabled, setAddDisabled] = useState(false);
@@ -64,9 +65,9 @@ export default function Page() {
         setName(_name)
             console.log("GetOrgName called", _name)
             console.log("calling date")
-        const date = await GetTimeStamp(orgAddr);
-        setTimeStamp(date);
-        console.log("date called", date)
+        // const date = await GetTimeStamp(orgAddr);
+        // setTimeStamp(date);
+        // console.log("date called", date)
         console.log("calling, listEmployees")
         
         const listEmployees = await ListOfEmployees(orgAddr);
@@ -75,7 +76,7 @@ export default function Page() {
             console.log("calling empAmount")
         const empAmount = await GetNumberOfEmployee(orgAddr);
         setEmpAmount(empAmount);
-            console.log("Empamount called", empAmount)
+            console.log("EmpAmount called", empAmount)
             console.log("calling GetPieData")
         const result = await GetPieData(orgAddr);
             console.log("GetPieData called", result)
@@ -96,7 +97,7 @@ export default function Page() {
             console.log("Get Total Employees Balance", totalEmployeesBalance)
         setEmployeesBalance(totalEmployeesBalance);
 } catch(error){
-    console.error("fethcdata, error", error)
+    console.error("fetChData, error", error)
 }
 
 
@@ -129,7 +130,7 @@ export default function Page() {
             setAddLoading(true);
             try {
                 if (checkIfValidAddress([addr]) && wage_ > 0) {
-                    const add_ = await AddEmployee(orgAddr, account, wage_, interval_)
+                    const add_ = await AddEmployee(orgAddr, addr, wage_, interval_)
                     console.log(add_)
                 }
                 else { setSubmitFail(true) }

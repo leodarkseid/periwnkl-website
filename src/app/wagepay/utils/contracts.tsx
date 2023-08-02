@@ -1,5 +1,5 @@
 import { ReturnColor } from "@/utils";
-import {PAYWAGES_ABI, PAYWAGES_FACTORY_ABI, PAYWAGES_FACTORY_CONTRACT} from "../constants";
+import { PAYWAGES_ABI, PAYWAGES_FACTORY_ABI, PAYWAGES_FACTORY_CONTRACT } from "../constants";
 
 import { BigNumber, Contract, Signer, ethers, utils } from "ethers";
 
@@ -26,207 +26,348 @@ export function WagepayFactory(): Contract {
         PAYWAGES_FACTORY_ABI,
         signer,)
 }
-export function Wagepay(contractAddress: string): Contract {  
+export function Wagepay(contractAddress: string): Contract {
     return new Contract(
         contractAddress,
         PAYWAGES_ABI,
         signer,)
 }
 
-export async function CreateWagePayOrganisation(tokenAddress: string, interval: number,  name: string){
-    const create = await wagepayFactory.createPayWages(tokenAddress, interval, name);
-    const createTx = await create.wait();
-    console.log(create)
+export async function CreateWagePayOrganisation(tokenAddress: string, interval: number, name: string) {
+
+    try {
+        const create = await wagepayFactory.createPayWages(tokenAddress, interval, name);
+        const createTx = await create.wait();
+        console.log(create)
+
+    } catch (error) {
+        console.error(error)
+        return ""
+    }
 }
 
 export async function checkIfAnEmployee(organisationAddress: string, employeeAddress: string): Promise<boolean> {
-    const contract = Wagepay(organisationAddress);
-    const isEmployee: boolean = await contract.employee(employeeAddress)
-    return isEmployee
+    try {
+        const contract = Wagepay(organisationAddress);
+        const isEmployee: boolean = await contract.employee(employeeAddress)
+        return isEmployee
+
+    } catch (error) {
+        console.error(error)
+        return false
+    }
 }
 
-export async function GetListOfCreatedOrgs(){
-    const names = await wagepayFactory.getCreatorDeployedContracts();
-    return names
+export async function GetListOfCreatedOrgs() {
+    try {
+        const names = await wagepayFactory.getCreatorDeployedContracts();
+        return names
+
+    } catch (error) {
+        console.error(error)
+        return ""
+    }
 }
 
 
 export async function SearchForOrganisation(employeeAddress: string): Promise<string[]> {
-    console.log("called search")
-    let listOfOrgs: string[] = [];
-    const contract = wagepayFactory
-    const listOfContracts: Array<string> = await contract.getDeployedPayWages();
-    await Promise.all(listOfContracts.map(async (org) => {
-        console.log("sorting through orgs", org)
-        if (await checkIfAnEmployee(org, employeeAddress)) {
-            listOfOrgs.push(org)
-        }
-    }));
-    return listOfOrgs
+    try {
+        console.log("called search")
+        let listOfOrgs: string[] = [];
+        const contract = wagepayFactory
+        const listOfContracts: Array<string> = await contract.getDeployedPayWages();
+        await Promise.all(listOfContracts.map(async (org) => {
+            console.log("sorting through orgs", org)
+            if (await checkIfAnEmployee(org, employeeAddress)) {
+                listOfOrgs.push(org)
+            }
+        }));
+        return listOfOrgs
+
+    } catch (error) {
+        console.error(error)
+        return []
+    }
 }
 
 export async function GetNumberOfEmployee(organisationAddress: string) {
-    console.log("called GetNumberOfEmployee")
-    const contract = Wagepay(organisationAddress)
-    const getNumber: BigNumber = await contract.employeesNumber();
-    return getNumber.toNumber();
-
+    try {
+        console.log("called GetNumberOfEmployee")
+        const contract = Wagepay(organisationAddress)
+        const getNumber: BigNumber = await contract.employeesNumber();
+        return getNumber.toNumber();
+    } catch (error) {
+        return 0
+    }
 }
 
 export async function GetOrgName(organisationAddress: string) {
-    const contract = Wagepay(organisationAddress);
-    const name = await contract.name_();
-    return name
+    try {
+        const contract = Wagepay(organisationAddress);
+        const name = await contract.name_();
+        return name
+
+    } catch (error) {
+        console.error(error)
+        return ""
+    }
 }
 
 
 
-export async function GetLastWithdrawal(organisationAddress: string, employeeAddress: string){
-    const contract = Wagepay(organisationAddress);
-    const date_ = await contract.lastWithdrawal(employeeAddress);
-    const date = new Date(date_ * 1000);
-    return date.toLocaleString(undefined, { dateStyle: 'medium' });
+export async function GetLastWithdrawal(organisationAddress: string, employeeAddress: string) {
+    try {
+        const contract = Wagepay(organisationAddress);
+        const date_ = await contract.lastWithdrawal(employeeAddress);
+        const date = new Date(date_ * 1000);
+        return date.toLocaleString(undefined, { dateStyle: 'medium' });
+
+    } catch (error) {
+        console.error(error)
+        return ""
+    }
 }
-export async function IsSuspended(organisationAddress: string, employeeAddress: string){
-    const contract = Wagepay(organisationAddress);
-    const status = await contract.suspended(employeeAddress);
-    const tx = await status.wait();
-    return status
+export async function IsSuspended(organisationAddress: string, employeeAddress: string) {
+    try {
+        const contract = Wagepay(organisationAddress);
+        const status = await contract.suspended(employeeAddress);
+        const tx = await status.wait();
+        return status
+
+    } catch (error) {
+        console.error(error)
+        return ""
+    }
 }
-export async function UnSuspendEmployee(organisationAddress: string, employeeAddress: string){
-    const contract = Wagepay(organisationAddress);
-    const status = await contract.unSuspendEmployee(employeeAddress);
-    const tx = await status.wait();
-    return status
+export async function UnSuspendEmployee(organisationAddress: string, employeeAddress: string) {
+    try {
+        const contract = Wagepay(organisationAddress);
+        const status = await contract.unSuspendEmployee(employeeAddress);
+        const tx = await status.wait();
+        return status
+    } catch (error) {
+        console.error(error)
+        return ""
+    }
 }
-export async function SuspendEmployee(organisationAddress: string, employeeAddress: string){
-    const contract = Wagepay(organisationAddress);
-    const status = await contract.suspendEmployee(employeeAddress);
-    const tx = await status.wait();
-    return status
+export async function SuspendEmployee(organisationAddress: string, employeeAddress: string) {
+    try {
+
+
+        const contract = Wagepay(organisationAddress);
+        const status = await contract.suspendEmployee(employeeAddress);
+        const tx = await status.wait();
+        return status
+    } catch (error) {
+        console.error("Suspended",error);
+        return ""
+    }
 }
-export async function IntervalChange(organisationAddress: string, employeeAddress: string, _newInterval: number ){
-    const contract = Wagepay(organisationAddress);
-    const status = await contract.changeEmployeeInterval(employeeAddress, _newInterval);
-    const tx = await status.wait();
-    return status
+export async function IntervalChange(organisationAddress: string, employeeAddress: string, _newInterval: number) {
+    try {
+        const contract = Wagepay(organisationAddress);
+        const status = await contract.changeEmployeeInterval(employeeAddress, _newInterval);
+        const tx = await status.wait();
+        return status
+    } catch (error) {
+        console.error("IntervalChange",error);
+    }
 }
-export async function WageChange(organisationAddress: string, employeeAddress: string, _newWage: number ){
-    const contract = Wagepay(organisationAddress);
-    const status = await contract.changeEmployeeWage(employeeAddress, _newWage);
-    const tx = await status.wait();
-    return status
+export async function WageChange(organisationAddress: string, employeeAddress: string, _newWage: number) {
+    try {
+        const contract = Wagepay(organisationAddress);
+        const status = await contract.changeEmployeeWage(employeeAddress, _newWage);
+        const tx = await status.wait();
+        return status
+    } catch (error) {
+        console.error("WageChange",error)
+    }
 }
 
 export async function GetTokenAddress(organisationAddress: string) {
-    const contract = Wagepay(organisationAddress)
-    const token = await contract.tokenAddress()
-    return token
+    try {
+        const contract = Wagepay(organisationAddress)
+        const token = await contract.tokenAddress()
+        return token
+    } catch (error) {
+        console.error("GetTokenAddress",error)
+        return ""
+    }
 }
 export async function GetTimeStamp(organisationAddress: string) {
-    const contract = Wagepay(organisationAddress)
-    const token = await contract.blockTimeStamp()
-    return token
+    try {
+        const contract = Wagepay(organisationAddress)
+        const token = await contract.blockTimeStamp()
+        return token
+    } catch (error) {
+        console.error("GetTimeStamp",error)
+        return 0
+    }
 }
 
 
-export async function ListOfEmployees(address: string) {
-    const contract = Wagepay(address)
-    const _total = await GetNumberOfEmployee(address);
-    const total = Number(_total)
-    const listOfEmployees = [];
-    for (let i = 0; i < total; i++) {
-        const id = i;
-        const employee = await contract.employee(id);
-        listOfEmployees.push(employee);
+export async function ListOfEmployees(address: string): Promise<string[]> {
+    try {
+        const contract = Wagepay(address)
+        const _total = await GetNumberOfEmployee(address);
+        const total = Number(_total)
+        const listOfEmployees = [];
+        for (let i = 0; i < total; i++) {
+            const id = i;
+            const employee = await contract.employee(id);
+            listOfEmployees.push(employee);
+        }
+        return listOfEmployees;
+
+    } catch (error) {
+        console.error("ListOfEmployees",error);
+        return []
     }
-    return listOfEmployees;
 }
 
 export async function GetWages(organisationAddress: string, employeeAddress: string) {
-    const contract = Wagepay(organisationAddress)
-    const tx = await contract.wage(employeeAddress)
-    const amount = ethers.utils.formatEther(tx.toString());
-    return Number(amount)
+    try {
+        const contract = Wagepay(organisationAddress)
+        const tx = await contract.wage(employeeAddress)
+        const amount = ethers.utils.formatEther(tx.toString());
+        return Number(amount)
+    } catch (error) {
+        console.error("GetWages",error)
+        return 0
+    }
 }
-    
+
 export async function GetInterval(organisationAddress: string, employeeAddress: string) {
-    const contract = Wagepay(organisationAddress);
-    const tx = await contract.interval(employeeAddress)
-    return tx
+    try {
+        const contract = Wagepay(organisationAddress);
+        const tx = await contract.interval(employeeAddress)
+        return tx
+    } catch (error) {
+        console.error("GetInterval",error)
+        return 0
+    }
 }
 
 export async function GetPieData(address: string) {
-    const listResult = await ListOfEmployees(address);
-    const data = await Promise.all(
-        listResult.map(async (addressObj: string, index: number) => {
-            const wage = await GetWages(addressObj, address);
-            const color = ReturnColor(index++);
-            return {
-                color: color,
-                title: addressObj,
-                value: wage
-            };
-        })
-    );
-    return data
+    try {
+        const listResult = await ListOfEmployees(address);
+        const data = await Promise.all(
+            listResult.map(async (addressObj: string, index: number) => {
+                const wage = await GetWages(addressObj, address);
+                const color = ReturnColor(index++);
+                return {
+                    color: color,
+                    title: addressObj,
+                    value: wage
+                };
+            })
+        );
+        return data
+    } catch (error) {
+        console.error("GetPieData",error)
+        return []
+    }
 }
 
 
-export async function GetBalance(organisationAddress: string, employeeAddress: string ) {
-    const contract = Wagepay(organisationAddress)
-    const tx = await contract.balance(employeeAddress)
-    const amount = ethers.utils.formatEther(tx.toString());
-    return Number(amount)
+export async function GetBalance(organisationAddress: string, employeeAddress: string) {
+    try {
+        const contract = Wagepay(organisationAddress)
+        const tx = await contract.balance(employeeAddress)
+        const amount = ethers.utils.formatEther(tx.toString());
+        return Number(amount)
+    } catch (error) {
+        console.error("GetBalance",error)
+        return 0
+    }
 }
 export async function GetContractBalance(organisationAddress: string) {
-    const contract = Wagepay(organisationAddress)
-    const tx = await contract.contractBalance()
-    const amount = ethers.utils.formatEther(tx.toString());
-    return Number(amount)
+    try {
+        const contract = Wagepay(organisationAddress)
+        const tx = await contract.contractBalance()
+        const amount = ethers.utils.formatEther(tx.toString());
+        return Number(amount)
+    } catch (error) {
+        console.error("GetContractBalance",error)
+        return 0
+    }
 }
 export async function GetWageBill(organisationAddress: string) {
-    const contract = Wagepay(organisationAddress)
-    const tx = await contract.totalWageBill()
-    const amount = ethers.utils.formatEther(tx.toString());
-    return Number(amount)
+    try {
+        const contract = Wagepay(organisationAddress)
+        const tx = await contract.totalWageBill()
+        const amount = ethers.utils.formatEther(tx.toString());
+        return Number(amount)
+    } catch (error) {
+        console.error("GetWageBil",error)
+        return 0
+    }
 }
 export async function GetTotalEmployeesBalance(organisationAddress: string) {
-    const contract = Wagepay(organisationAddress)
-    const tx = await contract.totalEmployeesBalance()
-    const amount = ethers.utils.formatEther(tx.toString());
-    return Number(amount)
+    try {
+        const contract = Wagepay(organisationAddress)
+        const tx = await contract.totalEmployeesBalance()
+        const amount = ethers.utils.formatEther(tx.toString());
+        return Number(amount)
+    } catch (error) {
+        console.error("GetTotalEmployees",error)
+        return 0
+    }
 }
 export async function WithdrawAll(organisationAddress: string) {
-    const contract = Wagepay(organisationAddress)
-    const tx = await contract.withdrawAll()
-    console.log(tx)
-    return tx
+    try {
+        const contract = Wagepay(organisationAddress)
+        const tx = await contract.withdrawAll()
+        console.log(tx)
+        return tx
+    } catch (error) {
+        console.error("SetUpdateBalance",error)
+        return 0
+    }
 }
 export async function GetEstimatedBalance(organisationAddress: string, employeeAddress: string) {
-    const contract = Wagepay(organisationAddress)
-    const tx = await contract.calculateIntervalToBeAdded()
-    const txWage = await contract.wage(employeeAddress)
-    const amount = ethers.utils.formatEther(txWage.toString());
-    const b =  Number(amount)
-    return tx * b
+    try {
+        const contract = Wagepay(organisationAddress)
+        const tx = await contract.calculateIntervalToBeAdded()
+        const txWage = await contract.wage(employeeAddress)
+        const amount = ethers.utils.formatEther(txWage.toString());
+        const b = Number(amount)
+        return tx * b
+    } catch (error) {
+        console.error("SetUpdateBalance",error)
+        return 0
+    }
 }
 
 export async function SetUpdateBalance(organisationAddress: string) {
-    const contract = Wagepay(organisationAddress)
-    const tx = await contract.updateBalance()
-    return tx
+    try {
+        const contract = Wagepay(organisationAddress)
+        const tx = await contract.updateBalance()
+        return tx
+    } catch (error) {
+        console.error("SetUpdateBalance",error)
+    }
 }
 export async function updateBalance_withdraw(organisationAddress: string) {
-    const contract = Wagepay(organisationAddress)
-    const tx = await contract.update_withdraw()
-    return tx
+    try {
+        const contract = Wagepay(organisationAddress)
+        const tx = await contract.update_withdraw()
+        return tx
+    } catch (error) {
+        console.error("updateBalance_withdraw",error)
+        return ""
+    }
 }
 
 export async function AddEmployee(organisationAddress: string, employeeAddress: string, wage: number, interval: number) {
-    const contract = Wagepay(organisationAddress)
-    const tx = await contract.addEmployee(employeeAddress, wage, interval)
-    return tx
+    try {
+        const contract = Wagepay(organisationAddress)
+        const tx = await contract.addEmployee(employeeAddress, wage, interval)
+        return tx
+    } catch (error) {
+        console.error("from add employee",error)
+        return ""
+    }
 }
 
 
