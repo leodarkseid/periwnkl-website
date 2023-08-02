@@ -29,14 +29,25 @@ export function WagepayFactory(): Contract {
 export function Wagepay(contractAddress: string): Contract {  
     return new Contract(
         contractAddress,
-        PAYWAGES_FACTORY_ABI,
+        PAYWAGES_ABI,
         signer,)
 }
 
-async function checkIfAnEmployee(organisationAddress: string, employeeAddress: string): Promise<boolean> {
+export async function CreateWagePayOrganisation(tokenAddress: string, interval: number,  name: string){
+    const create = await wagepayFactory.createPayWages(tokenAddress, interval, name);
+    const createTx = await create.wait();
+    console.log(create)
+}
+
+export async function checkIfAnEmployee(organisationAddress: string, employeeAddress: string): Promise<boolean> {
     const contract = Wagepay(organisationAddress);
     const isEmployee: boolean = await contract.employee(employeeAddress)
     return isEmployee
+}
+
+export async function GetListOfCreatedOrgs(){
+    const names = await wagepayFactory.getCreatorDeployedContracts();
+    return names
 }
 
 
@@ -55,9 +66,14 @@ export async function SearchForOrganisation(employeeAddress: string): Promise<st
 }
 
 export async function GetNumberOfEmployee(organisationAddress: string) {
+    console.log("called GetNumberOfEmployee")
+    try{
     const contract = Wagepay(organisationAddress)
-    const getNumber: BigNumber = await contract.employeesCount();
+    const getNumber: BigNumber = await contract.employeesNumber();
     return getNumber.toNumber();
+}catch(error){
+    console.error(error)
+}
 }
 
 export async function GetOrgName(organisationAddress: string) {
@@ -108,13 +124,11 @@ export async function WageChange(organisationAddress: string, employeeAddress: s
 export async function GetTokenAddress(organisationAddress: string) {
     const contract = Wagepay(organisationAddress)
     const token = await contract.tokenAddress()
-    const tokenTx = await token.wait()
     return token
 }
 export async function GetTimeStamp(organisationAddress: string) {
     const contract = Wagepay(organisationAddress)
     const token = await contract.blockTimeStamp()
-    const tokenTx = await token.wait()
     return token
 }
 
