@@ -81,7 +81,7 @@ export default function Create() {
 
             {resultLoading && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success" />}
             {employeeData.map((data, index) => (
-                <div onClick={(() => router.push(`/stock/employee/${data.address}/${wallet.accounts[0]}`))} key={index}><ListCard key={index} name={data.name} address={data.address} emp={data.emp} /></div>
+                <div onClick={(() => router.push(`/wagepay/employee/${data.address}/`))} key={index}><ListCard key={index} name={data.name} address={data.address} emp={data.emp} /></div>
             ))}
         </div>
         </>

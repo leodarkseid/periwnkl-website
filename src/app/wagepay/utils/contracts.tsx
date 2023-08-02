@@ -67,13 +67,10 @@ export async function SearchForOrganisation(employeeAddress: string): Promise<st
 
 export async function GetNumberOfEmployee(organisationAddress: string) {
     console.log("called GetNumberOfEmployee")
-    try{
     const contract = Wagepay(organisationAddress)
     const getNumber: BigNumber = await contract.employeesNumber();
     return getNumber.toNumber();
-}catch(error){
-    console.error(error)
-}
+
 }
 
 export async function GetOrgName(organisationAddress: string) {
@@ -149,14 +146,13 @@ export async function ListOfEmployees(address: string) {
 export async function GetWages(organisationAddress: string, employeeAddress: string) {
     const contract = Wagepay(organisationAddress)
     const tx = await contract.wage(employeeAddress)
-    const txReceipt = await tx.wait()
-    return tx
+    const amount = ethers.utils.formatEther(tx.toString());
+    return Number(amount)
 }
     
 export async function GetInterval(organisationAddress: string, employeeAddress: string) {
     const contract = Wagepay(organisationAddress);
     const tx = await contract.interval(employeeAddress)
-    const txReceipt = await tx.wait()
     return tx
 }
 
@@ -179,62 +175,57 @@ export async function GetPieData(address: string) {
 
 export async function GetBalance(organisationAddress: string, employeeAddress: string ) {
     const contract = Wagepay(organisationAddress)
-    const tx = await contract.tokenAddress(employeeAddress)
-    const txReceipt = await tx.wait()
-    return tx
+    const tx = await contract.balance(employeeAddress)
+    const amount = ethers.utils.formatEther(tx.toString());
+    return Number(amount)
 }
 export async function GetContractBalance(organisationAddress: string) {
     const contract = Wagepay(organisationAddress)
     const tx = await contract.contractBalance()
-    const txReceipt = await tx.wait()
-    return tx
+    const amount = ethers.utils.formatEther(tx.toString());
+    return Number(amount)
 }
 export async function GetWageBill(organisationAddress: string) {
     const contract = Wagepay(organisationAddress)
     const tx = await contract.totalWageBill()
-    const txReceipt = await tx.wait()
-    return tx
+    const amount = ethers.utils.formatEther(tx.toString());
+    return Number(amount)
 }
 export async function GetTotalEmployeesBalance(organisationAddress: string) {
     const contract = Wagepay(organisationAddress)
     const tx = await contract.totalEmployeesBalance()
-    const txReceipt = await tx.wait()
-    return tx
+    const amount = ethers.utils.formatEther(tx.toString());
+    return Number(amount)
 }
 export async function WithdrawAll(organisationAddress: string) {
     const contract = Wagepay(organisationAddress)
     const tx = await contract.withdrawAll()
-    const txReceipt = await tx.wait()
-    console.log(txReceipt)
+    console.log(tx)
     return tx
 }
 export async function GetEstimatedBalance(organisationAddress: string, employeeAddress: string) {
     const contract = Wagepay(organisationAddress)
     const tx = await contract.calculateIntervalToBeAdded()
     const txWage = await contract.wage(employeeAddress)
-    const txReceipt = await tx.wait()
-    const txReceipt2 = await txWage.wait()
-    console.log(txReceipt)
-    return tx * txWage
+    const amount = ethers.utils.formatEther(txWage.toString());
+    const b =  Number(amount)
+    return tx * b
 }
 
 export async function SetUpdateBalance(organisationAddress: string) {
     const contract = Wagepay(organisationAddress)
     const tx = await contract.updateBalance()
-    const txReceipt = await tx.wait()
     return tx
 }
 export async function updateBalance_withdraw(organisationAddress: string) {
     const contract = Wagepay(organisationAddress)
     const tx = await contract.update_withdraw()
-    const txReceipt = await tx.wait()
     return tx
 }
 
 export async function AddEmployee(organisationAddress: string, employeeAddress: string, wage: number, interval: number) {
     const contract = Wagepay(organisationAddress)
     const tx = await contract.addEmployee(employeeAddress, wage, interval)
-    const txReceipt = await tx.wait()
     return tx
 }
 

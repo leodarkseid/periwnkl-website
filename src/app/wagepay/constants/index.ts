@@ -1,4 +1,4 @@
-export const PAYWAGES_FACTORY_CONTRACT = "0x9143807354fcaDF2d6056e5040D215b44E830588";
+export const PAYWAGES_FACTORY_CONTRACT = "0xb9ba4b866835Fd314DE9f7D88e349a0b3BE9C066";
   // "0xF752F73EAe6BA72D7593332B510d235ACf5447bC";
 
 export const PAYWAGES_FACTORY_ABI = [
@@ -211,6 +211,19 @@ export const PAYWAGES_ABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "calculateIntervalToBeAdded",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "intervalCalculated",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -299,6 +312,25 @@ export const PAYWAGES_ABI = [
         internalType: "bool",
         name: "",
         type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "employees",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
       },
     ],
     stateMutability: "view",
@@ -422,7 +454,33 @@ export const PAYWAGES_ABI = [
   },
   {
     inputs: [],
+    name: "tokenAddress",
+    outputs: [
+      {
+        internalType: "contract IERC20",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "totalEmployeesBalance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalWageBill",
     outputs: [
       {
         internalType: "uint256",
@@ -462,6 +520,13 @@ export const PAYWAGES_ABI = [
   {
     inputs: [],
     name: "updateBalance",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "update_withdraw",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

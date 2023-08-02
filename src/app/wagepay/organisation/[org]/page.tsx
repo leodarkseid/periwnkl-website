@@ -56,33 +56,54 @@ export default function Page() {
 
 
     const FetchData = useCallback(async () => {
+        try{
 
         setPieLoading(true);
+        console.log("calling GetOrgName")
         const _name = await GetOrgName(orgAddr)
         setName(_name)
+            console.log("GetOrgName called", _name)
+            console.log("calling date")
         const date = await GetTimeStamp(orgAddr);
         setTimeStamp(date);
+        console.log("date called", date)
+        console.log("calling, listEmployees")
+        
         const listEmployees = await ListOfEmployees(orgAddr);
         setList(listEmployees);
+        console.log("listEmployees called", listEmployees)
+            console.log("calling empAmount")
         const empAmount = await GetNumberOfEmployee(orgAddr);
         setEmpAmount(empAmount);
+            console.log("Empamount called", empAmount)
+            console.log("calling GetPieData")
         const result = await GetPieData(orgAddr);
+            console.log("GetPieData called", result)
         setData(result);
         setPieLoading(false);
+            console.log("calling GetContract Balance")
         const contractBal = await GetContractBalance(orgAddr);
+            console.log(" GetOrgName called", contractBal)
         setContractBalance(contractBal);
 
+            console.log("calling GetWageBill")
         const wageBill = await GetWageBill(orgAddr);
+            console.log("GetWageBill called", wageBill)
         setWageBill(wageBill);
 
+            console.log("calling GetTotalEmployeesBalance")
         const totalEmployeesBalance = await GetTotalEmployeesBalance(orgAddr);
+            console.log("Get Total Employees Balance", totalEmployeesBalance)
         setEmployeesBalance(totalEmployeesBalance);
+} catch(error){
+    console.error("fethcdata, error", error)
+}
 
-    
 
     }, [orgAddr]);
 
     useEffect(() => {
+        try{
         if (wallet.accounts.length >= 1 && hasProvider) {
             FetchData()
             setAddDisabled(false)
@@ -93,6 +114,9 @@ export default function Page() {
                 setSubmitFail(false)
             }, 5000);
         }
+    }catch(error){
+        console.error("use effect", error)
+    }
     }, [wallet, hasProvider, setList, FetchData, submitFail])
 
 
@@ -179,33 +203,34 @@ export default function Page() {
 
 
                     {list.map((data, index) => (
-                        <ListEmployee onClick={(() => router.push(`/stock/organisation/${orgAddr}/${data}`))} key={index++} id={index + 1} address={data} />
+                        <ListEmployee onClick={(() => router.push(`/wagepay/organisation/${orgAddr}/${data}`))} key={index++} id={index + 1} address={data} />
                     ))}
                 </div>
                 <div className={styles.emp_others}>
                     <div className={styles.emp_slab1}>
-                        <div className="bg-36b9cc w-75 p-3 text-white  rounded-end-pill mb-3"> <BsBank 
-                        style={{ "transform": "scale(1.5)", "marginRight": "10px" }} /> Contract Balance : 
-                        {contractBalance == Infinity ? <Placehold size={3} /> : contractBalance} </div>
-                        <div className="bg-f6c23e w-75 p-3 text-white  rounded-end-pill mb-3"> <CgProfile 
-                        style={{ "transform": "scale(1.5)", "marginRight": "10px" }} />Total Employees : 
-                        {empAmount == Infinity ? <Placehold size={3} /> : empAmount}</div>
-                        <div className="bg-primary w-75 p-3 text-white  rounded-end-pill mb-3"><LiaSuitcaseSolid 
-                        style={{ "transform": "scale(1.5)", "marginRight": "10px" }} />Wage Bill : 
-                        {wageBill == Infinity ? <Placehold size={1} /> : wageBill}</div>
-                        <div className="bg-ff6f61 w-75 p-3 text-white  rounded-end-pill mb-3"><BsBank 
-                        style={{ "transform": "scale(1.5)", "marginRight": "10px" }} />Total Balance : 
-                        {totalEmployeesBalance == Infinity ? <Placehold size={2} /> : totalEmployeesBalance} </div>
-                        <div className="bg-36b9cc w-75 p-3 text-white  rounded-end-pill mb-3"> <BiTime 
-                        style={{ "transform": "scale(1.5)", "marginRight": "10px" }} /> Block Time : 
-                        {timeStamp == "" ? <Placehold size={3} /> : timeStamp} </div>
-                        <div ></div>
+                        <div className="bg-36b9cc w-75 p-3 text-white  rounded-end-pill mb-3"> <BsBank
+                            style={{ "transform": "scale(1.5)", "marginRight": "10px" }} /> Contract Balance :
+                            {contractBalance == Infinity ? <Placehold size={3} /> : contractBalance} </div>
+                        <div className="bg-f6c23e w-75 p-3 text-white  rounded-end-pill mb-3"> <CgProfile
+                            style={{ "transform": "scale(1.5)", "marginRight": "10px" }} />Total Employees :
+                            {empAmount == Infinity ? <Placehold size={3} /> : empAmount}</div>
+                        <div className="bg-primary w-75 p-3 text-white  rounded-end-pill mb-3"><LiaSuitcaseSolid
+                            style={{ "transform": "scale(1.5)", "marginRight": "10px" }} />Wage Bill :
+                            {wageBill == Infinity ? <Placehold size={1} /> : wageBill}</div>
+                        <div className="bg-ff6f61 w-75 p-3 text-white  rounded-end-pill mb-3"><BsBank
+                            style={{ "transform": "scale(1.5)", "marginRight": "10px" }} />Total Balance :
+                            {totalEmployeesBalance == Infinity ? <Placehold size={2} /> : totalEmployeesBalance} </div>
+                        <div className="bg-36b9cc w-75 p-3 text-white  rounded-end-pill mb-3"> <BiTime
+                            style={{ "transform": "scale(1.5)", "marginRight": "10px" }} /> Block Time :
+                            {timeStamp == "" ? <Placehold size={3} /> : timeStamp} </div>
                     </div>
                     {pieLoading && wallet.accounts.length >= 1 && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success" />}
-                    {!pieLoading && wallet.accounts.length >= 1 && <>
-                        {allValuesZero ? <Alert variant="success">All Employees currently do not have Stock Options</Alert> : <Piechart data={data} />}
+                    {!pieLoading && wallet.accounts.length >= 1 &&
+                        <>
+                            {allValuesZero ? <Alert variant="success">All Employees currently do not have Stock Options</Alert> : <Piechart data={data} />}
 
-                        <div className="text-center text-white bg-primary rounded-pill w-75 mx-auto p-1 mt-3 mb-3">Employee StockOptions InfoGraph</div></>}
+                            <div className="text-center text-white bg-primary rounded-pill w-75 mx-auto p-1 mt-3 mb-3">Employee StockOptions InfoGraph</div>
+                        </>}
 
 
                 </div>
