@@ -38,7 +38,7 @@ export default function Page() {
     const [interval_, setInterval_] = useState(0);
     const [submitFail, setSubmitFail] = useState(false);
     const [pieLoading, setPieLoading] = useState(false);
-    const [timeStamp, setTimeStamp] = useState("");
+   
     const [list, setList] = useState<string[]>([]);
     const [empAmount, setEmpAmount] = useState(Infinity);
     const [data, setData] = useState<PieData[]>([]);
@@ -65,11 +65,8 @@ export default function Page() {
         setName(_name)
             console.log("GetOrgName called", _name)
             console.log("calling date")
-        // const date = await GetTimeStamp(orgAddr);
-        // setTimeStamp(date);
-        // console.log("date called", date)
-        console.log("calling, listEmployees")
         
+        console.log("calling, listEmployees")
         const listEmployees = await ListOfEmployees(orgAddr);
         setList(listEmployees);
         console.log("listEmployees called", listEmployees)
@@ -221,9 +218,7 @@ export default function Page() {
                         <div className="bg-ff6f61 w-75 p-3 text-white  rounded-end-pill mb-3"><BsBank
                             style={{ "transform": "scale(1.5)", "marginRight": "10px" }} />Total Balance :
                             {totalEmployeesBalance == Infinity ? <Placehold size={2} /> : totalEmployeesBalance} </div>
-                        <div className="bg-36b9cc w-75 p-3 text-white  rounded-end-pill mb-3"> <BiTime
-                            style={{ "transform": "scale(1.5)", "marginRight": "10px" }} /> Block Time :
-                            {timeStamp == "" ? <Placehold size={3} /> : timeStamp} </div>
+
                     </div>
                     {pieLoading && wallet.accounts.length >= 1 && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success" />}
                     {!pieLoading && wallet.accounts.length >= 1 &&

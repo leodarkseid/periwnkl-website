@@ -18,6 +18,7 @@
     width: 90%;
     align-items: center;
     overflow: auto;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
 }
 
 .emp_card{
@@ -36,6 +37,7 @@
     justify-content: center;
     align-content: center;
     overflow: auto;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
 }
 
 .emp_slab1{
