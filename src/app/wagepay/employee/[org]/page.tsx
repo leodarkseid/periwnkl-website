@@ -26,10 +26,12 @@ export default function Page() {
 
     const params: Params = useParams()
     const orgAddr = params.org
-    const account = wallet.accounts[0];
+    const accountEmp = wallet.accounts[0];
 
     useEffect(() => {
         async function FetchData() {
+            try {
+            
             setCountDownLoading(true);
             setEmployeeBalanceLoading(true);
             setUpdateLoading(true);
@@ -41,53 +43,68 @@ export default function Page() {
             const getTokenAddress = await GetTokenAddress(orgAddr);
             setTokenAddress(getTokenAddress);
 
-            const getLastWithdrawal = await GetLastWithdrawal(orgAddr, account)
+            const getLastWithdrawal = await GetLastWithdrawal(orgAddr, accountEmp)
             setLastWithdrawal(getLastWithdrawal);
 
-            const employeeBalance = await GetBalance(orgAddr, account);
+            const employeeBalance = await GetBalance(orgAddr, accountEmp);
             setEmployeeBalance(employeeBalance);
             setEmployeeBalanceLoading(false);
 
 
-            const update = await SetUpdateBalance(orgAddr);
-            setUpdateLoading(false);
-
             const withdrawAll = await WithdrawAll(orgAddr);
             setWithdrawLoading(false);
 
-            const getEstimatedBalance = await GetEstimatedBalance(orgAddr, account);
+            const getEstimatedBalance = await GetEstimatedBalance(orgAddr, accountEmp);
             setEstimatedBalance(getEstimatedBalance);
             setEstimatedBalanceLoading(false);
 
-            const updateAndWithdraw = await updateBalance_withdraw(orgAddr);
             SetUpdateBalanceWithdraw(false);
 
 
 
 
 
-            const vestingCountdown: CountdownProp = await GetNextWageCountdown(orgAddr, account);
+            const vestingCountdown: CountdownProp = await GetNextWageCountdown(orgAddr, accountEmp);
             setCountdown(vestingCountdown);
             setCountDownLoading(false);
             if (vestingCountdown.days === 0 && vestingCountdown.hours === 0 && vestingCountdown.minutes === 0) {
                 setAlertCountdown(true);
             }
+        } catch (error) {
+            }
+            finally{
+                setCountDownLoading(false);
+                setEmployeeBalanceLoading(false);
+                setUpdateLoading(false);
+                setWithdrawLoading(false);
+                setEstimatedBalanceLoading(false);
+                SetUpdateBalanceWithdraw(false);
+            }
         }
+        
         if (wallet.accounts.length >= 1 && hasProvider) { FetchData(); }
-    }, [account, hasProvider, orgAddr, wallet.accounts.length])
+        else {
+            setCountDownLoading(false);
+            setEmployeeBalanceLoading(false);
+            setUpdateLoading(false);
+            setWithdrawLoading(false);
+            setEstimatedBalanceLoading(false);
+            SetUpdateBalanceWithdraw(false);
+}
+    }, [accountEmp, hasProvider, orgAddr, wallet.accounts.length])
 
     return (
         <>
             <div className="bg-primary rounded text-center text-white p-2 w-100">{orgAddr}</div>
             <div className={"container-xl bg-white h-75 w-75 rounded shadow mt-5 mx-auto d-flex flex-column justify-content-center px-5 pb-5"}>
                 <div className=" bg-ff6f61 bg-gradient mx-3 text-white text-center py-0 mt-3 mb-2"> Last withdrawal :
-                    {lastWithdrawal == "" ? <Spinner as="span"
+                    {withdrawLoading ? <Spinner as="span"
                         animation="border"
                         size="sm"
                         role="status"
                         aria-hidden="true" /> : lastWithdrawal} </div>
                 <div className="rounded w-50 bg-transparent mx-auto text-center text-primary mb-5 border border-primary border-2">Token Address :
-                    {tokenAddress == "" ?
+                    {tokenAddress == "" && withdrawLoading ?
                         <Spinner
                             as="span"
                             animation="border"

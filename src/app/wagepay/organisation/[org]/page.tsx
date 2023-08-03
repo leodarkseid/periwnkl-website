@@ -42,9 +42,9 @@ export default function Page() {
     const [list, setList] = useState<string[]>([]);
     const [empAmount, setEmpAmount] = useState(Infinity);
     const [data, setData] = useState<PieData[]>([]);
-    const [contractBalance, setContractBalance] = useState(0);
-    const [wageBill, setWageBill] = useState(0);
-    const [totalEmployeesBalance, setEmployeesBalance] = useState(0);
+    const [contractBalance, setContractBalance] = useState(Infinity);
+    const [wageBill, setWageBill] = useState(Infinity);
+    const [totalEmployeesBalance, setEmployeesBalance] = useState(Infinity);
 
     const { wallet, hasProvider, isConnecting, signer, connectMetaMask } = useMetaMask()
     const router = useRouter();
@@ -192,9 +192,11 @@ export default function Page() {
                         </Form>
                     </Collapse>
                     <Button
+                    className="mb-4"
                         onClick={() => setOpen(!open)}
                         aria-controls="example-collapse-text"
                         aria-expanded={open}
+                        disabled ={interval_ != 0 || wage_ != 0 || address_ != ""}
                     >
                         Add A New Employee
                     </Button>
@@ -206,17 +208,17 @@ export default function Page() {
                 </div>
                 <div className={styles.emp_others}>
                     <div className={styles.emp_slab1}>
-                        <div className="bg-36b9cc w-75 p-3 text-white  rounded-end-pill mb-3"> <BsBank
+                        <div className="bg-36b9cc p-3 text-white  rounded-end-pill mb-3" style={{ "width": "90%" }}> <BsBank
                             style={{ "transform": "scale(1.5)", "marginRight": "10px" }} /> Contract Balance :
                             {contractBalance == Infinity ? <Placehold size={3} /> : contractBalance} </div>
-                        <div className="bg-f6c23e w-75 p-3 text-white  rounded-end-pill mb-3"> <CgProfile
+                        <div className="bg-f6c23e p-3 text-white  rounded-end-pill mb-3" style={{ "width": "90%" }}> <CgProfile
                             style={{ "transform": "scale(1.5)", "marginRight": "10px" }} />Total Employees :
                             {empAmount == Infinity ? <Placehold size={3} /> : empAmount}</div>
-                        <div className="bg-primary w-75 p-3 text-white  rounded-end-pill mb-3"><LiaSuitcaseSolid
+                        <div className="bg-primary p-3 text-white  rounded-end-pill mb-3" style={{ "width": "90%" }}><LiaSuitcaseSolid
                             style={{ "transform": "scale(1.5)", "marginRight": "10px" }} />Wage Bill :
                             {wageBill == Infinity ? <Placehold size={1} /> : wageBill}</div>
-                        <div className="bg-ff6f61 w-75 p-3 text-white  rounded-end-pill mb-3"><BsBank
-                            style={{ "transform": "scale(1.5)", "marginRight": "10px" }} />Total Balance :
+                        <div className="bg-ff6f61 p-3 text-white  rounded-end-pill mb-3" style={{"width":"90%"}}><BsBank
+                            style={{ "transform": "scale(1.5)", "marginRight": "10px", }} />Total Balance :
                             {totalEmployeesBalance == Infinity ? <Placehold size={2} /> : totalEmployeesBalance} </div>
 
                     </div>

@@ -1,4 +1,4 @@
-export const PAYWAGES_FACTORY_CONTRACT = "0xb9ba4b866835Fd314DE9f7D88e349a0b3BE9C066";
+export const PAYWAGES_FACTORY_CONTRACT = "0x67225f71512d2d7A7769EfFAC445E39Af12756A7";
   // "0xF752F73EAe6BA72D7593332B510d235ACf5447bC";
 
 export const PAYWAGES_FACTORY_ABI = [
@@ -156,6 +156,13 @@ export const PAYWAGES_ABI = [
     type: "event",
   },
   {
+    inputs: [],
+    name: "activate",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -273,7 +280,13 @@ export const PAYWAGES_ABI = [
     type: "function",
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: "address",
+        name: "_employeeAddress",
+        type: "address",
+      },
+    ],
     name: "countdown",
     outputs: [
       {

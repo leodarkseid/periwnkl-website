@@ -131,7 +131,6 @@ export async function IsSuspended(organisationAddress: string, employeeAddress: 
     try {
         const contract = Wagepay(organisationAddress);
         const status = await contract.suspended(employeeAddress);
-        const tx = await status.wait();
         return status
 
     } catch (error) {
@@ -143,7 +142,6 @@ export async function UnSuspendEmployee(organisationAddress: string, employeeAdd
     try {
         const contract = Wagepay(organisationAddress);
         const status = await contract.unSuspendEmployee(employeeAddress);
-        const tx = await status.wait();
         return status
     } catch (error) {
         console.error(error)
@@ -156,7 +154,6 @@ export async function SuspendEmployee(organisationAddress: string, employeeAddre
 
         const contract = Wagepay(organisationAddress);
         const status = await contract.suspendEmployee(employeeAddress);
-        const tx = await status.wait();
         return status
     } catch (error) {
         console.error("Suspended",error);
@@ -166,7 +163,9 @@ export async function SuspendEmployee(organisationAddress: string, employeeAddre
 export async function IntervalChange(organisationAddress: string, employeeAddress: string, _newInterval: number) {
     try {
         const contract = Wagepay(organisationAddress);
-        const status = await contract.changeEmployeeInterval(employeeAddress, _newInterval);
+        const _amount = _newInterval * 86400
+        const amount = ethers.utils.parseEther(_amount.toString())
+        const status = await contract.changeEmployeeInterval(employeeAddress, amount);
         const tx = await status.wait();
         return status
     } catch (error) {
@@ -214,7 +213,7 @@ export async function ListOfEmployees(address: string): Promise<string[]> {
         const listOfEmployees = [];
         for (let i = 0; i < total; i++) {
             const id = i;
-            const employee = await contract.employee(id);
+            const employee = await contract.employees(id);
             listOfEmployees.push(employee);
         }
         return listOfEmployees;
@@ -229,7 +228,7 @@ export async function GetWages(organisationAddress: string, employeeAddress: str
     try {
         const contract = Wagepay(organisationAddress)
         const tx = await contract.wage(employeeAddress)
-        const amount = ethers.utils.formatEther(tx.toString());
+        const amount = ethers.utils.formatUnits(tx.toString(),10);
         return Number(amount)
     } catch (error) {
         console.error("GetWages",error)
@@ -241,7 +240,8 @@ export async function GetInterval(organisationAddress: string, employeeAddress: 
     try {
         const contract = Wagepay(organisationAddress);
         const tx = await contract.interval(employeeAddress)
-        return tx
+        const amount = tx/86400;
+        return Number(amount)
     } catch (error) {
         console.error("GetInterval",error)
         return 0
@@ -285,7 +285,7 @@ export async function GetContractBalance(organisationAddress: string) {
     try {
         const contract = Wagepay(organisationAddress)
         const tx = await contract.contractBalance()
-        const amount = ethers.utils.formatEther(tx.toString());
+        const amount = ethers.utils.formatUnits(tx.toString(),10);
         return Number(amount)
     } catch (error) {
         console.error("GetContractBalance",error)
@@ -327,14 +327,20 @@ export async function WithdrawAll(organisationAddress: string) {
 }
 export async function GetEstimatedBalance(organisationAddress: string, employeeAddress: string) {
     try {
+        let tx;
         const contract = Wagepay(organisationAddress)
-        const tx = await contract.calculateIntervalToBeAdded()
+        try{
+        tx = await contract.calculateIntervalToBeAdded()
+    }catch(error){
+        console.error("error from calculateInterval", error)
+        tx = 0;
+    }
         const txWage = await contract.wage(employeeAddress)
         const amount = ethers.utils.formatEther(txWage.toString());
         const b = Number(amount)
         return tx * b
     } catch (error) {
-        console.error("SetUpdateBalance",error)
+        console.error(" get estimated balance ",error)
         return 0
     }
 }
@@ -362,7 +368,8 @@ export async function updateBalance_withdraw(organisationAddress: string) {
 export async function AddEmployee(organisationAddress: string, employeeAddress: string, wage: number, interval: number) {
     try {
         const contract = Wagepay(organisationAddress)
-        const tx = await contract.addEmployee(employeeAddress, wage, interval)
+        const _wage = ethers.utils.parseUnits(interval.toString(), 10)
+        const tx = await contract.addEmployee(employeeAddress, Number(_wage), (interval*86400))
         return tx
     } catch (error) {
         console.error("from add employee",error)
@@ -380,11 +387,14 @@ export interface CountdownProp {
 export async function GetNextWageCountdown(organisationAddress: string, employeeAddress: string): Promise<CountdownProp> {
     try {
         const contract = Wagepay(organisationAddress);
-        const vestingCountdown = await contract.vestingCountdown(employeeAddress);
+        const vestingCountdown = await contract.countdown(employeeAddress);
+        console.log(vestingCountdown,"vestingCountdown")
         const days = Math.floor(vestingCountdown / (24 * 60 * 60));
+        console.log(days, "days")
         const hours = Math.floor((vestingCountdown % (24 * 60 * 60)) / (60 * 60));
         const minutes = Math.floor((vestingCountdown % (60 * 60)) / 60);
         const data = { days, hours, minutes };
+        console.log(data)
         return data
     } catch (error) {
         console.error("countdown error", error)

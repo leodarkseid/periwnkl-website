@@ -17,14 +17,13 @@ interface EmpDashProps {
 
 export default function EmpDashBoard(props: EmpDashProps) {
     const [countdown, setCountdown] = useState<CountdownProp>();
-    const [wage_, setWage] = useState(0);
-    const [interval_, setInterval_] = useState(0);
-    const [balance_, setBalance_] = useState(0);
+    const [wage_, setWage] = useState(Infinity);
+    const [interval_, setInterval_] = useState(Infinity);
+    const [balance_, setBalance_] = useState(Infinity);
     const [lastWithdrawal, setLastWithdrawal] = useState("");
     const [suspended, setSuspended] = useState(false);
     const [alertCountdown, setAlertCountdown] = useState(false);
     const [intervalLoading, setIntervalLoading] = useState(false);
-    const [sPLoading, setSpLoading] = useState(false);
     const [countdownLoading, setCountDownLoading] = useState(false);
     const [balanceLoading, setBalanceLoading] = useState(false);
     const [intervalSubmitLoading, setIntervalSubmitLoading] = useState(false);
@@ -33,6 +32,7 @@ export default function EmpDashBoard(props: EmpDashProps) {
     const [suspensionLoading, setSuspensionLoading] = useState(false);
     const [newWage, setNewWage] = useState(0);
     const [newInterval, setNewInterval] = useState(0);
+    const [changesCanBeMade, setChangesCanBeMade] = useState(false);
 
     const { wallet, hasProvider, isConnecting, signer, connectMetaMask } = useMetaMask()
 
@@ -41,7 +41,9 @@ export default function EmpDashBoard(props: EmpDashProps) {
     const empAddr = params.emp
     const orgAddr = params.org
 
-    async function HandleSuspension() {
+    async function HandleSuspension(e: SyntheticEvent) {
+        e.preventDefault();
+        console.log("called")
         try {
             if (wallet.accounts.length >= 1 && hasProvider) {
                 if (suspended) {
@@ -63,8 +65,8 @@ export default function EmpDashBoard(props: EmpDashProps) {
         async function FetchData() {
 
             setCountDownLoading(true);
-            setSpLoading(true);
-           
+
+
             const wage_: number = await GetWages(orgAddr, empAddr);
 
             const interv = await GetInterval(orgAddr, empAddr);
@@ -95,6 +97,7 @@ export default function EmpDashBoard(props: EmpDashProps) {
             setCountDownLoading(false);
             if (vestingCountdown.days === 0 && vestingCountdown.hours === 0 && vestingCountdown.minutes === 0) {
                 setAlertCountdown(true);
+                setChangesCanBeMade(true);
             }
 
         }
@@ -107,10 +110,10 @@ export default function EmpDashBoard(props: EmpDashProps) {
         setIntervalSubmitLoading(true);
         if (wallet.accounts.length >= 1 && hasProvider) {
             try {
-                if(newInterval > 0){
-                   const submit = await IntervalChange(orgAddr, empAddr, interval_); 
+                if (newInterval > 0) {
+                    const submit = await IntervalChange(orgAddr, empAddr, interval_);
                 }
-                
+
             } catch (error) {
                 console.error(error)
             } finally {
@@ -124,8 +127,8 @@ export default function EmpDashBoard(props: EmpDashProps) {
         setWageSubmitLoading(true);
         if (wallet.accounts.length >= 1 && hasProvider) {
             try {
-                if(newWage > 0){
-                   const submit = await WageChange(orgAddr, empAddr, wage_); 
+                if (newWage > 0) {
+                    const submit = await WageChange(orgAddr, empAddr, wage_);
                 }
             } catch (error) {
                 console.error(error)
@@ -155,23 +158,23 @@ export default function EmpDashBoard(props: EmpDashProps) {
                         </div>
                         <div className="bg-primary text-center rounded-pill text-white mx-auto w-50 mb-5">Countdown For Stock Options to Vest</div>
 
-                        {alertCountdown && <Alert variant="danger" className="mb-4" dismissible>Vesting Schedule has not been set</Alert>}
+                        {alertCountdown && <Alert variant="danger" className="mb-4" dismissible>Wage Interval is either 0 or has not been set</Alert>}
 
-                        <div className={styles.main_grid__timer_box_small_card}>Wage: {sPLoading ? <Spinner
+                        <div className={styles.main_grid__timer_box_small_card}>Wage: {(wage_ == Infinity) ? <Spinner
                             as="span"
                             animation="border"
                             size="sm"
                             role="status"
                             aria-hidden="true"
                         /> : wage_}</div>
-                        <div className={styles.main_grid__timer_box_small_card}>Interval: {intervalLoading ? <Spinner
+                        <div className={styles.main_grid__timer_box_small_card}>Interval: {interval_ == Infinity ? <Spinner
                             as="span"
                             animation="border"
                             size="sm"
                             role="status"
                             aria-hidden="true"
                         /> : interval_}</div>
-                        <div className={styles.main_grid__timer_box_small_card}>Balance: {balanceLoading ? <Spinner
+                        <div className={styles.main_grid__timer_box_small_card}>Balance: {balance_ == Infinity ? <Spinner
                             as="span"
                             animation="border"
                             size="sm"
@@ -198,8 +201,10 @@ export default function EmpDashBoard(props: EmpDashProps) {
 
                         <Form onSubmit={HandleIntervalSubmit} >
                             <Form.Group className={styles.main_grid2__row} controlId="formBasicGrantOptions">
-                                <div className={styles.main_grid2__row_display}><Form style={{ "width": "90%" }} className=""><Form.Control className="w-100 shadow-none border-white" onChange={e => setNewInterval(Number(e.target.value))} min={1} type="number"  /></Form></div>
-                                <Button type="submit" disabled={intervalSubmitLoading} className={styles.main_grid2__row_button}>{intervalSubmitLoading ? <Spinner
+                                <div className={styles.main_grid2__row_display}><Form style={{ "width": "90%" }} className=""><Form.Control className="shadow-none border-0" onChange={e => setNewInterval(Number(e.target.value))} min={1} type="number" />
+                                </Form>
+                                </div>
+                                <Button type="submit" disabled={intervalSubmitLoading || !changesCanBeMade} className={styles.main_grid2__row_button}>{intervalSubmitLoading ? <Spinner
                                     as="span"
                                     animation="border"
                                     size="sm"
@@ -211,8 +216,10 @@ export default function EmpDashBoard(props: EmpDashProps) {
 
                         <Form onSubmit={HandleWageSubmit} >
                             <Form.Group className={styles.main_grid2__row} controlId="formBasicSetSchedule">
-                                <div className={styles.main_grid2__row_display}><Form style={{ "width": "90%" }}><Form.Control className="w-100 shadow-none border-white" onChange={e => setNewWage(Number(e.target.value))} type="number" min={1} /></Form></div>
-                                <Button type="submit" disabled={wageSubmitLoading} className={styles.main_grid2__row_button}>{wageSubmitLoading ? <Spinner
+                                <div className={styles.main_grid2__row_display}><Form style={{ "width": "90%" }}><Form.Control className=" shadow-none border-0" onChange={e => setNewWage(Number(e.target.value))} type="number" min={1} />
+                                </Form>
+                                </div>
+                                <Button disabled={wageSubmitLoading || !changesCanBeMade} className={styles.main_grid2__row_button}>{wageSubmitLoading ? <Spinner
                                     as="span"
                                     animation="border"
                                     size="sm"
@@ -221,15 +228,15 @@ export default function EmpDashBoard(props: EmpDashProps) {
                                 /> : "Set Wage"}</Button>
                             </Form.Group>
                         </Form>
-                        
-                        {!suspended && <Button type="submit" variant="danger" >{suspensionLoading ? <Spinner
+
+                        {!suspended && <Button onClick={HandleSuspension} variant="danger" >{suspensionLoading ? <Spinner
                             as="span"
                             animation="border"
                             size="sm"
                             role="status"
                             aria-hidden="true"
                         /> : "Suspend"}</Button>}
-                        {suspended && <Button type="submit" onClick={(()=>{HandleSuspension})} variant="success" >{suspensionLoading ? <Spinner
+                        {suspended && <Button type="submit" onClick={HandleSuspension} variant="success" >{suspensionLoading ? <Spinner
                             as="span"
                             animation="border"
                             size="sm"
