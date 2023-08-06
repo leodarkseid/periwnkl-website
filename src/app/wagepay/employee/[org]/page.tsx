@@ -82,6 +82,7 @@ export default function Page() {
             }
         }
         
+        
         if (wallet.accounts.length >= 1 && hasProvider) { FetchData(); }
         else {
             setCountDownLoading(false);
