@@ -6,7 +6,6 @@ import FPNavbar from "./frontPage/navbar";
 export default function Page() {
     return (
         <>
-        <FPNavbar />
         <FPHeader />
         <FPBody />
         <FPFooter />

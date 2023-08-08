@@ -2,6 +2,7 @@
 
 import { Button, Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import Link from "next/link";
+import Image from "next/image"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import NavbarWalletButton from "./navbarWalletButton"
 
@@ -51,6 +52,25 @@ export default function NavBar() {
                             < NavbarWalletButton />
                         </Nav>
                     </Navbar.Collapse>
+                </Container>
+            </Navbar>
+        );
+    }
+
+    else if (isFrontPage){
+        return (
+            <Navbar className="bg-body-tertiary">
+                <Container>
+                    <Navbar.Brand href="#home">
+                        <Image
+                            alt=""
+                            src="/img/logo.svg"
+                            width="30"
+                            height="30"
+                            className="d-inline-block align-top"
+                        />{' '}
+                        React Bootstrap
+                    </Navbar.Brand>
                 </Container>
             </Navbar>
         );
