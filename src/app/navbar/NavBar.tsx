@@ -69,7 +69,7 @@ export default function NavBar() {
                             height="30"
                             className="d-inline-block align-top"
                         />{' '}
-                        React Bootstrap
+                        PeriWnkl
                     </Navbar.Brand>
                 </Container>
             </Navbar>
