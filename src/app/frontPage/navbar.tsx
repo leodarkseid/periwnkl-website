@@ -1,10 +1,14 @@
+"use client"
+import Image from "next/image";
+import { Navbar, Container } from "react-bootstrap";
+
 export default function FPNavbar() {
     return (
         <>
             <Navbar className="bg-body-tertiary">
                 <Container>
                     <Navbar.Brand href="#home">
-                        <img
+                        <Image
                             alt=""
                             src="/img/logo.svg"
                             width="30"
