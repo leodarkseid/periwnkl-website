@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import Logo from "@/image/logoBlue.png";
 import Link from "next/link";
 import Image from "next/image"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -64,7 +65,7 @@ export default function NavBar() {
                     <Navbar.Brand href="#home">
                         <Image
                             alt=""
-                            src="../image/logoBlue.png"
+                            src={Logo}
                             width="30"
                             height="30"
                             className="d-inline-block align-top"
