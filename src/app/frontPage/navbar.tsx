@@ -18,7 +18,6 @@ export default function FPNavbar() {
                         React Bootstrap
                     </Navbar.Brand>
                 </Container>
-                
             </Navbar>
         </>
     )
