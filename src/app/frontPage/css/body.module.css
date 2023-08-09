@@ -17,18 +17,37 @@
     border-radius: 25px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     padding-bottom: 0;
+    cursor: pointer;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-property: all;
+    transition-duration: 500ms;
     /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); */
+}
+.card:hover{
+    transform: scale(1.07);
 }
 .card_below{
     display: flex;
     flex-direction: column;
     padding: 10px;
-    background-color: #0d6efd;
+    background-color: #ff6f61;
     color: #ffffff;
     z-index: 0;
     margin-top: 0;
-    height: 122px;
+    height: 125px;
     border-radius: 0 0 25px 25px;
     justify-content: center;
     text-align: center;
+    font-weight:900 ;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 5px #ff6f61 ;
+}
+.card_below h3{
+    color: #fff;
+    font-weight:500;
+    padding-bottom: 5px;
+}
+.card_below p{
+    color: #fcd8d8;
+    font-weight:100;
 }

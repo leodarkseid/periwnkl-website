@@ -5,6 +5,7 @@ import { Inter, Roboto } from 'next/font/google'
 import { Container} from '@/components/bootstrap'
 import { Metadata } from 'next'
 import NavBar from './navbar/NavBar'
+import Footer from './footer'
 import  { MetaMaskContextProvider} from '../hooks/useMetaMask'
 
 
@@ -34,6 +35,7 @@ export default function RootLayout({
               {children}
             </Container>
           </main>
+          <Footer />
       </body>
     </html>
     </MetaMaskContextProvider>
