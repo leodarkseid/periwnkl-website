@@ -61,7 +61,7 @@ export default function NavBar() {
 
     else if (isFrontPage){
         return (
-            <Navbar className="bg-body-tertiary">
+            <Navbar className="shadow bg-body-tertiary">
                 <Container>
                     <Navbar.Brand href="/">
                         {/* <Image
