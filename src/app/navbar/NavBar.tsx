@@ -63,14 +63,14 @@ export default function NavBar() {
         return (
             <Navbar className="bg-body-tertiary">
                 <Container>
-                    <Navbar.Brand href="#home">
-                        <Image
+                    <Navbar.Brand href="/">
+                        {/* <Image
                             alt="Logo"
                             src={Logo}
                             width="30"
                             height="30"
                             className="d-inline-block align-top"
-                        />{' '}
+                        />{' '} */}
                         <Image
                             alt="LogoText"
                             src={LogoText}
