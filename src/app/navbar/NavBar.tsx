@@ -2,6 +2,7 @@
 
 import { Button, Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import Logo from "@/image/logoBlue.png";
+import LogoText from "@/image/logoText.png";
 import Link from "next/link";
 import Image from "next/image"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -64,13 +65,16 @@ export default function NavBar() {
                 <Container>
                     <Navbar.Brand href="#home">
                         <Image
-                            alt=""
+                            alt="Logo"
                             src={Logo}
                             width="30"
                             height="30"
                             className="d-inline-block align-top"
                         />{' '}
-                        Periwnkl
+                        <Image
+                            alt="LogoText"
+                            src={LogoText}
+                        />
                     </Navbar.Brand>
                 </Container>
             </Navbar>
