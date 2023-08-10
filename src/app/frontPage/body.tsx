@@ -3,7 +3,9 @@ import { Row, Col } from "react-bootstrap";
 import styles from "./css/body.module.css"
 import Wage from "@/image/wage.svg";
 import Stock from "@/image/stock.svg";
+import Crm from "@/image/crm.svg";
 import Image from "next/image"
+import { relative } from "path";
 
 export default function FPBody() {
     return (
@@ -28,6 +30,7 @@ export default function FPBody() {
                     <div className={styles.card}>
                         <Col>
                             <Image
+                                style={{ "maxHeight": "300px", "maxWidth": "300px", "position": "relative" }}
                                 alt="LogoText"
                                 src={Stock}
                                 width="300"
@@ -42,8 +45,9 @@ export default function FPBody() {
                     <div className={styles.card}>
                         <Col>
                             <Image
+                            style={{"maxHeight":"300px", "maxWidth":"300px", "position":"relative"}}
                                 alt="LogoText"
-                                src={Wage}
+                                src={Crm}
                                 width="300"
                                 height="300"
                             />
