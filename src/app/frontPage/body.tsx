@@ -2,6 +2,7 @@
 import { Row, Col } from "react-bootstrap";
 import styles from "./css/body.module.css"
 import Wage from "@/image/wage.svg";
+import Stock from "@/image/stock.svg";
 import Image from "next/image"
 
 export default function FPBody() {
@@ -28,7 +29,7 @@ export default function FPBody() {
                         <Col>
                             <Image
                                 alt="LogoText"
-                                src={Wage}
+                                src={Stock}
                                 width="300"
                                 height="300"
                             />

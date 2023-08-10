@@ -21,6 +21,7 @@
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-property: all;
     transition-duration: 500ms;
+    border: 2px solid#0d6efd ;
     /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); */
 }
 .card:hover{
@@ -30,7 +31,7 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
-    background-color: #ff6f61;
+    background-color: #0d6efd;
     color: #ffffff;
     z-index: 0;
     margin-top: 0;
@@ -40,7 +41,7 @@
     text-align: center;
     font-weight:900 ;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border: 5px #ff6f61 ;
+    
 }
 .card_below h3{
     color: #fff;
