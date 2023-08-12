@@ -34,7 +34,7 @@ export default function FPBody() {
                                 alt="LogoText"
                                 src={Stock}
                                 width="300"
-                                height="300"
+                                height="300" 
                             />
                             <div className={styles.card_below}>
                                 <h3>StockOptions</h3>
