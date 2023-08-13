@@ -1,5 +1,5 @@
 "use client"
-import { Row, Col } from "react-bootstrap";
+
 import styles from "./css/body.module.css"
 import Wage from "@/image/wage.svg";
 import Stock from "@/image/stock.svg";
@@ -14,21 +14,22 @@ export default function FPBody() {
             <div className={styles.main}>
                 <div className={styles.mainGrid}>
                     <div className={styles.card}>
-                        <Col>
+                        <div>
                             <Image
                                 alt="LogoText"
                                 src={Wage}
                                 width="300"
                                 height="300"
                             />
+                        </div>
                             <div className={styles.card_below}>
                                 <h3>WagePay</h3>
                                 <p>A Fully Onchain product for organizing and managing employee Wages</p>
                             </div>
-                        </Col>
+                        
                     </div>
                     <div className={styles.card}>
-                        <Col>
+                        <div>
                             <Image
                                 style={{ "maxHeight": "300px", "maxWidth": "300px", "position": "relative" }}
                                 alt="LogoText"
@@ -36,14 +37,15 @@ export default function FPBody() {
                                 width="300"
                                 height="300" 
                             />
+                            </div>
                             <div className={styles.card_below}>
                                 <h3>StockOptions</h3>
                                 <p>A Fully Onchain product for organizing and managing employee Wages</p>
                             </div>
-                        </Col>
+                        
                     </div>
                     <div className={styles.card}>
-                        <Col>
+                        <div>
                             <Image
                             style={{"maxHeight":"300px", "maxWidth":"300px", "position":"relative"}}
                                 alt="LogoText"
@@ -53,23 +55,24 @@ export default function FPBody() {
                             />
                             <div className={styles.card_below}>
                                 <h3>CRM</h3>
-                                <p>A CRM built with power of Delegation, supports selective sharing of sensitive data for Protocols</p>
+                                <p>A CRM built with power of Delegation, supports selective sharing of sensitive data for Protocol</p>
                             </div>
-                        </Col>
+                        </div>
                     </div>
                     <div className={styles.card}>
-                        <Col>
+                        <div>
                             <Image
                                 alt="LogoText"
                                 src={Wage}
                                 width="300"
                                 height="300"
                             />
+                            </div>
                             <div className={styles.card_below}>
                                 <h3>Tax Manager</h3>
                                 <p>An Onchain product that allows Taxes to be processed seamlessly</p>
                             </div>
-                        </Col>
+                        
                     </div>
                 </div>
 
