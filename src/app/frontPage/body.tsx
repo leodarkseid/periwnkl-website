@@ -14,7 +14,7 @@ export default function FPBody() {
             <div className={styles.main}>
                 <div className={styles.mainGrid}>
                     <div className={styles.card}>
-                        <div>
+                        <div className="d-flex justify-content-center">
                             <Image
                                 alt="LogoText"
                                 src={Wage}
@@ -22,57 +22,58 @@ export default function FPBody() {
                                 height="300"
                             />
                         </div>
-                            <div className={styles.card_below}>
-                                <h3>WagePay</h3>
-                                <p>A Fully Onchain product for organizing and managing employee Wages</p>
-                            </div>
-                        
+                        <div className={styles.card_below}>
+                            <h3>WagePay</h3>
+                            <p>A Fully Onchain product for organizing and managing employee Wages</p>
+                        </div>
+
                     </div>
                     <div className={styles.card}>
-                        <div>
+                        <div className="d-flex justify-content-center">
                             <Image
                                 style={{ "maxHeight": "300px", "maxWidth": "300px", "position": "relative" }}
                                 alt="LogoText"
                                 src={Stock}
                                 width="300"
-                                height="300" 
+                                height="300"
                             />
-                            </div>
-                            <div className={styles.card_below}>
-                                <h3>StockOptions</h3>
-                                <p>A Fully Onchain product for organizing and managing employee Wages</p>
-                            </div>
-                        
+                        </div>
+                        <div className={styles.card_below}>
+                            <h3>StockOptions</h3>
+                            <p>A Fully Onchain product for organizing and managing employee Wages</p>
+                        </div>
+
                     </div>
                     <div className={styles.card}>
-                        <div>
+                        <div className="d-flex justify-content-center">
                             <Image
-                            style={{"maxHeight":"300px", "maxWidth":"300px", "position":"relative"}}
+                                style={{ "maxHeight": "300px", "maxWidth": "300px", "position": "relative" }}
                                 alt="LogoText"
                                 src={Crm}
                                 width="300"
                                 height="300"
                             />
-                            <div className={styles.card_below}>
-                                <h3>CRM</h3>
-                                <p>A CRM built with power of Delegation, supports selective sharing of sensitive data for Protocol</p>
-                            </div>
                         </div>
+                        <div className={styles.card_below}>
+                            <h3>CRM</h3>
+                            <p>A CRM built with power of Delegation, supports selective sharing of sensitive data for Protocol</p>
+                        </div>
+
                     </div>
                     <div className={styles.card}>
-                        <div>
+                        <div className="d-flex justify-content-center">
                             <Image
                                 alt="LogoText"
                                 src={Wage}
                                 width="300"
                                 height="300"
                             />
-                            </div>
-                            <div className={styles.card_below}>
-                                <h3>Tax Manager</h3>
-                                <p>An Onchain product that allows Taxes to be processed seamlessly</p>
-                            </div>
-                        
+                        </div>
+                        <div className={styles.card_below}>
+                            <h3>Tax Manager</h3>
+                            <p>An Onchain product that allows Taxes to be processed seamlessly</p>
+                        </div>
+
                     </div>
                 </div>
 
