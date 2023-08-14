@@ -38,7 +38,14 @@
     margin-top: 40px;
     display: flex;
     justify-content: center;
-    font-family: 'Lilita One', cursive;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* font-family: 'Lilita One', cursive;  */
     color: #4a93ff;
     font-size: 25px;
+}
+
+.delegationList{
+    display: flex;
+    flex-direction: column;
+    color: #b1b1b1;
 }

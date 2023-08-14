@@ -10,6 +10,8 @@ import Style from "./css/top.module.css";
 import Image from "next/image"
 import Stock from "@/image/stockPage.svg"
 import Security from "@/image/securityEllipse.svg"
+import HandShake from "@/image/handshake.svg"
+import Team from "@/image/team.svg"
 
 
 export default function Body() {
@@ -34,7 +36,7 @@ export default function Body() {
 
                 <Form noValidate validated={validated} className="w-50">
                     <Form.Group className="mb-1" controlId="search-input">
-                        
+
                         <Row className="p-0">
                             <Col className="px-0">
                                 <Form.Control className="border-end-0 rounded-0 rounded-start shadow-sm" name="organisation" placeholder="Organisation Address" />
@@ -57,6 +59,11 @@ export default function Body() {
                     <div className={Style.title}>
                         <h1 >Stock Manager</h1>
                         <p>A simple and secure way to manage StockOptions for Organizations and Employee in a Trustless Manner  </p>
+
+                        <h3>To Create an Organisation</h3>
+                        <Button variant="secondary">Create Organisation</Button>
+                        <h3>For Employees</h3>
+                        <Button variant="secondary">Employees</Button>
                     </div>
                 </div>
                 <div>
@@ -71,18 +78,37 @@ export default function Body() {
             <div>
                 <div className={Style.beta}>Built With Smart Contracts, with the strength and advantage of Blockchain Technology</div>
                 <div className="d-flex justify-content-center"><Image
-                alt="secure"
-                src={Security}
-                width={100}
-                height={100}
+                    alt="secure"
+                    src={Security}
+                    width={100}
+                    height={100}
                 /></div>
 
-                <div className={Style.beta}>You can Transfer your Vested Options</div>
-                
+                <div className={Style.beta}>With Just a Click, You can Transfer your Vested Options to another Employee</div>
 
-                <div>Ability to Delegate Stock Options and thus still partake in all activity the ownership of the said amount of stocks grants you</div>
+                <div className="d-flex justify-content-center"><Image
+                    alt="secure"
+                    src={HandShake}
+                    width={100}
+                    height={100}
+                /></div>
 
-                <div>Ability to Assign Stocks to Stock Managers, to Manage the Stocks just the way it's currently done in TradFi and thus you can get your dividends just </div>
+                <div className={Style.beta} >Abstraction and Delegation</div>
+                <div className={Style.delegationList} style={{ "textAlign": "center" }}>
+                    <div>Gasless transaction</div>
+                    <div>Ability to Delegate Stock Options and thus still partake in all activity the ownership of the said amount of stocks grants you </div>
+                    <div>Ability to Assign Stocks to Stock Managers, to Manage the Stocks just the way it's currently done in TradFi and thus you can get your dividends maintaining the Status Quo </div>
+                </div>
+                <div className={Style.beta}>Zero Discrimination, Equal Access, Assured Security</div>
+                <div className="d-flex justify-content-center"><Image
+                    alt="secure"
+                    src={Team}
+                    width={300}
+
+                    
+
+                    
+                /></div>
             </div>
 
         </>
