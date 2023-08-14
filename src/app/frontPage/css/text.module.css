@@ -1,3 +1,21 @@
+.h1{
+  color: #333;
+  font-family: tahoma;
+  font-size: 3rem;
+  font-weight: 100;
+  line-height: 1.5;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+  width: 550px;
+}
+
+.h1{
+  font-size: 40px;
+  margin-left: 40px;
+}
+
 .message {
   background-color: yellow;
   color: #333;
@@ -78,4 +96,12 @@
     width: 0;
     text-indent: 0;
   }
+}
+
+.transition{
+    display: flex;
+    
+    justify-content: right;
+    color: blue;
+    transition: all 10sec ease-in-out;
 }
