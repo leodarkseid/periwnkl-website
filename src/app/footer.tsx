@@ -10,8 +10,8 @@ export default function Footer() {
             <div className="bg-altYellow text-white align-middle h-25 p-4 text-center"
             // style={{"height":"10vh", "minHeight":"10vh", "display":"flex", "justifyContent":"center","alignContent":"center", "verticalAlign":"middle", "textAlign":"center", "textJustify":"centre"}}
             >
-                Proudly made in 
-                <a href="https://en.wikipedia.org/wiki/Nigeria"><Image
+                Proudly made in {''}
+                 <a style={{"outline":"none"}} href="https://en.wikipedia.org/wiki/Nigeria"><Image
                     alt="Nigeria"
                     height={20}
                     width={20}

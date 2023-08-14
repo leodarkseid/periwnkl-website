@@ -6,6 +6,11 @@ import { BiSearchAlt } from 'react-icons/bi';
 import { checkIfValidAddress } from "@/utils";
 import { ethers, Contract, Signer } from "ethers";
 import { useRouter } from "next/navigation";
+import Style from "./css/top.module.css";
+import Image from "next/image"
+import Stock from "@/image/stockPage.svg"
+
+
 export default function Body() {
     const [organisation, setOrganisation] = useState("");
     const [employee, setEmployee] = useState("");
@@ -22,10 +27,7 @@ export default function Body() {
 
     return (
         <>
-            <div>
-                <h1 className="">Stock Options Manager</h1>
-                <p>Stock options manager is a simple and secure way to manage StockOptions for Organizations and Employee in a Trustless Manner  </p>
-
+            <div className={Style.top}>
 
                 <div className="container d-flex justify-content-center p-2">
 
@@ -46,6 +48,21 @@ export default function Body() {
                                     </Button></Col></Row>
                         </Form.Group>
                     </Form>
+                </div>
+            </div>
+            <div className={Style.grid}>
+                <div>
+                    <div className={Style.title}>
+                        <h1 >Stock Options Manager</h1>
+                        <p>Stock options manager is a simple and secure way to manage StockOptions for Organizations and Employee in a Trustless Manner  </p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <Image
+                        alt="stock" 
+                        src={Stock}/>
+                    </div>
                 </div>
             </div>
 

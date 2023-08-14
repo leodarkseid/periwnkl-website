@@ -1,0 +1,22 @@
+.top{
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    margin-top: -24px;
+    padding-top: 0;
+}
+
+.title{
+    position: relative;
+    margin-top: 15vh;
+    color: blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.title p{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
