@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+
+.animate_character
+{
+    font-family: "Poppins", sans-serif;
+   text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #ED004A  0%,
+    #0D6EFD 29%,
+    #EDEEFF 67%,
+    #C0A975 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 5s linear infinite;
+  display: inline-block;
+      font-size: 60px;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
