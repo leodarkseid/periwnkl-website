@@ -101,10 +101,10 @@
 .transition{
     display: flex;
     width: 100%;
-    padding-left: 30%;
+    padding-left: 32%;
     /* justify-content: center; */
     color: #a5c7fa;
-    margin-bottom: 10vh;
+    margin-bottom: 5vh;
     
     
 }

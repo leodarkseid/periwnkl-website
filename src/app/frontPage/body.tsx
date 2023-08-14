@@ -5,14 +5,16 @@ import Wage from "@/image/wage.svg";
 import Stock from "@/image/stock.svg";
 import Crm from "@/image/crm.svg";
 import Image from "next/image"
-import { relative } from "path";
+import Link from 'next/link';
 
 export default function FPBody() {
     return (
         <>
 
             <div className={styles.main}>
+                
                 <div className={styles.mainGrid}>
+                    <Link href="/wagepay">
                     <div className={styles.card}>
                         <div className="d-flex justify-content-center">
                             <Image
@@ -28,22 +30,25 @@ export default function FPBody() {
                         </div>
 
                     </div>
-                    <div className={styles.card}>
-                        <div className="d-flex justify-content-center">
-                            <Image
-                                style={{ "maxHeight": "300px", "maxWidth": "300px", "position": "relative" }}
-                                alt="LogoText"
-                                src={Stock}
-                                width="300"
-                                height="300"
-                            />
-                        </div>
-                        <div className={styles.card_below}>
-                            <h3>StockOptions</h3>
-                            <p>A Fully Onchain product for organizing and managing employee Wages</p>
-                        </div>
+                    </Link>
+                    <Link href="/stock">
+                        <div className={styles.card}>
+                            <div className="d-flex justify-content-center">
+                                <Image
+                                    style={{ "maxHeight": "300px", "maxWidth": "300px", "position": "relative" }}
+                                    alt="LogoText"
+                                    src={Stock}
+                                    width="300"
+                                    height="300"
+                                />
+                            </div>
+                            <div className={styles.card_below}>
+                                <h3>StockOptions</h3>
+                                <p>A Fully Onchain product for organizing and managing employee Wages</p>
+                            </div>
 
-                    </div>
+                        </div>
+                    </Link>
                     <div className={styles.card}>
                         <div className="d-flex justify-content-center">
                             <Image

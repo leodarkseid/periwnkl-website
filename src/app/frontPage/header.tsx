@@ -10,20 +10,20 @@ export default function FPHeader() {
         <>
             <div  >
                 <div className={styles.head}>
-                    <h2 className={styles.animate_character}>Periwnkl  </h2>{'  '}
+                    <div><h2 className={styles.animate_character}>Periwnkl  </h2></div>{'  '}
 
 
 
-                    &nbsp;<span> is a project inspired by novel EVM Applications like Delegation, Abstraction to provide free composable services that brings real life use cases Onchain</span>
+                    &nbsp;<span>Inspired by novel EVM Applications like Delegation, Abstraction to provide free composable services that brings real life use cases Onchain with Maximum Security</span>
                 </div>
 
-                <div className="d-flex justify-content-center py-5">
+                <div className="d-flex justify-content-center py-4">
                     <Image 
                     
                     alt="security"
                     src={Ellipse}
-                    height={300}
-                    width={400}
+                    height={150}
+                    width={150}
                     />
                 </div>
 
@@ -35,15 +35,15 @@ export default function FPHeader() {
                             500,
                             'Crypto does not have to be', // initially rendered starting point
                             1000,
-                            'Crypto does not have to be All Scam',
+                            'Crypto does not have to be For Scammers',
                             1000,
                             'Crypto does not have to be For Conmen',
                             1000,
-                            'Crypto does not have to be Criminals',
+                            'Crypto does not have to be For Criminals',
                             500,
                         ]}
                         speed={50}
-                        style={{ fontSize: '2em' }}
+                        style={{ fontSize: '1.5em' }}
                         repeat={Infinity}
                     />
             </div>

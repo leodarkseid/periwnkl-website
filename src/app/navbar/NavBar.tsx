@@ -61,7 +61,7 @@ export default function NavBar() {
 
     else if (isFrontPage){
         return (
-            <Navbar className="shadow-sm bg-body-tertiary">
+            <Navbar color="primary" className="shadow-sm bg-body-tertiary ">
                 <Container>
                     <Navbar.Brand href="/">
                         {/* <Image
@@ -76,6 +76,13 @@ export default function NavBar() {
                             src={LogoText}
                         />
                     </Navbar.Brand>
+                    <Navbar.Collapse className="justify-content-end text-primary" id="main-navbar">
+                        <Nav className="justify-content-end text-primary" >
+                            <Nav.Link className="text-primary" as={Link} href="/stock" >Stock Options</Nav.Link>
+                            <Nav.Link className="text-primary" as={Link} href="/wagepay" >Wage Pay</Nav.Link>
+                            
+                        </Nav>
+                    </Navbar.Collapse>
                 </Container>
             </Navbar>
         );
