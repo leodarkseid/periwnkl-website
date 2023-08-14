@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import Style from "./css/top.module.css";
 import Image from "next/image"
 import Stock from "@/image/stockPage.svg"
+import Security from "@/image/securityEllipse.svg"
 
 
 export default function Body() {
@@ -27,43 +28,61 @@ export default function Body() {
 
     return (
         <>
-            <div className={Style.top}>
 
-                <div className="container d-flex justify-content-center p-2">
 
-                    <Form noValidate validated={validated} className="w-50">
-                        <Form.Group className="mb-3" controlId="search-input">
-                            <Form.Label>Search for Employee </Form.Label>
-                            <Row className="p-0">
-                                <Col className="px-0">
-                                    <Form.Control className="border-end-0 rounded-0 rounded-start" name="organisation" placeholder="Organisation Address" />
-                                    <Form.Control.Feedback type="valid">Thanks</Form.Control.Feedback>
-                                </Col>
-                                <Col className="px-0">
-                                    <Form.Control className="border-end-0 rounded-0" name="employee" placeholder="Employee Address" />
-                                </Col>
-                                <Col className="p-0" xs={1} >
-                                    <Button type="submit" className=" rounded-0 rounded-end" >
-                                        <BiSearchAlt />
-                                    </Button></Col></Row>
-                        </Form.Group>
-                    </Form>
-                </div>
+            <div className="container d-flex justify-content-center p-2">
+
+                <Form noValidate validated={validated} className="w-50">
+                    <Form.Group className="mb-1" controlId="search-input">
+                        
+                        <Row className="p-0">
+                            <Col className="px-0">
+                                <Form.Control className="border-end-0 rounded-0 rounded-start shadow-sm" name="organisation" placeholder="Organisation Address" />
+                                <Form.Control.Feedback type="valid">Thanks</Form.Control.Feedback>
+                            </Col>
+                            <Col className="px-0">
+                                <Form.Control className="border-end-0 rounded-0 shadow-sm" name="employee" placeholder="Employee Address" />
+                            </Col>
+                            <Col className="p-0" xs={1} >
+                                <Button type="submit" className=" rounded-0 rounded-end shadow-sm" >
+                                    <BiSearchAlt />
+                                </Button></Col></Row>
+                    </Form.Group>
+                    <Form.Label className="text-altYellow text-center mt-0">Enter Organisation or Employee Address to find either, Enter Both to find Specific Employee from a specific organisation   </Form.Label>
+                </Form>
             </div>
+
             <div className={Style.grid}>
                 <div>
                     <div className={Style.title}>
-                        <h1 >Stock Options Manager</h1>
-                        <p>Stock options manager is a simple and secure way to manage StockOptions for Organizations and Employee in a Trustless Manner  </p>
+                        <h1 >Stock Manager</h1>
+                        <p>A simple and secure way to manage StockOptions for Organizations and Employee in a Trustless Manner  </p>
                     </div>
                 </div>
                 <div>
                     <div>
                         <Image
-                        alt="stock" 
-                        src={Stock}/>
+                            alt="stock"
+                            src={Stock} />
                     </div>
                 </div>
+            </div>
+
+            <div>
+                <div className={Style.beta}>Built With Smart Contracts, with the strength and advantage of Blockchain Technology</div>
+                <div className="d-flex justify-content-center"><Image
+                alt="secure"
+                src={Security}
+                width={100}
+                height={100}
+                /></div>
+
+                <div className={Style.beta}>You can Transfer your Vested Options</div>
+                
+
+                <div>Ability to Delegate Stock Options and thus still partake in all activity the ownership of the said amount of stocks grants you</div>
+
+                <div>Ability to Assign Stocks to Stock Managers, to Manage the Stocks just the way it's currently done in TradFi and thus you can get your dividends just </div>
             </div>
 
         </>
