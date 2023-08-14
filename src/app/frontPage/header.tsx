@@ -1,4 +1,5 @@
 import styles from "./css/header.module.css"
+import styl from "./css/text.module.css"
 
 export default function FPHeader() {
     return (
@@ -9,12 +10,14 @@ export default function FPHeader() {
 
 
                 <span>is a project inspired by novel EVM Applications like Delegation, Abstraction to provide free composable services that brings real life use cases Onchain</span>
-                <h2>Crypto does not have to be
-                    <div className="message">
-                        <div class="word1">close</div>
-                        <div class="word2">code</div>
-                        <div class="word3">creating</div>
-                    </div>all Scam </h2> <h2> We are building for real builders</h2>
+                <div>Crypto does not have to be
+                    <div className={styl.message}>
+                        <div className="word1">All Scam</div>
+                        <div className="word2">For Conmen</div>
+                        <div className="word3">For Criminals</div>
+                    </div>
+                    <h2> We are building for real builders</h2>
+                </div>
             </div>
         </>
     )
