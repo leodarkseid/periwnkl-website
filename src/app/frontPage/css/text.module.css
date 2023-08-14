@@ -100,8 +100,11 @@
 
 .transition{
     display: flex;
+    width: 100%;
+    padding-left: 30%;
+    /* justify-content: center; */
+    color: #a5c7fa;
+    margin-bottom: 10vh;
     
-    justify-content: right;
-    color: blue;
-    transition: all 10sec ease-in-out;
+    
 }

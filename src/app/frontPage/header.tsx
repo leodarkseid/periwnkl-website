@@ -2,16 +2,30 @@
 import styles from "./css/header.module.css"
 import styl from "./css/text.module.css"
 import { TypeAnimation } from 'react-type-animation';
+import Ellipse from "@/image/homeCircle.svg";
+import Image from "next/image"
 
 export default function FPHeader() {
     return (
         <>
-            <div >
-                <h2 className={styles.animate_character}>Periwnkl</h2>
+            <div  >
+                <div className={styles.head}>
+                    <h2 className={styles.animate_character}>Periwnkl  </h2>{'  '}
 
 
 
-                <span>is a project inspired by novel EVM Applications like Delegation, Abstraction to provide free composable services that brings real life use cases Onchain</span>
+                    &nbsp;<span> is a project inspired by novel EVM Applications like Delegation, Abstraction to provide free composable services that brings real life use cases Onchain</span>
+                </div>
+
+                <div className="d-flex justify-content-center py-5">
+                    <Image 
+                    
+                    alt="security"
+                    src={Ellipse}
+                    height={300}
+                    width={400}
+                    />
+                </div>
 
                 <div>
                     <TypeAnimation
