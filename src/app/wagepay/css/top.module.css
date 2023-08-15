@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,200;10..48,300;10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Lilita+One&display=swap');
+
+.title {
+    margin-bottom: 50px;
+}
+.title h1{
+    position: relative;
+    background: linear-gradient(
+            to right, #0d6efd, #ff6f61,
+             #0d6efd, #0d6efd);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+    display: flex;
+    flex-direction: column;
+    
+    font-family: 'Lilita One', cursive;
+    font-size: 62px;
+}
+.title p{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: #6fa9ff;
+}
+
+.grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 5rem;
+    margin-top: 50px;
+    
+}
+.grid > :first-child {
+    justify-self: center;
+    text-align: left;
+}
+
+.grid > :last-child {
+    justify-self: center;
+}
+
+.beta{
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* font-family: 'Lilita One', cursive;  */
+    color: #4a93ff;
+    font-size: 25px;
+}
+
+.delegationList{
+    display: flex;
+    flex-direction: column;
+    color: #b1b1b1;
+}
+
+.todo{
+    font-size: 23px;
+    color: #b1b1b1;
+}

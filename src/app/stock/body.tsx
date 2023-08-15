@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Form, Spinner, Row, Col, Alert } from "react-bootstrap";
+import { Button, Form, Spinner, Row, Col, Alert, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { useState, FormEvent, SyntheticEvent, useEffect } from "react";
 import { BiSearchAlt } from 'react-icons/bi';
 import { checkIfValidAddress } from "@/utils";
@@ -12,6 +12,9 @@ import Stock from "@/image/stockPage.svg"
 import Security from "@/image/securityEllipse.svg"
 import HandShake from "@/image/handshake.svg"
 import Team from "@/image/team.svg"
+import ContractWage from "@/image/contract.svg"
+import ToolTip from "@/image/tooltip.svg"
+
 
 
 export default function Body() {
@@ -33,7 +36,13 @@ export default function Body() {
 
 
             <div className="container d-flex justify-content-center p-2">
-
+                <OverlayTrigger
+                    placement="bottom"
+                    delay={{ show: 50, hide: 900 }}
+                    overlay={<Tooltip id="button-tooltip-2">Enter Organisation or Employee Address to find either, Enter Both to find Specific Employee from a specific Organisation</Tooltip>}
+                >
+                    <Image className="mx-3 my-auto" alt="tooltip" src={ToolTip} width={20} height={20} />
+                </OverlayTrigger>
                 <Form noValidate validated={validated} className="w-50">
                     <Form.Group className="mb-1" controlId="search-input">
 
@@ -50,7 +59,6 @@ export default function Body() {
                                     <BiSearchAlt />
                                 </Button></Col></Row>
                     </Form.Group>
-                    <Form.Label className="text-altYellow text-center mt-0">Enter Organisation or Employee Address to find either, Enter Both to find Specific Employee from a specific organisation   </Form.Label>
                 </Form>
             </div>
 
@@ -105,9 +113,9 @@ export default function Body() {
                     src={Team}
                     width={300}
 
-                    
 
-                    
+
+
                 /></div>
             </div>
 
