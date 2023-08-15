@@ -14,26 +14,47 @@ import HandShake from "@/image/handshake.svg"
 import Team from "@/image/team.svg"
 import ContractWage from "@/image/contract.svg"
 import Sec from "@/image/homeCircle.svg"
+import Link from "next/link";
 import ToolTip from "@/image/tooltip.svg"
 
 
 export default function Page() {
-    const [organisation, setOrganisation] = useState("");
-    const [employee, setEmployee] = useState("");
-    const [S_organisation_, setOrganisation_] = useState("");
-    const [S_employee_, setEmployee_] = useState("");
-    const [searchResultsLoading, setSearchResultsLoading] = useState(false);
-    const [validated, setValidated] = useState(false);
-    const [alertMessage, setAlertMessage] = useState("");
-    const [showAlert, setShowAlert] = useState(false);
-    const [alertVariant, setAlertVariant] = useState("success")
-    const [show, setShow] = useState(true);
-    const [disableSubmit, setDisableSubmit] = useState(false);
-    const [orgList, setOrgList] = useState<string[]>([]);
+    // const [organisation, setOrganisation] = useState("");
+    // const [employee, setEmployee] = useState("");
+    // const [validated, setValidated] = useState(false);
+    // const [disableSubmit, setDisableSubmit] = useState(false);
+    // const [loading, setLoading] = useState(false);
+
+    // const { wallet, hasProvider, isConnecting, signer, connectMetaMask } = useMetaMask()
+
+    // async function handleSubmit(e: SyntheticEvent) {
+    //     e.preventDefault();
+    //     setDisableSubmit(true);
+    //     setLoading(true);
+
+    //     const org = (organisation)?.toString().trim();
+    //     const emp = (employee)?.toString().trim();
+
+    //     if (wallet.accounts.length >= 1) {
+    //         try { 
+    //         if (org == "") {
+    //             null
+    //         }
+    //         else if (emp == "") {
+    //             null
+    //         }
+    //         else {
+    //             null
+    //         }
+    //     } catch(error){
+    //         console.error("search error", error)
+    //     }
+    //     }
+    // }
 
     return (
         <>
-            <div className="container d-flex justify-content-center p-2">
+            {/* <div className="container d-flex justify-content-center p-2">
                 <OverlayTrigger
                     placement="bottom"
                     delay={{ show: 50, hide: 900 }}
@@ -58,7 +79,7 @@ export default function Page() {
                                 </Button></Col></Row>
                     </Form.Group>
                 </Form>
-            </div>
+            </div> */}
 
             <div className={Style.grid}>
                 <div>
@@ -69,9 +90,9 @@ export default function Page() {
                         </p>
                     </div>
                     <div className={Style.todo}>For Organisations</div>
-                    <Button variant="primary">Organisation</Button>
+                    <Link href="/wagepay/organisation"><Button variant="primary">Organisation</Button></Link>
                     <div className={Style.todo}>For Employees</div>
-                    <Button variant="primary">Employees</Button>
+                    <Link href="/wagepay/employee"><Button variant="primary">Employees</Button></Link>
                 </div>
                 <div>
                     <div>

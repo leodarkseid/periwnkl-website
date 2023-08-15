@@ -4,9 +4,10 @@ import { Button, Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import Logo from "@/image/logoBlue.png";
 import LogoText from "@/image/logoText.png";
 import Link from "next/link";
-import Image from "next/image"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import NavbarWalletButton from "./navbarWalletButton"
+import Image from "next/image";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import NavbarWalletButton from "./navbarWalletButton";
+import LogoWhite from "@/image/logoWhite.svg";
 
 export default function NavBar() {
     const pathname = usePathname();
@@ -20,6 +21,9 @@ export default function NavBar() {
         return (
             <Navbar bg="primary" variant="dark" sticky="top" expand="sm" collapseOnSelect>
                 <Container>
+                    < Navbar.Brand as={Link} href="/">
+                        <Image alt="Logo" src={LogoWhite} width={35}/>
+                    </Navbar.Brand>
                     < Navbar.Brand as={Link} href="/stock">
                         Stock Manager
                     </Navbar.Brand>
@@ -43,6 +47,9 @@ export default function NavBar() {
         return (
             <Navbar bg="primary" variant="dark" sticky="top" expand="sm" collapseOnSelect>
                 <Container>
+                    < Navbar.Brand as={Link} href="/">
+                        <Image alt="Logo" src={LogoWhite} width={35} />
+                    </Navbar.Brand>
                     < Navbar.Brand as={Link} href="/wagepay">
                         Wage Pay
                     </Navbar.Brand>

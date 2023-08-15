@@ -12,55 +12,15 @@ import Stock from "@/image/stockPage.svg"
 import Security from "@/image/securityEllipse.svg"
 import HandShake from "@/image/handshake.svg"
 import Team from "@/image/team.svg"
-import ContractWage from "@/image/contract.svg"
-import ToolTip from "@/image/tooltip.svg"
+import Link from 'next/link';
+
 
 
 
 export default function Body() {
-    const [organisation, setOrganisation] = useState("");
-    const [employee, setEmployee] = useState("");
-    const [S_organisation_, setOrganisation_] = useState("");
-    const [S_employee_, setEmployee_] = useState("");
-    const [searchResultsLoading, setSearchResultsLoading] = useState(false);
-    const [validated, setValidated] = useState(false);
-    const [alertMessage, setAlertMessage] = useState("");
-    const [showAlert, setShowAlert] = useState(false);
-    const [alertVariant, setAlertVariant] = useState("success")
-    const [show, setShow] = useState(true);
-    const [disableSubmit, setDisableSubmit] = useState(false);
-    const [orgList, setOrgList] = useState<string[]>([]);
 
     return (
         <>
-
-
-            <div className="container d-flex justify-content-center p-2">
-                <OverlayTrigger
-                    placement="bottom"
-                    delay={{ show: 50, hide: 900 }}
-                    overlay={<Tooltip id="button-tooltip-2">Enter Organisation or Employee Address to find either, Enter Both to find Specific Employee from a specific Organisation</Tooltip>}
-                >
-                    <Image className="mx-3 my-auto" alt="tooltip" src={ToolTip} width={20} height={20} />
-                </OverlayTrigger>
-                <Form noValidate validated={validated} className="w-50">
-                    <Form.Group className="mb-1" controlId="search-input">
-
-                        <Row className="p-0">
-                            <Col className="px-0">
-                                <Form.Control className="border-end-0 rounded-0 rounded-start shadow-sm" name="organisation" placeholder="Organisation Address" />
-                                <Form.Control.Feedback type="valid">Thanks</Form.Control.Feedback>
-                            </Col>
-                            <Col className="px-0">
-                                <Form.Control className="border-end-0 rounded-0 shadow-sm" name="employee" placeholder="Employee Address" />
-                            </Col>
-                            <Col className="p-0" xs={1} >
-                                <Button type="submit" className=" rounded-0 rounded-end shadow-sm" >
-                                    <BiSearchAlt />
-                                </Button></Col></Row>
-                    </Form.Group>
-                </Form>
-            </div>
 
             <div className={Style.grid}>
                 <div>
@@ -69,10 +29,9 @@ export default function Body() {
                         <p>A simple and secure way to manage StockOptions for Organizations and Employee in a Trustless Manner  </p>
                     </div>
                     <div className={Style.todo}>To Create an Organisation</div>
-                    <Button variant="primary">Create Organisation</Button>
+                    <Link href="/stock/organisation/create"><Button variant="primary">Create Organisation</Button></Link>
                     <div className={Style.todo}>For Employees</div>
-                    <Button variant="primary">Employees</Button>
-
+                    <Link href="/stock/employee"><Button variant="primary">Employees</Button></Link>
                 </div>
                 <div>
                     <div>
