@@ -106,7 +106,7 @@ export default function Page() {
                 <div className={Style.delegationList} style={{ "textAlign": "center" }}>
                     <div>Gasless transaction</div>
                     <div>Ability to Delegate Wages and have access to unlimited use cases like Auto Purchase, Auto Save and so much more </div>
-                    
+
                 </div>
                 <div className={Style.beta}>Zero Discrimination, Equal Access, Assured Security</div>
                 <div className="d-flex justify-content-center"><Image
