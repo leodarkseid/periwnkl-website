@@ -67,12 +67,12 @@ export default function Body() {
                     <div className={Style.title}>
                         <h1 >Stock Manager</h1>
                         <p>A simple and secure way to manage StockOptions for Organizations and Employee in a Trustless Manner  </p>
-
-                        <h3>To Create an Organisation</h3>
-                        <Button variant="secondary">Create Organisation</Button>
-                        <h3>For Employees</h3>
-                        <Button variant="secondary">Employees</Button>
                     </div>
+                    <div className={Style.todo}>To Create an Organisation</div>
+                    <Button variant="primary">Create Organisation</Button>
+                    <div className={Style.todo}>For Employees</div>
+                    <Button variant="primary">Employees</Button>
+
                 </div>
                 <div>
                     <div>

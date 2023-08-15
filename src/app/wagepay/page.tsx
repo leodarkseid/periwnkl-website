@@ -33,8 +33,6 @@ export default function Page() {
 
     return (
         <>
-
-
             <div className="container d-flex justify-content-center p-2">
                 <OverlayTrigger
                     placement="bottom"
@@ -70,8 +68,8 @@ export default function Page() {
                             A Simple Wage Manager, that automates wage payment and also assures Employees of Payment for at least One Payment Cycle
                         </p>
                     </div>
-                    <div className={Style.todo}>To Create an Organisation</div>
-                    <Button variant="primary">Create Organisation</Button>
+                    <div className={Style.todo}>For Organisations</div>
+                    <Button variant="primary">Organisation</Button>
                     <div className={Style.todo}>For Employees</div>
                     <Button variant="primary">Employees</Button>
                 </div>
