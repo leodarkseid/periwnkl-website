@@ -16,7 +16,7 @@ export default function FPBody() {
                 <div className={styles.mainGrid}>
                     <Link href="/wagepay">
                     <div className={styles.card}>
-                        <div className="d-flex justify-content-center">
+                            <div className="d-flex justify-content-center align-self-center">
                             <Image
                                 alt="LogoText"
                                 src={Wage}
@@ -33,7 +33,7 @@ export default function FPBody() {
                     </Link>
                     <Link href="/stock">
                         <div className={styles.card}>
-                            <div className="d-flex justify-content-center">
+                            <div className="d-flex justify-content-center align-self-center">
                                 <Image
                                     style={{ "maxHeight": "300px", "maxWidth": "300px", "position": "relative" }}
                                     alt="LogoText"
@@ -50,7 +50,7 @@ export default function FPBody() {
                         </div>
                     </Link>
                     <div className={styles.card}>
-                        <div className="d-flex justify-content-center">
+                        <div className="d-flex justify-content-center align-self-center">
                             <Image
                                 style={{ "maxHeight": "300px", "maxWidth": "300px", "position": "relative" }}
                                 alt="LogoText"
@@ -66,7 +66,7 @@ export default function FPBody() {
 
                     </div>
                     <div className={styles.card}>
-                        <div className="d-flex justify-content-center">
+                        <div className="d-flex justify-content-center align-self-center">
                             <Image
                                 alt="LogoText"
                                 src={Wage}
