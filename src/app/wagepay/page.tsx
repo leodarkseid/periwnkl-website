@@ -10,6 +10,7 @@ import Style from "./css/top.module.css";
 import Image from "next/image"
 import Stock from "@/image/stockPage.svg"
 import Security from "@/image/securityEllipse.svg"
+import SupportMo from "@/image/supportMO.svg"
 import HandShake from "@/image/handshake.svg"
 import Team from "@/image/team.svg"
 import ContractWage from "@/image/contract.svg"
@@ -110,6 +111,14 @@ export default function Page() {
                     src={Security}
                     width={100}
                     height={100}
+                /></div>
+
+                <div className={Style.beta}>Support For Multiple Organisations for Both Admins and Employees</div>
+                <div className="d-flex justify-content-center"><Image
+                    alt="secure"
+                    src={SupportMo}
+                    width={300}
+                    height={300}
                 /></div>
 
                 <div className={Style.beta}>The Contract is designed to protect Employees</div>
