@@ -57,7 +57,7 @@ export default function Body() {
                     alt="secure"
                     src={SupportMo}
                     width={300}
-                    height={300}
+
                 /></div>
 
                 <div className={Style.beta}>With Just a Click, You can Transfer your Vested Options to another Employee</div>
@@ -73,16 +73,13 @@ export default function Body() {
                 <div className={Style.delegationList} style={{ "textAlign": "center" }}>
                     <div>Gasless transaction</div>
                     <div>Ability to Delegate Stock Options and thus still partake in all activity the ownership of the said amount of stocks grants you </div>
-                    <div>Ability to Assign Stocks to Stock Managers, to Manage the Stocks just the way it's currently done in TradFi and thus you can get your dividends maintaining the Status Quo </div>
+                    <div>Ability to Assign Stocks to Stock Managers, to Manage the Stocks just the way it is currently done in TradFi and thus you can get your dividends maintaining the Status Quo </div>
                 </div>
                 <div className={Style.beta}>Zero Discrimination, Equal Access, Assured Security</div>
                 <div className="d-flex justify-content-center"><Image
                     alt="secure"
                     src={Team}
                     width={300}
-
-
-
 
                 /></div>
             </div>
