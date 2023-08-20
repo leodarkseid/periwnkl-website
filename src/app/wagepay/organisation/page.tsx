@@ -9,6 +9,7 @@ import { BigNumber } from "ethers";
 import { useMetaMask } from "@/hooks/useMetaMask";
 import { checkIfValidAddress } from "@/utils";
 import { CreateWagePayOrganisation, GetListOfCreatedOrgs, GetNumberOfEmployee, GetOrgName, SearchForOrganisation } from "../utils/contracts";
+import NoData from "@/components/NoData";
 
 interface EmployeeData {
     name: string;
@@ -50,7 +51,7 @@ export default function Page() {
                 const data = await Promise.all(
                     listResult.map(async (addressObj: { newContractAddress: string; name: any; }) => {
                         const empCount = await GetNumberOfEmployee(addressObj.newContractAddress);
-                        
+
                         return {
                             name: addressObj.name,
                             address: addressObj.newContractAddress,
@@ -90,7 +91,7 @@ export default function Page() {
             setAddLoading(true);
             try {
                 if (checkIfValidAddress([tokenAddr]) && name != "") {
-                    const add_ = await CreateWagePayOrganisation(tokenAddr, wageInterval, name )
+                    const add_ = await CreateWagePayOrganisation(tokenAddr, wageInterval, name)
                     console.log(add_)
                 }
                 else { setSubmitFail(true) }
@@ -108,7 +109,7 @@ export default function Page() {
         <>
 
 
-            
+
             <Collapse in={open}>
 
                 <Form onSubmit={handleSubmit} >
@@ -148,13 +149,13 @@ export default function Page() {
                             /></InputGroup>
                         {submitFail && <div className="text-danger " style={{ "fontSize": "12px" }}>Invalid Address !!</div>}
                     </Row>
-                    <Row className="w-50 mx-auto mt-2 mb-3"><Button type="submit" disabled={addDisabled} >{addLoading ? <Spinner 
+                    <Row className="w-50 mx-auto mt-2 mb-3"><Button type="submit" disabled={addDisabled} >{addLoading ? <Spinner
                         as="span"
                         animation="border"
                         size="sm"
                         role="status"
                         aria-hidden="true"
-                    className="mb-2 text-success" />:"Create"}</Button></Row>
+                        className="mb-2 text-success" /> : "Create"}</Button></Row>
                 </Form>
             </Collapse>
 
@@ -167,9 +168,12 @@ export default function Page() {
                 <div className="bg-primary rounded text-white text-center p-2 mb-2 mx-auto"> Organisations</div>
 
                 {resultLoading && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success" />}
-                {employeeData.map((data, index) => (
+
+                {wallet.accounts.length > 1 || employeeData.length >= 1 ? employeeData.map((data, index) => (
                     <div onClick={(() => router.push(`/wagepay/organisation/${data.address}`))} key={index}><ListCard key={index} name={data.name} address={data.address} emp={data.emp} /></div>
-                ))}
+                )) :
+                    <div><NoData /></div>
+                }
             </div>
         </>
     )
