@@ -11,13 +11,13 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
     return (
-        <div className='d-flex justify-content-center h-100 align-items-center'
-        style={{"height":"100vh "}}
+        <div className='d-flex justify-content-center align-items-center'
+        style={{"height":"100vh"}}
         >
           <Image alt='404' src={Image404}
           style={{
             "height":"70vh",
-            "width":"70vh",
+            "width":"70vw",
           }}
           />
         </div>
