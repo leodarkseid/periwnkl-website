@@ -156,7 +156,7 @@ export default function EmpDashBoard(props: EmpDashProps) {
                                 <div className={styles.main_grid__timer_box_mins}>Min</div>
                             </div>
                         </div>
-                        <div className="bg-primary text-center rounded-pill text-white mx-auto w-50 mb-5">Countdown For Stock Options to Vest</div>
+                        <div className="bg-primary text-center rounded-pill text-white mx-auto w-50 mb-5">Countdown to Next Wage</div>
 
                         {alertCountdown && <Alert variant="danger" className="mb-4" dismissible>Wage Interval is either 0 or has not been set</Alert>}
 
@@ -191,10 +191,6 @@ export default function EmpDashBoard(props: EmpDashProps) {
 
                     </div>
                 </div>
-
-
-
-
 
                 <div className={styles.main_grid2}>
                     <div className={styles.main_grid2__col}>
