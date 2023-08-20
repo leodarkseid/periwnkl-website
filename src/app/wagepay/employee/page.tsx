@@ -1,12 +1,12 @@
 "use client"
 import { Button, Form, Spinner, Alert, Card } from "react-bootstrap";
 import { useState, useRef, SyntheticEvent, useEffect, useCallback, useMemo } from "react";
-import { ListCard, ListTitle } from "@/components/list";
+import { ListCard } from "@/components/list";
 import { useMetaMask } from "@/hooks/useMetaMask";
 import { GetNumberOfEmployee, GetOrgName, SearchForOrganisation } from "../utils/contracts";
 
 import { useRouter } from "next/navigation";
-import { BigNumber } from "ethers";
+import NoData from "@/components/NoData";
 
 interface EmployeeData {
     name: string;
@@ -78,11 +78,18 @@ export default function Create() {
     return (
         <><div>
             <div className="bg-primary rounded text-white text-center p-2 mb-2 mx-auto">Organisations Which You Work For</div>
+            <div style={{"minHeight":"80vh"}}>
 
-            {resultLoading && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success" />}
-            {employeeData.map((data, index) => (
-                <div onClick={(() => router.push(`/wagepay/employee/${data.address}/`))} key={index}><ListCard key={index} name={data.name} address={data.address} emp={data.emp} /></div>
-            ))}
+                {resultLoading && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success" />}
+                {wallet.accounts.length > 1 || employeeData.length >= 1 ?
+
+                    employeeData.map((data, index) => (
+                        <div onClick={(() => router.push(`/wagepay/employee/${data.address}/`))} key={index}><ListCard key={index} name={data.name} address={data.address} emp={data.emp} /></div>
+                    ))
+                    :
+                    <div className="d-flex justify-content-center " ><NoData /></div>
+                }
+            </div>
         </div>
         </>
     )

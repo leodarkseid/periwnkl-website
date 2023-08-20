@@ -15,6 +15,7 @@ export default function NavBar() {
     const isStockPage = pathname.startsWith("/stock");
     const isWagePage = pathname.startsWith("/wagepay");
     const isFrontPage = pathname.startsWith("/");
+    const is404 = pathname.startsWith("/");
 
     // Render null if it's the landing page to omit the navbar
     if (isStockPage) {
@@ -66,7 +67,7 @@ export default function NavBar() {
         );
     }
 
-    else if (isFrontPage){
+    else{
         return (
             <Navbar color="primary" className="shadow-sm bg-body-tertiary ">
                 <Container>
