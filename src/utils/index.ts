@@ -20,14 +20,18 @@ export const formatBalance = (rawBalance: string) => {
 
 
 
-export const checkIfValidAddress = (Arr: Array<string>)=> {
+export const checkIfValidAddress = (address:string)=> {
+  console.log("checking if is valid ",address)
   try{
-    for(const str of Arr){  
-    if(str.length == 42 && str.startsWith('0x') && ethers.utils.isAddress(str) === true){
-      return true
-    }
+    
+      console.log("this is the length",address.length)
+    if(address.length != 42 || !address.startsWith('0x') || ethers.utils.isAddress(address) == false){
+      console.log("false")
+      return false
+    
   }
-  return false
+  console.log("true")
+  return true
 }catch(error){
     console.error(error)
     return false

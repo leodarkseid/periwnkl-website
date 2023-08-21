@@ -22,15 +22,14 @@ export default function Body() {
 
     return (
         <>
-
             <div className={Style.grid}>
                 <div>
                     <div className={Style.title}>
                         <h1 >Stock Manager</h1>
                         <p>A simple and secure way to manage StockOptions for Organizations and Employee in a Trustless Manner  </p>
                     </div>
-                    <div className={Style.todo}>To Create an Organisation</div>
-                    <Link href="/stock/organisation/create"><Button variant="primary">Create Organisation</Button></Link>
+                    <div className={Style.todo}>For Organisations</div>
+                    <Link href="/stock/organisation/create"><Button variant="primary">Organisations</Button></Link>
                     <div className={Style.todo}>For Employees</div>
                     <Link href="/stock/employee"><Button variant="primary">Employees</Button></Link>
                 </div>

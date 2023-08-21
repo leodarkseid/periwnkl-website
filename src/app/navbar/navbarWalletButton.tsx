@@ -21,8 +21,8 @@ export default function NavbarWalletButton() {
   const { wallet, hasProvider, isConnecting, signer, connectMetaMask } = useMetaMask()
   const [show, setShow] = useState(false);
 
-  const targetNetworkId = "0x5";
-  // const targetNetworkId = "0xe704";
+  // const targetNetworkId = "0x5";
+  const targetNetworkId = "0xe704";
 
   return (
     <>

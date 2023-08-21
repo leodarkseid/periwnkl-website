@@ -81,7 +81,7 @@ export default function Create() {
             <div style={{"minHeight":"80vh"}}>
 
                 {resultLoading && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success" />}
-                {wallet.accounts.length > 1 || employeeData.length >= 1 ?
+                {wallet.accounts.length >= 1 || employeeData.length >= 1 ?
 
                     employeeData.map((data, index) => (
                         <div onClick={(() => router.push(`/wagepay/employee/${data.address}/`))} key={index}><ListCard key={index} name={data.name} address={data.address} emp={data.emp} /></div>

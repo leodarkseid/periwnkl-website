@@ -7,6 +7,7 @@ import { CreateStockOptionsPlan, GetListOfCreatedOrgs, GetNumberOfEmployee, GetO
 
 import { useRouter } from "next/navigation";
 import { BigNumber } from "ethers";
+import NoData from "@/components/NoData";
 
 interface EmployeeData {
     name: string;
@@ -77,12 +78,18 @@ export default function Create() {
 
     return (
         <><div>
-            <div className="bg-primary rounded text-white text-center p-2 mb-2 mx-auto">List Of Organisations In Which You Have Stocks</div>
+            <div className="bg-primary rounded text-white text-center p-2 mb-2 mx-auto">List Of Organisations In Which You Are Members Of</div>
 
             {resultLoading && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success" />}
-            {employeeData.map((data, index) => (
+            <div style={{ "minHeight": "80vh" }}>
+            {wallet.accounts.length >= 1 || employeeData.length >= 1 ? employeeData.map((data, index) => (
                 <div onClick={(() => router.push(`/stock/employee/${data.address}/${wallet.accounts[0]}`))} key={index}><ListCard key={index} name={data.name} address={data.address} emp={data.emp} /></div>
-            ))}
+            ))
+                :
+                <div className="d-flex justify-content-center" style={{ "minHeight": "75vh", "height": "75vh" }}><NoData />
+                </div>
+            }
+            </div>
         </div>
         </>
     )

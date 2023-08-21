@@ -6,9 +6,8 @@ import { Alert, Button, Form, Placeholder, Spinner } from "react-bootstrap"
 import { SyntheticEvent, useEffect, useState } from "react"
 import { ExcercisedOptions, GetStockOptionsAmount, GetVestingCountdown, VestedOptions, CountdownProp, Transfer, CheckForVestAble } from "@/utils/contracts"
 import { useMetaMask } from "@/hooks/useMetaMask"
-import { checkIfValidAddress } from "@/utils"
-import { Placehold } from "@/components/placeholder"
-
+import { checkIfValidAddress } from "@/utils";
+import { useRouter } from "next/navigation"
 export default function EmployeeDash() {
   const [stockOptions, setStockOptions] = useState(0);
   const [vestedOptions, setVestedOptions] = useState(0);
@@ -29,6 +28,7 @@ export default function EmployeeDash() {
   const params: Params = useParams()
   const empAddr = params.emp
   const orgAddr = params.org
+  const router = useRouter();
 
   const { wallet, hasProvider, isConnecting, signer, connectMetaMask } = useMetaMask()
 
@@ -37,7 +37,7 @@ export default function EmployeeDash() {
     const _amount = (amount);
     const _address = (recipient)?.toString().trim()
     if (wallet.accounts.length >= 1 && hasProvider) {
-      if (_amount != 0 && _address != "" && checkIfValidAddress([_address])) {
+      if (_amount != 0 && _address != "" && checkIfValidAddress(_address)) {
         try {
           setTransferLoading(true)
           setInvalidData(false);
@@ -56,6 +56,12 @@ export default function EmployeeDash() {
     }
 
   }
+
+  useEffect(() => {
+    if (checkIfValidAddress(orgAddr) == false || checkIfValidAddress(empAddr) == false) {
+      router.push('/notvalidquery')
+    }
+  }, [empAddr, orgAddr, router])
 
 
   useEffect(() => {
@@ -97,8 +103,10 @@ export default function EmployeeDash() {
   }, [empAddr, orgAddr, wallet.accounts, hasProvider])
 
   useEffect(() => {
-    if (!checkIfValidAddress([recipient]) && recipient != "") {
-      setInvalidData(true)
+    if (recipient != "") {
+      if (!checkIfValidAddress(recipient)) {
+        setInvalidData(true)
+      }
     }
     else { setInvalidData(false) }
   }, [recipient])
