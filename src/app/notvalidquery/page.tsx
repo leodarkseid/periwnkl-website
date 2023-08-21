@@ -7,11 +7,6 @@ import { useRouter } from 'next/navigation';
 import { IoMdArrowRoundBack } from "react-icons/io"
 
 
-export const metadata: Metadata = {
-    title: 'ERROR 400 || Periwnkl',
-    description: 'query not found',
-}
-
 export default function NotFound() {
     const router = useRouter()
 
