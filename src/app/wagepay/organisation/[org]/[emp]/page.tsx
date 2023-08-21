@@ -7,15 +7,11 @@ import { CountdownProp, GetBalance, GetInterval, GetLastWithdrawal, GetNextWageC
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
 import { useParams } from "next/navigation"
 import { useMetaMask } from "@/hooks/useMetaMask"
+import { checkIfValidAddress } from "@/utils";
+import { useRouter } from "next/navigation";
 
 
-
-
-interface EmpDashProps {
-    address: string
-}
-
-export default function EmpDashBoard(props: EmpDashProps) {
+export default function EmpDashBoard() {
     const [countdown, setCountdown] = useState<CountdownProp>();
     const [wage_, setWage] = useState(Infinity);
     const [interval_, setInterval_] = useState(Infinity);
@@ -40,6 +36,13 @@ export default function EmpDashBoard(props: EmpDashProps) {
     const params: Params = useParams()
     const empAddr = params.emp
     const orgAddr = params.org
+    const router = useRouter();
+
+    useEffect(() => {
+        if (checkIfValidAddress(orgAddr) == false || checkIfValidAddress(empAddr) == false) {
+            router.push('/notvalidquery')
+        }
+    }, [empAddr, orgAddr, router])
 
     async function HandleSuspension(e: SyntheticEvent) {
         e.preventDefault();

@@ -93,7 +93,7 @@ export default function Dashboard(props: DashProps) {
             setAddDisabled(true);
             setAddLoading(true);
             try {
-                if (checkIfValidAddress([addr_]) && ethers.utils.isAddress(addr_)) {
+                if (checkIfValidAddress(addr_) && ethers.utils.isAddress(addr_)) {
                     const add_ = await AddEmployee(addr_, props.address)
                     console.log(add_)
                 }

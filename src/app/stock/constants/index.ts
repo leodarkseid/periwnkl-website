@@ -1,444 +1,445 @@
-export const STOCK_OPTIONS_FACTORY_CONTRACT ='0xF752F73EAe6BA72D7593332B510d235ACf5447bC';
- 
- export const STOCK_OPTIONS_FACTORY_ABI= [
+export const STOCK_OPTIONS_FACTORY_CONTRACT =
+  "0xFa7118c234CD373433010f23aB9b6Bb527Ff5aCD";
+
+export const STOCK_OPTIONS_FACTORY_ABI = [
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
+        internalType: "string",
+        name: "_name",
+        type: "string",
       },
       {
-        "internalType": "uint256",
-        "name": "_totalStockOptions",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "_totalStockOptions",
+        type: "uint256",
+      },
     ],
-    "name": "createStockOptionsPlan",
-    "outputs": [
+    name: "createStockOptionsPlan",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        internalType: "address",
+        name: "",
+        type: "address",
       },
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "name": "deployedStockOptions",
-    "outputs": [
+    name: "deployedStockOptions",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "getCreatorDeployedContracts",
-    "outputs": [
+    inputs: [],
+    name: "getCreatorDeployedContracts",
+    outputs: [
       {
-        "components": [
+        components: [
           {
-            "internalType": "string",
-            "name": "name",
-            "type": "string"
+            internalType: "string",
+            name: "name",
+            type: "string",
           },
           {
-            "internalType": "address",
-            "name": "newContractAddress",
-            "type": "address"
-          }
+            internalType: "address",
+            name: "newContractAddress",
+            type: "address",
+          },
         ],
-        "internalType": "struct StockOptionsFactory.AddressName[]",
-        "name": "",
-        "type": "tuple[]"
-      }
+        internalType: "struct StockOptionsFactory.AddressName[]",
+        name: "",
+        type: "tuple[]",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "getDeployedStockOptions",
-    "outputs": [
+    inputs: [],
+    name: "getDeployedStockOptions",
+    outputs: [
       {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
-  }
-]
+    stateMutability: "view",
+    type: "function",
+  },
+];
 
 export const STOCK_OPTIONS_CONTRACT_ABI = [
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
+        internalType: "string",
+        name: "_name",
+        type: "string",
       },
       {
-        "internalType": "uint256",
-        "name": "_totalStockOptions",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "_totalStockOptions",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    stateMutability: "nonpayable",
+    type: "constructor",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "previousOwner",
-        "type": "address"
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
     ],
-    "name": "OwnershipTransferred",
-    "type": "event"
+    name: "OwnershipTransferred",
+    type: "event",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "employee",
-        "type": "address"
+        indexed: false,
+        internalType: "address",
+        name: "employee",
+        type: "address",
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "stockOptionsAmount",
-        "type": "uint256"
-      }
+        indexed: false,
+        internalType: "uint256",
+        name: "stockOptionsAmount",
+        type: "uint256",
+      },
     ],
-    "name": "StockOptionsGranted",
-    "type": "event"
+    name: "StockOptionsGranted",
+    type: "event",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_employeeAddress",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "_employeeAddress",
+        type: "address",
+      },
     ],
-    "name": "addEmployee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "addEmployee",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "name": "employees",
-    "outputs": [
+    name: "employees",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "exerciseOptions",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [],
+    name: "exerciseOptions",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "getBlockTimeStamp",
-    "outputs": [
+    inputs: [],
+    name: "getBlockTimeStamp",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_employeeAddress",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "_employeeAddress",
+        type: "address",
+      },
     ],
-    "name": "getEmployee",
-    "outputs": [
+    name: "getEmployee",
+    outputs: [
       {
-        "components": [
+        components: [
           {
-            "internalType": "uint256",
-            "name": "stockOptions",
-            "type": "uint256"
+            internalType: "uint256",
+            name: "stockOptions",
+            type: "uint256",
           },
           {
-            "internalType": "uint256",
-            "name": "vestingSchedule",
-            "type": "uint256"
+            internalType: "uint256",
+            name: "vestingSchedule",
+            type: "uint256",
           },
           {
-            "internalType": "bool",
-            "name": "isEmployee",
-            "type": "bool"
-          }
+            internalType: "bool",
+            name: "isEmployee",
+            type: "bool",
+          },
         ],
-        "internalType": "struct EmployeeStockOptionPlan.employee_",
-        "name": "",
-        "type": "tuple"
-      }
+        internalType: "struct EmployeeStockOptionPlan.employee_",
+        name: "",
+        type: "tuple",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_employeeAddress",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "_employeeAddress",
+        type: "address",
+      },
     ],
-    "name": "getExcercisedOptions",
-    "outputs": [
+    name: "getExcercisedOptions",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "getTotalEmployees",
-    "outputs": [
+    inputs: [],
+    name: "getTotalEmployees",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_employeeAddress",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "_employeeAddress",
+        type: "address",
+      },
     ],
-    "name": "getVestedOptions",
-    "outputs": [
+    name: "getVestedOptions",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_employeeAddress",
-        "type": "address"
+        internalType: "address",
+        name: "_employeeAddress",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "_stockOptions",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "_stockOptions",
+        type: "uint256",
+      },
     ],
-    "name": "grantStockOptions",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "grantStockOptions",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_employeeAddress",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "_employeeAddress",
+        type: "address",
+      },
     ],
-    "name": "isEmployee",
-    "outputs": [
+    name: "isEmployee",
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "name",
-    "outputs": [
+    inputs: [],
+    name: "name",
+    outputs: [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
+    inputs: [],
+    name: "owner",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_employeeAddress",
-        "type": "address"
+        internalType: "address",
+        name: "_employeeAddress",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "_vestingSchedule",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "_vestingSchedule",
+        type: "uint256",
+      },
     ],
-    "name": "setVestingSchedule",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "setVestingSchedule",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "totalStockOptions",
-    "outputs": [
+    inputs: [],
+    name: "totalStockOptions",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_recipient",
-        "type": "address"
+        internalType: "address",
+        name: "_recipient",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "_stockOptionsAmount",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "_stockOptionsAmount",
+        type: "uint256",
+      },
     ],
-    "name": "transferOptions",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "transferOptions",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
     ],
-    "name": "transferOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "vestOptions",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [],
+    name: "vestOptions",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_employeeAddress",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "_employeeAddress",
+        type: "address",
+      },
     ],
-    "name": "vestingCountdown",
-    "outputs": [
+    name: "vestingCountdown",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
-  }
-]
+    stateMutability: "view",
+    type: "function",
+  },
+];

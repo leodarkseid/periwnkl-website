@@ -24,8 +24,8 @@
   transition-duration: 500ms;
   border: 2px solid#0d6efd;
   overflow: hidden;
-  /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); */
 }
+
 .card:hover {
   transform: scale(1.07);
 }
@@ -52,6 +52,7 @@
   font-weight: 900;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .card_below h3 {
   color: #fff;
   font-weight: 500;
@@ -60,4 +61,37 @@
 .card_below p {
   color: #fcd8d8;
   font-weight: 100;
+}
+.card_below_disabled p {
+  color: #fcd8d8;
+  font-weight: 100;
+}
+.card_below_disabled {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: #6b7684;
+  color: #ffffff;
+  z-index: 0;
+  margin-top: 0;
+  height: 100%;
+  min-height: 100%;
+  border: 0;
+  justify-content: center;
+  text-align: center;
+  font-weight: 900;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.card_disabled {
+  display: grid;
+  grid-template-rows: 70% 30%;
+  gap: 0;
+  height: 50vh;
+  width: 20vw;
+  background-color: #ffffff;
+  border-radius: 25px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  padding-bottom: 0;
+  border: 2px solid#6b7684;
+  overflow: hidden;
 }

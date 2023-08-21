@@ -7,6 +7,8 @@ import { CountdownProp, ExcercisedOptions, GetStockOptionsAmount, GetVestingCoun
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
 import { useParams } from "next/navigation"
 import { useMetaMask } from "@/hooks/useMetaMask"
+import { checkIfValidAddress } from "@/utils";
+import { useRouter } from "next/navigation";
 
 
 
@@ -34,6 +36,14 @@ export function EmpDashBoard(props: EmpDashProps) {
     const params: Params = useParams()
     const empAddr = params.emp
     const orgAddr = params.org
+    const router = useRouter();
+
+
+    useEffect(() => {
+        if (checkIfValidAddress(orgAddr) == false || checkIfValidAddress(empAddr) == false) {
+            router.push('/notvalidquery')
+        }
+    }, [empAddr, orgAddr, router])
 
     useEffect(() => {
         async function FetchData() {

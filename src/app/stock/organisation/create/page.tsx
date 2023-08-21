@@ -146,7 +146,8 @@ export default function Create() {
           <div onClick={(() => router.push("/stock"))} key={index}><ListCard key={index} name={data.name} address={data.address} emp={data.emp} /></div>
         ))
           :
-          <div className="d-flex justify-content-center" style={{ "minHeight": "75vh", "height": "75vh" }}><NoData />
+          <div className="d-flex justify-content-center" style={{ "minHeight": "75vh", "height": "75vh" }}>
+            <NoData />
           </div>
         }
       </div>

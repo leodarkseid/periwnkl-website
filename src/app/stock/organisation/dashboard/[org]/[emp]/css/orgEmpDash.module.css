@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 60% 40%;
   gap: 1.5rem;
+  height: 80vh;
 }
 
 .main_grid1 {
@@ -16,6 +17,7 @@
   justify-content: center;
   align-content: center;
   overflow: auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .main_grid2 {
@@ -32,6 +34,7 @@
   width: 90%;
   align-items: center;
   overflow: auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .main_grid2__col {
@@ -72,8 +75,8 @@
   height: 50px;
   cursor: pointer;
 }
-.main_grid2__row_button:hover{
-background-color: #0355d1;
+.main_grid2__row_button:hover {
+  background-color: #0355d1;
 }
 
 .main_grid__timer_box {
@@ -155,7 +158,7 @@ background-color: #0355d1;
   border: solid 2px#0d6efd;
   border-bottom: solid 10px#0d6efd;
   border-radius: 10px;
-  color: #0d6efd;;
+  color: #0d6efd;
   width: 20vw;
   align-items: center;
   justify-content: center;

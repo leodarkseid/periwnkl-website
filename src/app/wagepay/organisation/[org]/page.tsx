@@ -38,7 +38,7 @@ export default function Page() {
     const [interval_, setInterval_] = useState(0);
     const [submitFail, setSubmitFail] = useState(false);
     const [pieLoading, setPieLoading] = useState(false);
-   
+
     const [list, setList] = useState<string[]>([]);
     const [empAmount, setEmpAmount] = useState(Infinity);
     const [data, setData] = useState<PieData[]>([]);
@@ -50,71 +50,74 @@ export default function Page() {
     const router = useRouter();
     const params: Params = useParams()
     const orgAddr = params.org
-
     const account = wallet.accounts[0]
-
     const allValuesZero = data.every((item) => item.value === 0);
 
+    useEffect(() => {
+        if (checkIfValidAddress(orgAddr) == false) {
+            router.push('/notvalidquery')
+        }
+    }, [orgAddr, router])
 
     const FetchData = useCallback(async () => {
-        try{
+        try {
 
-        setPieLoading(true);
-        console.log("calling GetOrgName")
-        const _name = await GetOrgName(orgAddr)
-        setName(_name)
+            setPieLoading(true);
+            console.log("calling GetOrgName")
+            const _name = await GetOrgName(orgAddr)
+            setName(_name)
             console.log("GetOrgName called", _name)
             console.log("calling date")
-        
-        console.log("calling, listEmployees")
-        const listEmployees = await ListOfEmployees(orgAddr);
-        setList(listEmployees);
-        console.log("listEmployees called", listEmployees)
+
+            console.log("calling, listEmployees")
+            const listEmployees = await ListOfEmployees(orgAddr);
+            setList(listEmployees);
+            console.log("listEmployees called", listEmployees)
             console.log("calling empAmount")
-        const empAmount = await GetNumberOfEmployee(orgAddr);
-        setEmpAmount(empAmount);
+            const empAmount = await GetNumberOfEmployee(orgAddr);
+            setEmpAmount(empAmount);
             console.log("EmpAmount called", empAmount)
             console.log("calling GetPieData")
-        const result = await GetPieData(orgAddr);
+            const result = await GetPieData(orgAddr);
             console.log("GetPieData called", result)
-        setData(result);
-        setPieLoading(false);
+            setData(result);
+            setPieLoading(false);
             console.log("calling GetContract Balance")
-        const contractBal = await GetContractBalance(orgAddr);
+            const contractBal = await GetContractBalance(orgAddr);
             console.log(" GetOrgName called", contractBal)
-        setContractBalance(contractBal);
+            setContractBalance(contractBal);
 
             console.log("calling GetWageBill")
-        const wageBill = await GetWageBill(orgAddr);
+            const wageBill = await GetWageBill(orgAddr);
             console.log("GetWageBill called", wageBill)
-        setWageBill(wageBill);
+            setWageBill(wageBill);
 
             console.log("calling GetTotalEmployeesBalance")
-        const totalEmployeesBalance = await GetTotalEmployeesBalance(orgAddr);
+            const totalEmployeesBalance = await GetTotalEmployeesBalance(orgAddr);
             console.log("Get Total Employees Balance", totalEmployeesBalance)
-        setEmployeesBalance(totalEmployeesBalance);
-} catch(error){
-    console.error("fetChData, error", error)
-}
+            setEmployeesBalance(totalEmployeesBalance);
+        } catch (error) {
+            console.error("fetChData, error", error)
+        }
 
 
     }, [orgAddr]);
 
     useEffect(() => {
-        try{
-        if (wallet.accounts.length >= 1 && hasProvider) {
-            FetchData()
-            setAddDisabled(false)
-        } else { setAddDisabled(true) }
-        setList
-        if (submitFail == true) {
-            setTimeout(() => {
-                setSubmitFail(false)
-            }, 5000);
+        try {
+            if (wallet.accounts.length >= 1 && hasProvider) {
+                FetchData()
+                setAddDisabled(false)
+            } else { setAddDisabled(true) }
+            setList
+            if (submitFail == true) {
+                setTimeout(() => {
+                    setSubmitFail(false)
+                }, 5000);
+            }
+        } catch (error) {
+            console.error("use effect", error)
         }
-    }catch(error){
-        console.error("use effect", error)
-    }
     }, [wallet, hasProvider, setList, FetchData, submitFail])
 
 
@@ -126,7 +129,7 @@ export default function Page() {
             setAddDisabled(true);
             setAddLoading(true);
             try {
-                if (checkIfValidAddress([addr]) && wage_ > 0) {
+                if (checkIfValidAddress(addr) && wage_ > 0) {
                     const add_ = await AddEmployee(orgAddr, addr, wage_, interval_)
                     console.log(add_)
                 }
@@ -192,11 +195,11 @@ export default function Page() {
                         </Form>
                     </Collapse>
                     <Button
-                    className="mb-4"
+                        className="mb-4"
                         onClick={() => setOpen(!open)}
                         aria-controls="example-collapse-text"
                         aria-expanded={open}
-                        disabled ={interval_ != 0 || wage_ != 0 || address_ != ""}
+                        disabled={interval_ != 0 || wage_ != 0 || address_ != ""}
                     >
                         Add A New Employee
                     </Button>
@@ -217,7 +220,7 @@ export default function Page() {
                         <div className="bg-primary p-3 text-white  rounded-end-pill mb-3" style={{ "width": "90%" }}><LiaSuitcaseSolid
                             style={{ "transform": "scale(1.5)", "marginRight": "10px" }} />Wage Bill :
                             {wageBill == Infinity ? <Placehold size={1} /> : wageBill}</div>
-                        <div className="bg-ff6f61 p-3 text-white  rounded-end-pill mb-3" style={{"width":"90%"}}><BsBank
+                        <div className="bg-ff6f61 p-3 text-white  rounded-end-pill mb-3" style={{ "width": "90%" }}><BsBank
                             style={{ "transform": "scale(1.5)", "marginRight": "10px", }} />Total Balance :
                             {totalEmployeesBalance == Infinity ? <Placehold size={2} /> : totalEmployeesBalance} </div>
 

@@ -90,7 +90,7 @@ export default function Page() {
             setAddDisabled(true);
             setAddLoading(true);
             try {
-                if (checkIfValidAddress([tokenAddr]) && name != "") {
+                if (checkIfValidAddress(tokenAddr) && name != "") {
                     const add_ = await CreateWagePayOrganisation(tokenAddr, wageInterval, name)
                     console.log(add_)
                 }

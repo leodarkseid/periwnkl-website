@@ -15,8 +15,8 @@ export default function FPBody() {
                 
                 <div className={styles.mainGrid}>
                     <Link href="/wagepay">
-                    <div className={styles.card}>
-                            <div className="d-flex justify-content-center align-self-center">
+                    <div className={styles.card} style={{"outline":"none"}}>
+                            <div className="d-flex justify-content-center align-self-center" style={{ "outline": "none" }}>
                             <Image
                                 alt="LogoText"
                                 src={Wage}
@@ -24,7 +24,7 @@ export default function FPBody() {
                                 height="300"
                             />
                         </div>
-                        <div className={styles.card_below}>
+                        <div className={styles.card_below} >
                             <h3>WagePay</h3>
                             <p>A Fully Onchain product for organizing and managing employee Wages</p>
                         </div>
@@ -32,8 +32,8 @@ export default function FPBody() {
                     </div>
                     </Link>
                     <Link href="/stock">
-                        <div className={styles.card}>
-                            <div className="d-flex justify-content-center align-self-center">
+                        <div className={styles.card} style={{ "outline": "none" }}>
+                            <div className="d-flex justify-content-center align-self-center" style={{ "outline": "none" }}>
                                 <Image
                                     style={{ "maxHeight": "300px", "maxWidth": "300px", "position": "relative" }}
                                     alt="LogoText"
@@ -49,7 +49,7 @@ export default function FPBody() {
 
                         </div>
                     </Link>
-                    <div className={styles.card}>
+                    <div className={styles.card_disabled}>
                         <div className="d-flex justify-content-center align-self-center">
                             <Image
                                 style={{ "maxHeight": "300px", "maxWidth": "300px", "position": "relative" }}
@@ -59,13 +59,13 @@ export default function FPBody() {
                                 height="300"
                             />
                         </div>
-                        <div className={styles.card_below}>
+                        <div className={styles.card_below_disabled}>
                             <h3>CRM</h3>
                             <p>A CRM built with power of Delegation, supports selective sharing of sensitive data for Protocol</p>
                         </div>
 
                     </div>
-                    <div className={styles.card}>
+                    <div className={styles.card_disabled}>
                         <div className="d-flex justify-content-center align-self-center">
                             <Image
                                 alt="LogoText"
@@ -74,7 +74,7 @@ export default function FPBody() {
                                 height="300"
                             />
                         </div>
-                        <div className={styles.card_below}>
+                        <div className={styles.card_below_disabled}>
                             <h3>Tax Manager</h3>
                             <p>An Onchain product that allows Taxes to be processed seamlessly</p>
                         </div>

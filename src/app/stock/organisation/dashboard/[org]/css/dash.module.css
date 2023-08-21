@@ -1,44 +1,45 @@
-.dash_grid{
-    display: grid;
-    grid-template-columns: 40% 60%;
-    gap: 1.5rem;
+.dash_grid {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  gap: 1.5rem;
+  height: 80vh;
 }
 
-.emp_grid{
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-
-    margin-top: 25px;
-    padding: 0;
-    border-radius: 30px;
-    height: 70vh;
-    min-height: 70vh;
-    max-height: 70vh;
-    width: 90%;
-    align-items: center;
-    overflow: auto;
+.emp_grid {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  margin-top: 25px;
+  padding: 0;
+  border-radius: 30px;
+  height: 70vh;
+  min-height: 70vh;
+  max-height: 70vh;
+  width: 90%;
+  align-items: center;
+  overflow: auto;
 }
 
-.emp_card{
-    padding: 0;
+.emp_card {
+  padding: 0;
 }
 
-.emp_others{
-    
-    background-color: #fff;
-    padding: 20px;
-    margin-top: 25px;
-    border-radius: 30px;
-    height: 70vh;
-    min-height: 70vh;
-    max-height: 70vh;
-    justify-content: center;
-    align-content: center;
-    overflow: auto;
+.emp_others {
+  background-color: #fff;
+  padding: 20px;
+  margin-top: 25px;
+  border-radius: 30px;
+  height: 70vh;
+  min-height: 70vh;
+  max-height: 70vh;
+  justify-content: center;
+  align-content: center;
+  overflow: auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
-.emp_slab1{
-    display: grid;
-    grid-template-columns: 50% 50%;
+.emp_slab1 {
+  display: grid;
+  grid-template-columns: 50% 50%;
 }

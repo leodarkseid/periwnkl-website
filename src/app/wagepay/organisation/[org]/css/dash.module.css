@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: 40% 60%;
     gap: 1.5rem;
+    height: 80vh;
 }
 
 .emp_grid{

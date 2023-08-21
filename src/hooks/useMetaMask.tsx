@@ -43,7 +43,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const [wallet, setWallet] = useState(disconnectedState)
   // useCallback ensures that you don't uselessly recreate the _updateWallet function on every render
   const _updateWallet = useCallback(async (providedAccounts?: any) => {
-    const accounts = providedAccounts || await window.ethereum.request(
+    const accounts = providedAccounts || await (window as any).ethereum.request(
       { method: 'eth_accounts' },
     )
 
@@ -53,16 +53,16 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
       return
     }
 
-    const balance = formatBalance(await window.ethereum.request({
+    const balance = formatBalance(await (window as any).ethereum.request({
       method: 'eth_getBalance',
       params: [accounts[0], 'latest'],
     }))
-    const chainId = await window.ethereum.request({
+    const chainId = await (window as any).ethereum.request({
       method: 'eth_chainId',
     })
 
     setWallet({ accounts, balance, chainId })
-  
+
   }, [])
 
   const updateWalletAndAccounts = useCallback(() => _updateWallet(), [_updateWallet])
@@ -78,24 +78,24 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     const getProvider = async () => {
       const provider = await detectEthereumProvider({ silent: true })
       setHasProvider(Boolean(provider))
-      
+
 
       if (provider) {
         const provideR = new ethers.providers.Web3Provider((window as any).ethereum);
         const signer = provideR.getSigner();
         updateWalletAndAccounts();
         setSigner(signer);
-        window.ethereum.on('accountsChanged', updateWallet)
-        window.ethereum.on('chainChanged', updateWalletAndAccounts)
+        (window as any).ethereum.on('accountsChanged', updateWallet)
+          (window as any).ethereum.on('chainChanged', updateWalletAndAccounts)
       }
     }
 
     getProvider()
-    
+
 
     return () => {
-      window.ethereum?.removeListener('accountsChanged', updateWallet)
-      window.ethereum?.removeListener('chainChanged', updateWalletAndAccounts)
+      (window as any).ethereum?.removeListener('accountsChanged', updateWallet)
+        (window as any).ethereum?.removeListener('chainChanged', updateWalletAndAccounts)
     }
   }, [updateWallet, updateWalletAndAccounts])
 
@@ -103,12 +103,12 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     setIsConnecting(true)
 
     try {
-      const accounts = await window.ethereum.request({
+      const accounts = await (window as any).ethereum.request({
         method: 'eth_requestAccounts',
       })
       clearError()
       updateWallet(accounts)
-    } catch(err: any) {
+    } catch (err: any) {
       setErrorMessage(err.message)
     }
     setIsConnecting(false)

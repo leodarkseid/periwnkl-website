@@ -31,7 +31,7 @@ export default function NavbarWalletButton() {
           Install MetaMask
         </Button>}
 
-      {(window as any).ethereum?.isMetaMask && wallet.accounts.length < 1 &&
+      {hasProvider && wallet.accounts.length < 1 &&
         <Button variant="success" disabled={isConnecting} onClick={() => setShow(true)}>
           Connect MetaMask
         </Button>
@@ -42,7 +42,7 @@ export default function NavbarWalletButton() {
         </Button>
       }
 
-      {(window as any).ethereum?.isMetaMask && wallet.chainId == targetNetworkId &&
+      {hasProvider && wallet.chainId == targetNetworkId &&
         <Button variant="success" disabled={isConnecting} onClick={() => setShow(true)}>
           {wallet.accounts.length < 1 ? "Connect MetaMask" : formatAddress(wallet.accounts[0])}
         </Button>}
@@ -67,7 +67,7 @@ export default function NavbarWalletButton() {
             <MetamaskLogo />
           </>
           <div className="text-center">
-            {(window as any).ethereum?.isMetaMask && wallet.chainId == targetNetworkId &&
+            {hasProvider && wallet.chainId == targetNetworkId &&
               <Button variant="success" onClick={connectMetaMask}>
                 {wallet.accounts.length < 1 ? "Connect MetaMask" : <a className="text-white" href={`https://etherscan.io/address/${wallet.accounts[0]}`}>{formatAddress(wallet.accounts[0])}</a>}
               </Button>}
@@ -77,7 +77,7 @@ export default function NavbarWalletButton() {
                 Switch Network !
               </Button>}
 
-            {(window as any).ethereum?.isMetaMask && wallet.accounts.length < 1 &&
+            {hasProvider && wallet.accounts.length < 1 &&
               <Button variant="success" disabled={isConnecting} onClick={connectMetaMask}>
                 Connect MetaMask
               </Button>
