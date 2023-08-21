@@ -228,9 +228,9 @@ export default function Page() {
                     {pieLoading && wallet.accounts.length >= 1 && <Spinner animation="border" className=" mt-3 d-block mx-auto text-success" />}
                     {!pieLoading && wallet.accounts.length >= 1 &&
                         <>
-                            {allValuesZero ? <Alert variant="success">All Employees currently do not have Stock Options</Alert> : <Piechart data={data} />}
+                            {allValuesZero ? <Alert variant="success">All Employees currently do not have Wages</Alert> : <Piechart data={data} />}
 
-                            <div className="text-center text-white bg-primary rounded-pill w-75 mx-auto p-1 mt-3 mb-3">Employee StockOptions InfoGraph</div>
+                            <div className="text-center text-white bg-primary rounded-pill w-75 mx-auto p-1 mt-3 mb-3">Employee Wages InfoGraph</div>
                         </>}
 
 

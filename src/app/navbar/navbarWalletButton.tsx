@@ -31,7 +31,7 @@ export default function NavbarWalletButton() {
           Install MetaMask
         </Button>}
 
-      {hasProvider && wallet.accounts.length < 1 &&
+      {isConnecting == false && hasProvider && wallet.accounts.length < 1 &&
         <Button variant="success" disabled={isConnecting} onClick={() => setShow(true)}>
           Connect MetaMask
         </Button>

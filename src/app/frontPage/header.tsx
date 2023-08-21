@@ -47,16 +47,6 @@ export default function FPHeader() {
                         repeat={Infinity}
                     />
             </div>
-            {/* <div className={styl.h1}>
-                <div className={styl.span}>Crypto does not have to be
-                    <div className={styl.message}>
-                        <div className="word1">All Scam</div>
-                        <div className="word2">For Conmen</div>
-                        <div className="word3">For Criminals</div>
-                    </div>
-                    <h2> We are building for real builders</h2>
-                </div>
-            </div> */}
         </div >
         </>
     )
